@@ -1,0 +1,14 @@
+# Saubere URLs ohne .html-Endung
+RewriteEngine On
+
+# /meine-geschichte.html -> /ueber-uns (alte URL dauerhaft umgeleitet)
+RewriteRule ^meine-geschichte\.html?$ /ueber-uns [R=301,L]
+
+# Direktaufruf einer .html-Datei auf die schoene URL umleiten
+RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Schoene URL intern auf die .html-Datei mappen
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
