@@ -450,8 +450,9 @@
   }
   .hero-usp li svg {
     flex-shrink: 0;
-    width: 13px;
-    height: 13px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
     align-self: center;
   }
   .hero-usp li span {
