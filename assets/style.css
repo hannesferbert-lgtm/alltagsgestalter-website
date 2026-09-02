@@ -427,30 +427,38 @@
 
   .hero-usp {
     list-style: none;
-    margin-top: 1rem;
+    margin-top: 1.15rem;
+    padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem 1.4rem;
-    font-family: var(--font-display);
-    font-size: 0.82rem;
-    line-height: 1.3;
-    color: var(--color-text);
+    gap: 0.5rem;
   }
   .hero-usp li {
-    position: relative;
-    padding-left: 0.85rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    padding: 0.32rem 0.7rem 0.32rem 0.55rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-violett) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-violett) 32%, transparent);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-text);
+    white-space: nowrap;
   }
-  .hero-usp li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.45em;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--color-violett);
+  .hero-usp li svg {
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    align-self: center;
   }
-  .hero-usp li span { color: var(--color-text-soft); }
+  .hero-usp li span {
+    font-weight: 400;
+    font-size: 0.9em;
+    color: var(--color-text-soft);
+  }
 
   .hero-copy .btn { margin-top: 2.2rem; }
 
