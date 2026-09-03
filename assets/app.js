@@ -385,6 +385,134 @@ try {
             });
           });
         })();
-      
+
+        // ---------- Modal / Pop-up-Overlay ----------
+        // Generische, barrierefreie Dialog-Logik:
+        //  * Öffnen  über jedes Element mit [data-modal-open="<id>"]
+        //  * Schließen über [data-modal-close] (X-Button + Backdrop), Escape
+        //    und Klick auf den abgedunkelten Hintergrund.
+        //  * Fokus wandert beim Öffnen in den Dialog, wird beim Schließen an das
+        //    auslösende Element zurückgegeben, und bleibt dazwischen im Dialog
+        //    gefangen (Tab / Shift+Tab). Der Rest der Seite wird für Screenreader
+        //    per aria-hidden ausgeblendet.
+        (function modalDialogs() {
+          var openers = Array.prototype.slice.call(document.querySelectorAll('[data-modal-open]'));
+          if (!openers.length) return;
+
+          var FOCUSABLE = 'a[href], area[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+          var activeModal = null;
+          var activeTrigger = null;
+          var inertKids = [];
+
+          function focusableIn(root) {
+            return Array.prototype.slice.call(root.querySelectorAll(FOCUSABLE)).filter(function (el) {
+              return el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement;
+            });
+          }
+
+          function setBackgroundInert(on) {
+            if (on) {
+              inertKids = [];
+              Array.prototype.slice.call(document.body.children).forEach(function (el) {
+                if (el === activeModal || el.tagName === 'SCRIPT') return;
+                inertKids.push({ el: el, prev: el.getAttribute('aria-hidden') });
+                el.setAttribute('aria-hidden', 'true');
+              });
+            } else {
+              inertKids.forEach(function (rec) {
+                if (rec.prev === null) rec.el.removeAttribute('aria-hidden');
+                else rec.el.setAttribute('aria-hidden', rec.prev);
+              });
+              inertKids = [];
+            }
+          }
+
+          function onKeydown(e) {
+            if (!activeModal) return;
+            if (e.key === 'Escape' || e.key === 'Esc') {
+              e.preventDefault();
+              closeModal();
+              return;
+            }
+            if (e.key === 'Tab') {
+              var f = focusableIn(activeModal);
+              if (!f.length) { e.preventDefault(); return; }
+              var first = f[0];
+              var last = f[f.length - 1];
+              if (e.shiftKey && (document.activeElement === first || !activeModal.contains(document.activeElement))) {
+                e.preventDefault();
+                last.focus();
+              } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }
+
+          function openModal(id, trigger) {
+            var modal = document.getElementById(id);
+            if (!modal || activeModal) return;
+            activeModal = modal;
+            activeTrigger = trigger || null;
+            modal.hidden = false;
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            setBackgroundInert(true);
+            if (activeTrigger) activeTrigger.setAttribute('aria-expanded', 'true');
+            var f = focusableIn(modal);
+            var dialog = modal.querySelector('[role="dialog"]') || modal;
+            (f.length ? f[0] : dialog).focus();
+            document.addEventListener('keydown', onKeydown, true);
+          }
+
+          function closeModal() {
+            if (!activeModal) return;
+            var modal = activeModal;
+            document.removeEventListener('keydown', onKeydown, true);
+            setBackgroundInert(false);
+            modal.hidden = true;
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            activeModal = null;
+            if (activeTrigger) {
+              activeTrigger.setAttribute('aria-expanded', 'false');
+              if (typeof activeTrigger.focus === 'function') activeTrigger.focus();
+            }
+            activeTrigger = null;
+          }
+
+          openers.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              openModal(btn.getAttribute('data-modal-open'), btn);
+            });
+          });
+
+          Array.prototype.slice.call(document.querySelectorAll('.modal')).forEach(function (modal) {
+            modal.setAttribute('aria-hidden', 'true');
+            modal.addEventListener('click', function (e) {
+              var closer = e.target.closest('[data-modal-close]');
+              if (!closer) return;
+              // Ein echter Link (z. B. der CTA-Button) darf nach dem Schließen
+              // noch zu seinem Ziel navigieren – deshalb hier kein preventDefault.
+              if (!(closer.tagName === 'A' && closer.getAttribute('href'))) e.preventDefault();
+              closeModal();
+            });
+          });
+
+          // Klick irgendwo auf die Genuss-Kachel (außer auf Text-Markierung) öffnet
+          // das Pop-up ebenfalls – wie bei den anderen Kacheln der Klick aufs Auf-/
+          // Zuklappen wirkt.
+          openers.forEach(function (btn) {
+            var card = btn.closest('.service-card');
+            if (!card) return;
+            card.addEventListener('click', function (e) {
+              if (e.target.closest('[data-modal-open]')) return;
+              if (window.getSelection && String(window.getSelection()).length > 0) return;
+              openModal(btn.getAttribute('data-modal-open'), btn);
+            });
+          });
+        })();
+
     } catch (e) { console.error('Seiten-Skript:', e); }
 });
