@@ -547,7 +547,7 @@
     opacity: 0;
   }
   .service-card details.service-more li::before {
-    content: "✓";
+    content: "\2713";
     position: absolute;
     left: 0;
     top: 0;
@@ -1344,5 +1344,203 @@
   .about-grid { z-index: 5; }
 
   [hidden] { display: none !important; }
-  
+
   #dc-root, .sc-host { height: auto !important; min-height: 100%; }
+
+  /* ============ Leistungskachel "Genuss": Trigger fuer das Pop-up ============ */
+  /* Optisch identisch zum <summary> "Im Detail enthalten +" der anderen Karten. */
+  .service-card .service-more-trigger {
+    margin-top: 0.4rem;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--color-kohle);
+  }
+  .service-card .service-more-trigger .plus {
+    flex-shrink: 0;
+    width: 1.5rem; height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-violett);
+    color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+  }
+  .service-card .service-more-trigger:hover .plus,
+  .service-card .service-more-trigger:focus-visible .plus { transform: scale(1.08); }
+
+  /* ============ Modal / Pop-up-Overlay ============ */
+  body.modal-open { overflow: hidden; }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2.5rem);
+  }
+
+  .modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-kohle) 58%, transparent);
+    animation: modal-fade 0.25s ease-out;
+  }
+
+  .modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: min(640px, 100%);
+    max-height: min(88vh, 900px);
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 40px 80px -30px rgba(30, 22, 15, 0.55);
+    overflow: hidden;
+    animation: modal-rise 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  @keyframes modal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes modal-rise {
+    from { opacity: 0; transform: translateY(16px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .modal__backdrop, .modal__dialog { animation: none; }
+  }
+
+  .modal__header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1.35rem, 3vw, 2rem) 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .modal__title {
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    line-height: 1.2;
+  }
+  .modal__close {
+    flex-shrink: 0;
+    margin-left: auto;
+    width: 2.5rem; height: 2.5rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-violett);
+    background: var(--color-violett);
+    color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+  .modal__close svg { width: 1.15rem; height: 1.15rem; }
+  .modal__close:hover { transform: rotate(90deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .modal__close:hover { transform: none; }
+  }
+
+  .modal__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.35rem, 3vw, 2rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  .modal__intro {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-soft);
+  }
+
+  .modal__blocks {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: modal-block;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+  .modal__block {
+    counter-increment: modal-block;
+    position: relative;
+    padding-left: 3rem;
+  }
+  .modal__block::before {
+    content: counter(modal-block);
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    background: var(--color-violett);
+    color: var(--color-kohle);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal__block h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.3rem;
+  }
+  .modal__block p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--color-text-soft);
+  }
+
+  .modal__note {
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-text-soft);
+  }
+
+  .modal__footer {
+    flex: 0 0 auto;
+    padding: 1rem clamp(1.35rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid var(--color-border);
+  }
+  .modal__footer .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .modal { padding: 0; align-items: stretch; }
+    .modal__dialog {
+      width: 100%;
+      max-height: 100dvh;
+      max-height: 100vh;
+      border-radius: 0;
+      border: 0;
+    }
+    .modal__title { font-size: 1.2rem; }
+  }
