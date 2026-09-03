@@ -188,17 +188,9 @@
           <h3 id="genuss-title">Genuss</h3>
           <p>Genuss kennt keine Altersgrenze. Mit der Erfahrung eines gelernten Kochs entdecken wir gemeinsam alte und neue Lieblingsrezepte – gemeinsames Kochen weckt Erinnerungen und bringt Geschmack zurück in den Alltag.</p>
           <span class="kicker" style="color: #000000">Kochen &amp; gemeinsame Mahlzeiten</span>
-          <details class="service-more">
-            <summary>Im Detail enthalten <span class="plus" aria-hidden="true" style="color: #FFFFFF">+</span></summary>
-            <div class="service-more-body">
-              <ul>
-                <li>Gemeinsames Kochen</li>
-                <li>Backen</li>
-                <li>Rezeptvorbereitung</li>
-                <li>Mahlzeitengestaltung</li>
-              </ul>
-            </div>
-          </details>
+          <button type="button" class="service-more-trigger" data-modal-open="genuss-modal" aria-haspopup="dialog" aria-expanded="false">
+            Im Detail enthalten <span class="plus" aria-hidden="true">+</span>
+          </button>
         </article>
 
       </div>
@@ -367,6 +359,41 @@
     </ul>
   </div>
 </footer>
+
+<!-- ============ MODAL: Genuss & Ernährung ============ -->
+<div class="modal" id="genuss-modal" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="genuss-modal-title" aria-describedby="genuss-modal-intro" tabindex="-1">
+    <div class="modal__header">
+      <h2 class="modal__title" id="genuss-modal-title">Genuss &amp; Ernährung – Der Geschmack von früher</h2>
+      <button type="button" class="modal__close" data-modal-close aria-label="Dialog schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p class="modal__intro" id="genuss-modal-intro">Essen weckt Erinnerungen und stärkt die Gesundheit. Mit unserem biografischen Kochangebot verbinden wir Emotion, Gemeinschaft und Prävention direkt bei Ihnen zu Hause.</p>
+      <ol class="modal__blocks">
+        <li class="modal__block">
+          <h3>Biografisch &amp; Familienerbe</h3>
+          <p>Wir kochen Ihre Lieblingsrezepte von früher, aktivieren bei Demenz sanft die Sinne und halten Ihre Familienrezepte als gebundenes Kochbuch fest.</p>
+        </li>
+        <li class="modal__block">
+          <h3>Kulturell &amp; Verbindend</h3>
+          <p>Gemeinsam kochen gegen Einsamkeit – wir bringen Freude an den Esstisch und tauschen kulinarische Geschichten aus.</p>
+        </li>
+        <li class="modal__block">
+          <h3>Präventiv &amp; Medizinisch</h3>
+          <p>In Kooperation mit zertifizierten Ernährungsfachkräften bieten wir gezielte, alltagsnahe Ernährungsanpassungen bei Bluthochdruck, Diabetes, Gicht, Adipositas oder Mangelernährung – lecker und ohne Verzicht.</p>
+        </li>
+      </ol>
+      <p class="modal__note">Bezuschussbar über die Pflegekasse (§&nbsp;45b SGB&nbsp;XI) sowie Krankenkassen (z.&nbsp;B. BARMER nach §&nbsp;20/43 SGB&nbsp;V).</p>
+    </div>
+    <div class="modal__footer">
+      <a class="btn btn-primary" href="#kontakt" data-modal-close>Jetzt kostenfreies Erstgespräch anfragen</a>
+    </div>
+  </div>
+</div>
+
 <script src="assets/app.js" defer></script>
 </body>
 </html>
