@@ -458,7 +458,13 @@ try {
             var modal = document.getElementById(id);
             if (!modal || activeModal) return;
             activeModal = modal;
-            activeTrigger = trigger || null;
+            // Der ausloesende "Im Detail enthalten +"-Button wird gemerkt, damit der
+            // Fokus beim Schliessen exakt dorthin zurueckkehrt. Fallback: der Button,
+            // dessen data-modal-open auf dieses Modal zeigt.
+            activeTrigger = trigger
+              || document.querySelector('.service-more-trigger[data-modal-open="' + id + '"]')
+              || document.querySelector('[data-modal-open="' + id + '"]')
+              || null;
             modal.hidden = false;
             modal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('modal-open');
@@ -473,17 +479,20 @@ try {
           function closeModal() {
             if (!activeModal) return;
             var modal = activeModal;
+            var trigger = activeTrigger;
             document.removeEventListener('keydown', onKeydown, true);
             setBackgroundInert(false);
             modal.hidden = true;
             modal.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
             activeModal = null;
-            if (activeTrigger) {
-              activeTrigger.setAttribute('aria-expanded', 'false');
-              if (typeof activeTrigger.focus === 'function') activeTrigger.focus();
-            }
             activeTrigger = null;
+            // Fokus zurueck auf den ausloesenden Button (X, Backdrop, Escape und
+            // "Zurueck zur Uebersicht" landen alle hier).
+            if (trigger && typeof trigger.focus === 'function') {
+              trigger.setAttribute('aria-expanded', 'false');
+              trigger.focus();
+            }
           }
 
           openers.forEach(function (btn) {
