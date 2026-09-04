@@ -337,7 +337,59 @@
   .hero-title {
     font-size: clamp(1.7rem, 3vw, 2.35rem);
     margin-top: 0.9rem;
-    line-height: 1.18;
+    line-height: 1.25;
+  }
+
+  /* Hero-H1: Wort-fuer-Wort-Einblendung + handgezeichnete SVG-Unterstreichung */
+  .hero-title .word-fade {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    animation: hero-word-fade 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.13s);
+  }
+  @keyframes hero-word-fade {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-title .highlight-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title .highlight-text {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-title .underline-stroke {
+    position: absolute;
+    left: -3%;
+    bottom: -0.24em;
+    width: 106%;
+    height: 0.5em;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .hero-title .underline-stroke path {
+    stroke-dasharray: 170;
+    stroke-dashoffset: 170;
+    animation: hero-underline-draw 0.7s ease-out forwards;
+    /* startet, sobald das letzte Wort ("--i: 4") eingeblendet ist */
+    animation-delay: calc(4 * 0.13s + 0.4s);
+  }
+  @keyframes hero-underline-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title .word-fade {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .hero-title .underline-stroke path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
   }
 
   .hero-subtitle {
