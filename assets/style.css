@@ -353,6 +353,12 @@
     animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(var(--i) * 0.12s);
     will-change: opacity, transform;
+    white-space: nowrap;
+  }
+
+  .ampersand-group {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   @keyframes fadeInUp {
@@ -380,12 +386,12 @@
     overflow: visible;
     pointer-events: none;
   }
-  .hero-title .underline-stroke path {
+  .hero-title .underline-stroke path.stroke-path {
     stroke-dasharray: 170;
     stroke-dashoffset: 170;
-    animation: hero-underline-draw 0.7s ease-out forwards;
-    /* startet, sobald das letzte Wort ("--i: 4") eingeblendet ist */
-    animation-delay: calc(4 * 0.12s + 0.4s);
+    animation: hero-underline-draw 0.8s ease-out forwards;
+    /* startet, sobald das letzte Wort ("--i: 3") eingeblendet ist */
+    animation-delay: calc(3 * 0.12s + 0.4s);
   }
   @keyframes hero-underline-draw {
     to { stroke-dashoffset: 0; }
