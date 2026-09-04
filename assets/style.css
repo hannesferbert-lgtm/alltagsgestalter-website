@@ -324,100 +324,23 @@
     .hero-grid { grid-template-columns: 1fr; }
   }
 
-  .hero-copy h1 {
-    position: relative;
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-text-soft);
+  }
+
+  .hero-title {
     font-size: clamp(1.7rem, 3vw, 2.35rem);
     margin-top: 0.9rem;
-    line-height: 1.5;
-  }
-  .hero-copy h1 .accent {
-    
-    color: #FFFFFF;
-    background: var(--color-violett);
-    padding: 0.05em 0.25em;
-    border-radius: 6px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+    line-height: 1.18;
   }
 
-  .hero-cursor-glow {
-    position: absolute;
-    border-radius: 8px;
-    background: radial-gradient(ellipse at center, rgba(214, 197, 232, 0.7), rgba(214, 197, 232, 0) 72%);
-    filter: blur(3px);
-    opacity: 0;
-    pointer-events: none;
-  }
-  .hero-cursor-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    height: 30px;
-    opacity: 0;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(30, 30, 30, 0.25));
-    will-change: transform, opacity;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.9rem, 4.2vw, 3.1rem);
-    line-height: 1.08;
-    margin-top: 1.6rem;
-  }
-  
-  .hero-tagline .tw {
-    display: inline-block;
-    opacity: 0;
-    animation: hero-tagline-in 0.6s ease forwards;
-  }
-  .hero-tagline .tw:nth-child(1) { animation-delay: 2.1s; }
-  .hero-tagline .tw:nth-child(2) { animation-delay: 2.38s; }
-  .hero-tagline .tw:nth-child(3) { animation-delay: 2.66s; }
-  .hero-tagline .tw:nth-child(4) { animation-delay: 2.94s; }
-  .hero-tagline .tw:nth-child(5) { animation-delay: 3.22s; }
-  @keyframes hero-tagline-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .hero-tagline .script {
-    font-size: 1.25em;
-    font-weight: 700;
-    display: inline-block;
-    transform: rotate(-3deg);
-    position: relative;
-    background: transparent;
-  }
-  
-  .hero-tagline .script::before {
-    content: "";
-    position: absolute;
-    left: -0.06em;
-    right: -0.06em;
-    top: 0.06em;
-    bottom: 0.04em;
-    background: var(--color-violett);
-    border-radius: 3px 6px 4px 7px;
-    transform: scaleX(0);
-    transform-origin: left center;
-    animation: marker-sweep 0.5s cubic-bezier(0.45, 0.1, 0.3, 1) 2.35s forwards;
-    z-index: -1;
-  }
-  @keyframes marker-sweep {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-tagline .script::before {
-      animation: none;
-      transform: scaleX(1);
-    }
-  }
-
-  .hero-sub {
-
+  .hero-subtitle {
     font-size: 1.275rem;
     color: var(--color-text-soft);
     font-style: italic;
@@ -441,7 +364,7 @@
     line-height: 1.4;
     color: var(--color-kohle);
   }
-  .hero-badge .check {
+  .hero-badge .badge-icon {
     flex-shrink: 0;
     width: 1.3rem;
     height: 1.3rem;
@@ -455,11 +378,10 @@
     line-height: 1;
   }
 
-  /* USP-Qualifikationszeile unter der Subline. Vollstaendiges Styling steht
-     als Inline-Style am Markup (cache-fest); diese Regel ist nur ein Anker. */
-  .hero-credentials {
+  /* Qualifikationszeile unter dem Trust-Badge */
+  .hero-qualifications {
     margin-top: 0.5rem;
-    font-family: var(--font-display), 'Space Grotesk', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.015em;
