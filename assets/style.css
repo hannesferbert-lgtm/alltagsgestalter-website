@@ -342,19 +342,24 @@
 
   /* Hero-H1: Wort-fuer-Wort-Einblendung + handgezeichnete SVG-Unterstreichung */
   .hero-title .word-fade {
-    display: inline-block;
+    display: inline; /* verhindert starre Block-Breiten beim Umbruch auf Mobil */
     opacity: 0;
-    transform: translateY(0.35em);
-    animation: hero-word-fade 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    animation-delay: calc(var(--i, 0) * 0.13s);
+    transform: translateY(6px);
+    animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i) * 0.12s);
+    will-change: transform, opacity;
   }
-  @keyframes hero-word-fade {
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .hero-title .highlight-wrapper {
-    position: relative;
     display: inline-block;
+    white-space: nowrap; /* Highlight-Text + Strich brechen nie um */
+    position: relative;
   }
   .hero-title .highlight-text {
     position: relative;
@@ -374,7 +379,7 @@
     stroke-dashoffset: 170;
     animation: hero-underline-draw 0.7s ease-out forwards;
     /* startet, sobald das letzte Wort ("--i: 4") eingeblendet ist */
-    animation-delay: calc(4 * 0.13s + 0.4s);
+    animation-delay: calc(4 * 0.12s + 0.4s);
   }
   @keyframes hero-underline-draw {
     to { stroke-dashoffset: 0; }
@@ -389,6 +394,19 @@
     .hero-title .underline-stroke path {
       animation: none;
       stroke-dashoffset: 0;
+    }
+  }
+
+  /* Mobil: fluide H1-Groesse + flexibel skalierender Unterstreichungs-Strich */
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: clamp(1.8rem, 6vw, 2.4rem);
+      line-height: 1.3;
+    }
+    .hero-title .underline-stroke {
+      left: 0;
+      width: 100%;
+      bottom: -4px;
     }
   }
 
