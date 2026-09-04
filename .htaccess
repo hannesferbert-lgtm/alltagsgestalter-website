@@ -12,3 +12,16 @@ RewriteRule ^ /%1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.+?)/?$ $1.html [L]
+
+# CSS/JS nur kurz cachen + revalidieren, damit Live-Updates sofort sichtbar sind
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header always set Cache-Control "max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
+  ExpiresByType text/javascript "access plus 1 hour"
+</IfModule>
