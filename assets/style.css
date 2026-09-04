@@ -387,14 +387,18 @@
     pointer-events: none;
   }
   .hero-title .underline-stroke path.stroke-path {
-    stroke-dasharray: 170;
-    stroke-dashoffset: 170;
-    animation: hero-underline-draw 0.9s ease-out forwards;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: hero-underline-draw 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     /* startet, sobald das letzte Wort ("--i: 3") eingeblendet ist */
     animation-delay: calc(3 * 0.2s + 0.6s);
   }
   @keyframes hero-underline-draw {
-    to { stroke-dashoffset: 0; }
+    0% { stroke-dashoffset: 150; opacity: 0; }
+    10% { opacity: 1; }
+    to { stroke-dashoffset: 0; opacity: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {
