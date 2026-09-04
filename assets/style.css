@@ -417,12 +417,42 @@
   }
 
   .hero-sub {
-    
+
     font-size: 1.275rem;
     color: var(--color-text-soft);
     font-style: italic;
     margin-top: 1rem;
-    max-width: 34ch;
+    max-width: 44ch;
+  }
+
+  /* Trust-Badge im Hero: "Abrechenbar ueber alle Pflegekassen ..." */
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.1rem;
+    padding: 0.6rem 1rem 0.6rem 0.7rem;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--color-violett) 14%, var(--color-surface));
+    border: 1.5px solid var(--color-violett);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--color-kohle);
+  }
+  .hero-badge .check {
+    flex-shrink: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    background: var(--color-violett);
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    line-height: 1;
   }
 
   /* USP-Qualifikationszeile unter der Subline. Vollstaendiges Styling steht
