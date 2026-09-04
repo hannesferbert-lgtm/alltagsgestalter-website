@@ -341,14 +341,20 @@
   }
 
   /* Hero-H1: Wort-fuer-Wort-Einblendung + handgezeichnete SVG-Unterstreichung */
-  .hero-title .word-fade {
-    display: inline; /* verhindert starre Block-Breiten beim Umbruch auf Mobil */
+  .word-group {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .word-fade {
+    display: inline-block;
     opacity: 0;
     transform: translateY(6px);
-    animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(var(--i) * 0.12s);
-    will-change: transform, opacity;
+    will-change: opacity, transform;
   }
+
   @keyframes fadeInUp {
     to {
       opacity: 1;
@@ -400,12 +406,12 @@
   /* Mobil: fluide H1-Groesse + flexibel skalierender Unterstreichungs-Strich */
   @media (max-width: 480px) {
     .hero-title {
-      font-size: clamp(1.8rem, 6vw, 2.4rem);
-      line-height: 1.3;
+      font-size: clamp(1.75rem, 5.5vw, 2.2rem);
+      line-height: 1.25;
     }
     .hero-title .underline-stroke {
-      left: 0;
       width: 100%;
+      left: 0;
       bottom: -4px;
     }
   }
