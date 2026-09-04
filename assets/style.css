@@ -392,13 +392,26 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     animation: hero-underline-draw 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    /* startet, sobald das letzte Wort ("--i: 3") eingeblendet ist */
     animation-delay: calc(3 * 0.2s + 0.6s);
   }
+
+  .hero-title .underline-stroke .hand-icon {
+    animation: hand-draw 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(3 * 0.2s + 0.6s);
+    transform-origin: 50% 50%;
+    opacity: 0;
+  }
+
   @keyframes hero-underline-draw {
     0% { stroke-dashoffset: 150; opacity: 0; }
     10% { opacity: 1; }
     to { stroke-dashoffset: 0; opacity: 1; }
+  }
+
+  @keyframes hand-draw {
+    0% { opacity: 0; transform: translateX(-20px) scale(0.8); }
+    10% { opacity: 1; }
+    to { opacity: 1; transform: translateX(0) scale(1); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -418,12 +431,31 @@
     .hero-title {
       font-size: clamp(1.75rem, 5.5vw, 2.2rem);
       line-height: 1.25;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
     }
+
+    .hero-title .highlight-wrapper {
+      animation: drop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation-delay: calc(3 * 0.2s + 0.6s);
+      transform-origin: center top;
+    }
+
+    .hero-title .word-fade:nth-of-type(3n) {
+      width: 100%;
+    }
+
     .hero-title .underline-stroke {
       width: 100%;
       left: 0;
       bottom: -4px;
     }
+  }
+
+  @keyframes drop-in {
+    0% { opacity: 0; transform: translateY(-30px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   .hero-subtitle {
