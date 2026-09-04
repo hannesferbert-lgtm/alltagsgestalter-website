@@ -396,7 +396,12 @@ try {
         //    gefangen (Tab / Shift+Tab). Der Rest der Seite wird für Screenreader
         //    per aria-hidden ausgeblendet.
         (function modalDialogs() {
-          var openers = Array.prototype.slice.call(document.querySelectorAll('[data-modal-open]'));
+          // Ausloeser sind die "Im Detail enthalten +"-Buttons der Leistungskacheln
+          // (Klasse .service-more-trigger) sowie jedes weitere Element mit
+          // [data-modal-open="<modal-id>"]. Doppelte werden entfernt.
+          var openers = Array.prototype.slice.call(
+            document.querySelectorAll('.service-more-trigger[data-modal-open], [data-modal-open]')
+          ).filter(function (el, i, arr) { return arr.indexOf(el) === i; });
           if (!openers.length) return;
 
           var FOCUSABLE = 'a[href], area[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
