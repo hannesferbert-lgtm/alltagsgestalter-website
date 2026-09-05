@@ -1353,9 +1353,9 @@
   }
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr;
+    grid-template-columns: 1.3fr 1fr;
     gap: 2.5rem;
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 2.5rem);
   }
   @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
@@ -1385,6 +1385,55 @@
     display: flex; align-items: center; justify-content: center;
   }
   .footer-social svg { width: 1.1rem; height: 1.1rem; }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .footer-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    color: var(--color-bg);
+  }
+  .footer-contact a:hover { text-decoration: underline; }
+  .footer-contact svg {
+    width: 1.15rem; height: 1.15rem;
+    flex-shrink: 0;
+    color: color-mix(in srgb, var(--color-bg) 75%, transparent);
+  }
+
+  .footer-person {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+  .footer-person img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid color-mix(in srgb, var(--color-bg) 30%, transparent);
+  }
+  .footer-person-label {
+    display: block;
+    font-size: 0.78rem;
+    color: color-mix(in srgb, var(--color-bg) 65%, transparent);
+  }
+  .footer-person strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    color: var(--color-bg);
+  }
 
   .footer-bottom {
     border-top: 1px solid color-mix(in srgb, var(--color-bg) 20%, transparent);
