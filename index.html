@@ -48,7 +48,7 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/style.css?v=20260906m">
+<link rel="stylesheet" href="assets/style.css?v=20260906n">
 </head>
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -203,6 +203,62 @@
       </div>
     </div>
   <img class="wm wm-auto" data-wm-speed="0.1" src="deko-auto.webp" alt="" width="1024" height="1024"></section>
+
+
+  <!-- ============ ALLTAGSPROFIL-WIDGET ============ -->
+  <section class="section-pad profile-section" id="alltagsprofil">
+    <div class="wrap">
+      <p class="eyebrow">Mein Alltagsprofil</p>
+      <h2 class="profile-heading">In 3 Klicks: Wer passt zu Ihrem Alltag?</h2>
+      <p class="profile-sub">Gute Betreuung beginnt mit Verstehen. Finden Sie heraus, welche Begleitung wirklich zu Ihren Bedürfnissen passt.</p>
+
+      <div class="profile-widget" id="profileWidget">
+        <div class="profile-steps" aria-hidden="true">
+          <span class="profile-step-dot is-active" data-step-dot="1">1</span>
+          <span class="profile-step-dot" data-step-dot="2">2</span>
+          <span class="profile-step-dot" data-step-dot="3">3</span>
+        </div>
+
+        <div class="profile-panel is-active" data-panel="1">
+          <h3 class="profile-question">Was ist Ihnen heute wichtig?</h3>
+          <div class="profile-options profile-options-category">
+            <button type="button" class="profile-option" data-category="ruhe">
+              <span class="profile-option-dot" style="background: var(--color-violett-card)"></span>
+              Ruhe
+            </button>
+            <button type="button" class="profile-option" data-category="gesellschaft">
+              <span class="profile-option-dot" style="background: var(--color-orange-card)"></span>
+              Gesellschaft
+            </button>
+            <button type="button" class="profile-option" data-category="genuss">
+              <span class="profile-option-dot" style="background: var(--color-sand); border: 1.5px solid var(--color-border)"></span>
+              Genuss
+            </button>
+            <button type="button" class="profile-option" data-category="aktivitaet">
+              <span class="profile-option-dot" style="background: var(--color-gruen)"></span>
+              Aktivität
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-panel" data-panel="2" hidden>
+          <button type="button" class="profile-back" data-profile-back>&larr; Zurück</button>
+          <h3 class="profile-question">Welche Eigenschaft tut gut?</h3>
+          <div class="profile-options profile-options-persona" data-persona-list></div>
+        </div>
+
+        <div class="profile-panel" data-panel="3" hidden>
+          <div class="profile-result">
+            <span class="profile-result-avatar" data-result-avatar aria-hidden="true"></span>
+            <p class="profile-result-headline" data-result-headline></p>
+            <p class="profile-result-text">Wir bringen Sie mit Menschen zusammen, die Ihre Sprache sprechen und Ihre Interessen teilen.</p>
+            <a class="btn btn-primary" href="#kontakt">Alltagsprofil im Erstgespräch ausfüllen <span aria-hidden="true">&rarr;</span></a>
+            <button type="button" class="profile-restart" data-profile-restart>Nochmal von vorn</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
   <!-- ============ NEWSLETTER ============ -->
@@ -475,6 +531,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=20260906m" defer></script>
+<script src="assets/app.js?v=20260906n" defer></script>
 </body>
 </html>

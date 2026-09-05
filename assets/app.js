@@ -550,5 +550,114 @@ try {
           });
         })();
 
+        // ---------- "Mein Alltagsprofil"-Widget: 3-Schritte-Mini-Quiz ----------
+        // Rein clientseitig, ohne Speicherung: Kategorie -> Persönlichkeit -> Ergebnis.
+        // Icons werden aus denselben Form-Gesicht-SVGs gebaut wie die Matching-
+        // Avatare auf den Leistungskacheln (Kreis/Rundrahmen/Dreieck je Kategorie),
+        // damit die Bildsprache konsistent bleibt.
+        (function alltagsprofilWidget() {
+          var widget = document.getElementById('profileWidget');
+          if (!widget) return;
+
+          var panels = {
+            1: widget.querySelector('[data-panel="1"]'),
+            2: widget.querySelector('[data-panel="2"]'),
+            3: widget.querySelector('[data-panel="3"]')
+          };
+          var dots = Array.prototype.slice.call(widget.querySelectorAll('[data-step-dot]'));
+          var personaList = widget.querySelector('[data-persona-list]');
+          var resultAvatar = widget.querySelector('[data-result-avatar]');
+          var resultHeadline = widget.querySelector('[data-result-headline]');
+          var backBtn = widget.querySelector('[data-profile-back]');
+          var restartBtn = widget.querySelector('[data-profile-restart]');
+          if (!panels[1] || !panels[2] || !panels[3] || !personaList || !resultAvatar || !resultHeadline) return;
+
+          function shapeIcon(shape, color, outline) {
+            var strokeAttr = outline ? ' stroke="var(--color-text)" stroke-width="1.5"' : '';
+            if (shape === 'circle') {
+              return '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="' + (outline ? 15 : 16) + '" fill="' + color + '"' + strokeAttr + '/><circle cx="11" cy="13" r="1.6" fill="var(--color-kohle)"/><circle cx="21" cy="13" r="1.6" fill="var(--color-kohle)"/><path d="M11 19q5 4.5 10 0" stroke="var(--color-kohle)" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
+            }
+            if (shape === 'rect') {
+              return '<svg viewBox="0 0 32 32"><rect width="32" height="32" rx="12" fill="' + color + '"' + strokeAttr + '/><circle cx="11" cy="13" r="1.6" fill="var(--color-kohle)"/><circle cx="21" cy="13" r="1.6" fill="var(--color-kohle)"/><path d="M11 19q5 4.5 10 0" stroke="var(--color-kohle)" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
+            }
+            return '<svg viewBox="0 0 32 32"><polygon points="16,4 28,29 4,29" fill="' + color + '"' + strokeAttr + '/><circle cx="12.5" cy="20" r="1.4" fill="var(--color-kohle)"/><circle cx="19.5" cy="20" r="1.4" fill="var(--color-kohle)"/><path d="M12.5 24.5q3.5 3 7 0" stroke="var(--color-kohle)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
+          }
+
+          var DATA = {
+            ruhe: {
+              color: 'var(--color-violett-card)',
+              personas: [
+                { label: 'Der Ruhepol', shape: 'circle', result: 'Ein Ruhepol mit Sinn für gemütlichen Genuss.' },
+                { label: 'Die Organisierte', shape: 'rect', result: 'Eine Organisierte mit Blick fürs Wesentliche.' },
+                { label: 'Der Tüftler', shape: 'triangle', result: 'Ein Tüftler mit Geduld für die kleinen Dinge.' }
+              ]
+            },
+            gesellschaft: {
+              color: 'var(--color-orange-card)',
+              personas: [
+                { label: 'Die Plauderin', shape: 'circle', result: 'Eine Plauderin mit offenem Ohr für Ihre Geschichten.' },
+                { label: 'Der Frühaufsteher', shape: 'rect', result: 'Ein Frühaufsteher, der den Tag mit Ihnen beginnt.' },
+                { label: 'Der Entdecker', shape: 'triangle', result: 'Ein Entdecker mit Lust auf neue Wege.' }
+              ]
+            },
+            genuss: {
+              color: 'var(--color-sand)',
+              outline: true,
+              personas: [
+                { label: 'Die Genießerin', shape: 'triangle', result: 'Eine Genießerin mit Liebe fürs gute Essen.' },
+                { label: 'Der Gartenfreund', shape: 'circle', result: 'Ein Gartenfreund mit Freude an frischer Luft und Natur.' }
+              ]
+            },
+            aktivitaet: {
+              color: 'var(--color-gruen)',
+              personas: [
+                { label: 'Der Bücherwurm', shape: 'rect', result: 'Ein Bücherwurm mit Freude an guten Geschichten.' },
+                { label: 'Die Kreative', shape: 'triangle', result: 'Eine Kreative mit Ideen für lebendige Stunden.' },
+                { label: 'Die Musikliebhaberin', shape: 'circle', result: 'Eine Musikliebhaberin mit Gespür für die richtigen Töne.' }
+              ]
+            }
+          };
+
+          function showPanel(step) {
+            Object.keys(panels).forEach(function (key) {
+              var isActive = Number(key) === step;
+              panels[key].classList.toggle('is-active', isActive);
+              panels[key].hidden = !isActive;
+            });
+            dots.forEach(function (dot) {
+              var dotStep = Number(dot.getAttribute('data-step-dot'));
+              dot.classList.toggle('is-active', dotStep === step);
+              dot.classList.toggle('is-done', dotStep < step);
+            });
+          }
+
+          function selectPersona(persona, category) {
+            resultAvatar.innerHTML = shapeIcon(persona.shape, category.color, category.outline);
+            resultHeadline.textContent = 'Ihr perfektes Miteinander: ' + persona.result;
+            showPanel(3);
+          }
+
+          function selectCategory(key) {
+            var category = DATA[key];
+            if (!category) return;
+            personaList.innerHTML = '';
+            category.personas.forEach(function (persona) {
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'profile-option-persona';
+              btn.innerHTML = shapeIcon(persona.shape, category.color, category.outline) + '<span>' + persona.label + '</span>';
+              btn.addEventListener('click', function () { selectPersona(persona, category); });
+              personaList.appendChild(btn);
+            });
+            showPanel(2);
+          }
+
+          widget.querySelectorAll('[data-category]').forEach(function (btn) {
+            btn.addEventListener('click', function () { selectCategory(btn.getAttribute('data-category')); });
+          });
+          if (backBtn) backBtn.addEventListener('click', function () { showPanel(1); });
+          if (restartBtn) restartBtn.addEventListener('click', function () { showPanel(1); });
+        })();
+
     } catch (e) { console.error('Seiten-Skript:', e); }
 });
