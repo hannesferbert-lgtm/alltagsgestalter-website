@@ -783,8 +783,6 @@
   .about-grid {
     position: relative; z-index: 1;
     max-width: 62ch;
-    margin-inline: auto;
-    text-align: center;
   }
 
   .about-copy h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-top: 0.6rem; }
