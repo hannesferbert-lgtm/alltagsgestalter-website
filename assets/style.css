@@ -404,10 +404,13 @@
   }
 
   .hero-subtitle {
+    font-family: var(--font-body);
     font-size: 1.275rem;
-    color: var(--color-text-soft);
+    font-weight: 400;
     font-style: normal;
+    color: var(--color-text-soft);
     margin-top: 1.4rem;
+    margin-bottom: 1.5rem;
     max-width: 44ch;
   }
 
@@ -443,7 +446,7 @@
 
   /* Qualifikationszeile unter dem Trust-Badge */
   .hero-qualifications {
-    margin-top: 0.9rem;
+    margin-top: 0;
     font-family: var(--font-display);
     font-size: 0.76rem;
     font-weight: 500;
