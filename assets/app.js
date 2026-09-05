@@ -1,3 +1,12 @@
+// Verhindert, dass der Browser bei einem Seitenaufruf mit Hash in der URL
+// (z. B. Sprung von "ueber-uns" zu "/#zuhause") sofort hart zum Anker
+// springt; stattdessen bleibt die Seite oben, bis der eigene, sanfte
+// Scroll weiter unten (siehe scrollToId) uebernimmt.
+if (location.hash) {
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 try {
       document.documentElement.lang = 'de';
@@ -152,37 +161,50 @@ try {
             updateCardHighlight();
           }
       
-          // Beim Klick auf einen internen Link (Navigation, Footer, Buttons) den
-          // Zielbereich sanft ansteuern. Ein geklicktes Ziel wird "angepinnt", damit
-          // genau dieser Bereich hervorgehoben bleibt, solange er im Blick ist.
+          // Steuert einen Zielbereich sanft an und "pinnt" ihn, damit er als
+          // hervorgehoben gilt, solange er im Blick bleibt. Wird sowohl beim
+          // Klick auf einen internen Link (Navigation, Footer, Buttons) als
+          // auch beim Laden der Seite mit einem Hash in der URL genutzt
+          // (z. B. Sprung von "ueber-uns" zu "/#zuhause").
+          var scrollToId = function (id) {
+            var target = document.getElementById(id);
+            if (!target) return false;
+
+            pinnedCardId = id;
+            requestCardUpdate(); // sofort neu bewerten, auch wenn sich die Scroll-Position nicht ändert
+
+            // Kurze Ziele (z. B. eine Leistungskarte) werden in der Bildschirmmitte
+            // platziert – das deckt sich mit der Logik, die oben erkennt, welche
+            // Karte gerade "im Blick" ist. Lange Ziele (z. B. ein ganzer Artikel)
+            // werden stattdessen nur knapp unter den Header gesetzt, damit ihr
+            // Anfang nicht hinter der Navigation verschwindet.
+            var rect = target.getBoundingClientRect();
+            var absoluteTop = rect.top + window.pageYOffset;
+            var centeredTop = absoluteTop + rect.height / 2 - window.innerHeight / 2;
+            var underHeaderTop = absoluteTop - HEADER_OFFSET;
+            var top = Math.max(Math.min(centeredTop, underHeaderTop), 0);
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            return true;
+          };
+
           document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             link.addEventListener('click', function (e) {
               var id = link.getAttribute('href').slice(1);
-              if (!id) return;
-              var target = document.getElementById(id);
-              if (!target) return;
-      
+              if (!id || !scrollToId(id)) return;
               e.preventDefault();
-              pinnedCardId = id;
-              requestCardUpdate(); // sofort neu bewerten, auch wenn sich die Scroll-Position nicht ändert
-      
-              // Kurze Ziele (z. B. eine Leistungskarte) werden in der Bildschirmmitte
-              // platziert – das deckt sich mit der Logik, die oben erkennt, welche
-              // Karte gerade "im Blick" ist. Lange Ziele (z. B. ein ganzer Artikel)
-              // werden stattdessen nur knapp unter den Header gesetzt, damit ihr
-              // Anfang nicht hinter der Navigation verschwindet.
-              var rect = target.getBoundingClientRect();
-              var absoluteTop = rect.top + window.pageYOffset;
-              var centeredTop = absoluteTop + rect.height / 2 - window.innerHeight / 2;
-              var underHeaderTop = absoluteTop - HEADER_OFFSET;
-              var top = Math.max(Math.min(centeredTop, underHeaderTop), 0);
-              window.scrollTo({ top: top, behavior: 'smooth' });
-      
               try {
                 history.pushState(null, '', '#' + id);
               } catch (err) {  }
             });
           });
+
+          // Seite wurde mit einem Hash aufgerufen (z. B. von einer anderen
+          // Unterseite verlinkt) – statt des harten Browser-Sprungs sanft
+          // hinscrollen, sobald das Layout steht.
+          if (location.hash) {
+            var initialId = location.hash.slice(1);
+            window.setTimeout(function () { scrollToId(initialId); }, 60);
+          }
         })();
       
         // ---------- Hero-Cursor: einmalige Begrüßungs-Geste beim ersten Laden ----------
