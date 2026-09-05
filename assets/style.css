@@ -13,7 +13,7 @@
   :root {
     
     --color-violett: #A688C7;
-    --color-blau: #2E4BD1;
+    --color-blau: #2C3E50;
     --color-orange: #FF6A00;
     --color-gruen: #6DBA6D;
     --color-sand: #F2E7D6;
@@ -26,8 +26,8 @@
     --color-secondary: var(--color-blau);
     --color-green: var(--color-gruen);
 
-    --color-bg: #FAF9F6;        
-    --color-bg-alt: #EFEDE5;    
+    --color-bg: #FAFAF8;
+    --color-bg-alt: #F5F4F0;
     --color-surface: #FFFFFF;
     --color-text: #1E1E1E;
     --color-text-soft: #4A4540;
@@ -802,7 +802,8 @@
     font-size: clamp(2rem, 4vw, 2.75rem);
     line-height: 1.15;
     color: var(--color-kohle);
-    background: var(--color-violett);
+    background: var(--color-surface);
+    border: 2px solid var(--color-violett);
     padding: 1.75rem 1.85rem;
     border-radius: var(--radius-md);
     transform: rotate(-1.5deg);
@@ -839,8 +840,10 @@
   .story-body p:first-child { font-size: 1.1rem; }
 
   .newsletter {
-    background: var(--color-violett);
+    background: color-mix(in srgb, var(--color-violett) 8%, var(--color-surface));
     color: var(--color-kohle);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
   }
   .newsletter-inner {
     display: flex;
@@ -1319,7 +1322,7 @@
     color: var(--color-text);
   }
 
-  .jobs-section { background: var(--color-gruen); color: var(--color-kohle); }
+  .jobs-section { background: var(--color-bg-alt); color: var(--color-kohle); }
   .jobs-inner { max-width: 46rem; }
   .jobs-inner .eyebrow { color: var(--color-kohle); opacity: 0.72; }
   .jobs-inner h2 { margin-top: 0.6rem; font-size: clamp(1.7rem, 3vw, 2.3rem); }
