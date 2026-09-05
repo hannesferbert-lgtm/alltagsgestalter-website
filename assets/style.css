@@ -435,18 +435,8 @@
     flex-shrink: 0;
   }
 
-  /* Qualifikationszeile unter dem Trust-Badge */
-  .hero-qualifications {
-    margin-top: 0;
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.015em;
-    color: #6B7280;
-  }
-
   .hero-copy .btn {
-    margin-top: 2.2rem;
+    margin-top: 0.6rem;
     font-family: var(--font-body);
     font-size: 14px;
     font-weight: 600;
@@ -791,6 +781,26 @@
     color: var(--color-text);
   }
   .story-body p:first-child { font-size: 1.1rem; }
+
+  .story-credentials {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: 0.25rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--color-violett) 14%, var(--color-surface));
+    border: 1.5px solid color-mix(in srgb, var(--color-violett) 40%, transparent);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+  .story-credentials strong {
+    font-weight: 700;
+    color: var(--color-kohle);
+    margin-right: 0.35em;
+  }
 
   .newsletter {
     background: color-mix(in srgb, var(--color-violett) 8%, var(--color-surface));
