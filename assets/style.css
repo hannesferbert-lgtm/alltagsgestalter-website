@@ -169,7 +169,10 @@
       opacity: 0.5;
     }
     .wm-topf   { top: -40px;  right: calc(var(--wm-w) * -0.5); left: auto; }
-    .wm-auto   { top: -110px; left: calc(var(--wm-w) * -0.5); right: auto; }
+    /* Ueberlappt auf schmalen Viewports die Ueberschrift "Unsere vier
+       Leistungsbereiche" darunter, statt nur dekorativ im Hintergrund zu
+       bleiben - deshalb hier komplett ausgeblendet statt nur verschoben. */
+    .wm-auto   { display: none; }
     .wm-schach { top: -120px; right: calc(var(--wm-w) * -0.5); left: auto; }
     
     .wm-besen  { --wm-w: 118vw; top: 0; left: calc(var(--wm-w) * -0.5); right: auto; }
