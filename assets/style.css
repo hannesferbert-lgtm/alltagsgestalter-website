@@ -145,12 +145,12 @@
   .wm-topf {
     --wm-w: clamp(380px, 44vw, 628px);
     top: -114px;
-    right: calc(var(--wm-w) * -0.72);
+    right: calc(var(--wm-w) * -0.66);
   }
   .wm-auto {
     --wm-w: clamp(300px, 38vw, 580px);
     top: -335px;
-    left: calc(var(--wm-w) * -0.48);
+    left: calc(var(--wm-w) * -0.61);
   }
   .wm-schach {
     --wm-w: clamp(300px, 38vw, 600px);
