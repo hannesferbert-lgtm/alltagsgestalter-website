@@ -371,6 +371,9 @@
   .hero-title .highlight-wrapper {
     display: inline-block;
     white-space: nowrap; /* Highlight-Text + Strich brechen nie um */
+  }
+  .hero-title .highlight-inner {
+    display: inline-block;
     position: relative;
   }
   .hero-title .highlight-text {
@@ -380,9 +383,10 @@
   .hero-title .underline-stroke {
     position: absolute;
     left: -3%;
-    bottom: -0.24em;
-    width: 106%;
-    height: 0.5em;
+    bottom: -2.1em;
+    width: 150%;
+    max-width: none;
+    aspect-ratio: 200 / 80;
     overflow: visible;
     pointer-events: none;
   }
@@ -420,6 +424,11 @@
       opacity: 1;
       transform: none;
     }
+    .hero-title .underline-stroke .hand-icon {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
     .hero-title .underline-stroke path {
       animation: none;
       stroke-dashoffset: 0;
@@ -453,7 +462,7 @@
     .hero-title .underline-stroke {
       width: 100%;
       left: 0;
-      bottom: -4px;
+      bottom: -1.35em;
     }
   }
 
@@ -466,7 +475,7 @@
     font-size: 1.275rem;
     color: var(--color-text-soft);
     font-style: italic;
-    margin-top: 1rem;
+    margin-top: 3.7rem;
     max-width: 44ch;
   }
 
