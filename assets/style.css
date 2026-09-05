@@ -1697,54 +1697,52 @@
   }
 
   /* ---------- Alltagsprofil-Widget ---------- */
-  .profile-section {
-    background: linear-gradient(160deg,
-      color-mix(in srgb, var(--color-violett) 10%, var(--color-surface)) 0%,
-      color-mix(in srgb, var(--color-sand) 22%, var(--color-surface)) 100%);
+  .profile-widget-wrap {
+    max-width: 560px;
+    margin: 1.5rem auto 0;
   }
 
-  .profile-heading {
-    margin-top: 0.6rem;
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    max-width: 26ch;
-  }
-
-  .profile-sub {
-    margin-top: 0.8rem;
-    max-width: 56ch;
-    font-size: 1.05rem;
+  .profile-widget-eyebrow {
+    margin: 0 0 0.75rem;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
     color: var(--color-text-soft);
   }
 
   .profile-widget {
-    max-width: 620px;
-    margin: clamp(2rem, 4vw, 3rem) auto 0;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
+    width: 100%;
+    max-width: 100%;
+    padding: clamp(1rem, 4vw, 1.5rem);
     background: var(--color-surface);
     border: 1px solid var(--color-tile-border);
-    border-radius: 20px;
+    border-radius: 18px;
     box-shadow: var(--shadow-soft);
+    overflow: hidden;
   }
 
   .profile-steps {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    margin-bottom: 1.6rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
   }
   .profile-step-dot {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     border: 1.5px solid var(--color-tile-border);
     background: var(--color-surface);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--color-text-soft);
   }
   .profile-step-dot.is-active {
@@ -1761,14 +1759,14 @@
   .profile-panel.is-active { display: block; animation: fadeInUp 0.35s ease-out; }
 
   .profile-question {
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
     text-align: center;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 
   .profile-back {
     display: inline-block;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.75rem;
     padding: 0;
     background: none;
     border: none;
@@ -1782,15 +1780,22 @@
   .profile-back:hover,
   .profile-back:focus-visible { color: var(--color-kohle); }
 
-  .profile-options { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .profile-options { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
-  .profile-options-category {
+  /* Schritt 1: zwei volle Breite Buttons untereinander - grosszuegige
+     Touch-Flaeche statt zweier schmaler Spalten bei 375px Breite. */
+  .profile-options-stack { flex-direction: column; }
+  .profile-option-wide {
+    width: 100%;
+    text-align: center;
+    text-transform: none;
+    font-size: 0.95rem;
+  }
+
+  .profile-options-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-  @media (min-width: 640px) {
-    .profile-options-category { grid-template-columns: repeat(4, 1fr); }
+    gap: 0.6rem;
   }
 
   .profile-option {
@@ -1798,17 +1803,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    min-height: 44px;
-    padding: 1rem 0.75rem;
+    gap: 0.4rem;
+    min-height: 64px;
+    padding: 0.9rem 0.75rem;
     border-radius: 14px;
     border: 1.5px solid var(--color-tile-border);
     background: var(--color-surface);
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
     color: var(--color-kohle);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -1819,55 +1823,60 @@
     box-shadow: 0 12px 22px -16px rgba(30, 22, 15, 0.4);
     border-color: var(--color-violett);
   }
-  .profile-option-dot {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .profile-option-emoji {
+    font-size: 1.6rem;
+    line-height: 1;
   }
-
-  .profile-options-persona { justify-content: center; }
-  .profile-option-persona {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    min-height: 44px;
-    padding: 0.65rem 1.15rem;
-    border-radius: 999px;
-    border: 1.5px solid var(--color-tile-border);
-    background: var(--color-surface);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.82rem;
-    color: var(--color-kohle);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  }
-  .profile-option-persona:hover,
-  .profile-option-persona:focus-visible {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 22px -16px rgba(30, 22, 15, 0.4);
-    border-color: var(--color-violett);
-  }
-  .profile-option-persona svg { width: 28px; height: 28px; flex-shrink: 0; }
 
   .profile-result {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.9rem;
+    gap: 0.75rem;
     text-align: center;
   }
-  .profile-result-avatar svg { width: 64px; height: 64px; }
-  .profile-result-headline {
-    max-width: 38ch;
+  .profile-result-kicker {
+    max-width: 32ch;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: var(--color-kohle);
   }
+  .profile-result-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .profile-result-avatar svg { width: 60px; height: 60px; }
+  .profile-result-main strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-kohle);
+  }
+  .profile-result-facets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .profile-facet-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-violett) 14%, var(--color-surface));
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--color-kohle);
+  }
+  .profile-facet-chip svg { width: 20px; height: 20px; flex-shrink: 0; }
   .profile-result-text {
-    max-width: 46ch;
+    max-width: 42ch;
+    font-size: 0.92rem;
     color: var(--color-text-soft);
   }
   .profile-restart {

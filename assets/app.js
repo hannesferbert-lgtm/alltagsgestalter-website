@@ -550,11 +550,11 @@ try {
           });
         })();
 
-        // ---------- "Mein Alltagsprofil"-Widget: 3-Schritte-Mini-Quiz ----------
-        // Rein clientseitig, ohne Speicherung: Kategorie -> Persönlichkeit -> Ergebnis.
-        // Icons werden aus denselben Form-Gesicht-SVGs gebaut wie die Matching-
-        // Avatare auf den Leistungskacheln (Kreis/Rundrahmen/Dreieck je Kategorie),
-        // damit die Bildsprache konsistent bleibt.
+        // ---------- "Ihr Alltagsprofil"-Widget: 4-Schritte-Mini-Quiz ----------
+        // Rein clientseitig, ohne Speicherung: Für wen -> Bedürfnis -> Charakter ->
+        // Multi-Match-Ergebnis (Haupttyp + 2 ergänzende Facetten aus anderen
+        // Kategorien). Icons nutzen dieselben Form-Gesicht-SVGs wie die Matching-
+        // Hinweise auf den Leistungskacheln, damit die Bildsprache konsistent bleibt.
         (function alltagsprofilWidget() {
           var widget = document.getElementById('profileWidget');
           if (!widget) return;
@@ -562,15 +562,16 @@ try {
           var panels = {
             1: widget.querySelector('[data-panel="1"]'),
             2: widget.querySelector('[data-panel="2"]'),
-            3: widget.querySelector('[data-panel="3"]')
+            3: widget.querySelector('[data-panel="3"]'),
+            4: widget.querySelector('[data-panel="4"]')
           };
           var dots = Array.prototype.slice.call(widget.querySelectorAll('[data-step-dot]'));
-          var personaList = widget.querySelector('[data-persona-list]');
           var resultAvatar = widget.querySelector('[data-result-avatar]');
-          var resultHeadline = widget.querySelector('[data-result-headline]');
-          var backBtn = widget.querySelector('[data-profile-back]');
+          var resultMain = widget.querySelector('[data-result-main]');
+          var resultFacets = widget.querySelector('[data-result-facets]');
+          var resultText = widget.querySelector('[data-result-text]');
           var restartBtn = widget.querySelector('[data-profile-restart]');
-          if (!panels[1] || !panels[2] || !panels[3] || !personaList || !resultAvatar || !resultHeadline) return;
+          if (!panels[1] || !panels[2] || !panels[3] || !panels[4] || !resultAvatar || !resultMain || !resultFacets || !resultText) return;
 
           function shapeIcon(shape, color, outline) {
             var strokeAttr = outline ? ' stroke="var(--color-text)" stroke-width="1.5"' : '';
@@ -583,40 +584,46 @@ try {
             return '<svg viewBox="0 0 32 32"><polygon points="16,4 28,29 4,29" fill="' + color + '"' + strokeAttr + '/><circle cx="12.5" cy="20" r="1.4" fill="var(--color-kohle)"/><circle cx="19.5" cy="20" r="1.4" fill="var(--color-kohle)"/><path d="M12.5 24.5q3.5 3 7 0" stroke="var(--color-kohle)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
           }
 
-          var DATA = {
-            ruhe: {
-              color: 'var(--color-violett-card)',
-              personas: [
-                { label: 'Der Ruhepol', shape: 'circle', result: 'Ein Ruhepol mit Sinn für gemütlichen Genuss.' },
-                { label: 'Die Organisierte', shape: 'rect', result: 'Eine Organisierte mit Blick fürs Wesentliche.' },
-                { label: 'Der Tüftler', shape: 'triangle', result: 'Ein Tüftler mit Geduld für die kleinen Dinge.' }
-              ]
-            },
-            gesellschaft: {
-              color: 'var(--color-orange-card)',
-              personas: [
-                { label: 'Die Plauderin', shape: 'circle', result: 'Eine Plauderin mit offenem Ohr für Ihre Geschichten.' },
-                { label: 'Der Frühaufsteher', shape: 'rect', result: 'Ein Frühaufsteher, der den Tag mit Ihnen beginnt.' },
-                { label: 'Der Entdecker', shape: 'triangle', result: 'Ein Entdecker mit Lust auf neue Wege.' }
-              ]
-            },
-            genuss: {
-              color: 'var(--color-sand)',
-              outline: true,
-              personas: [
-                { label: 'Die Genießerin', shape: 'triangle', result: 'Eine Genießerin mit Liebe fürs gute Essen.' },
-                { label: 'Der Gartenfreund', shape: 'circle', result: 'Ein Gartenfreund mit Freude an frischer Luft und Natur.' }
-              ]
-            },
-            aktivitaet: {
-              color: 'var(--color-gruen)',
-              personas: [
-                { label: 'Der Bücherwurm', shape: 'rect', result: 'Ein Bücherwurm mit Freude an guten Geschichten.' },
-                { label: 'Die Kreative', shape: 'triangle', result: 'Eine Kreative mit Ideen für lebendige Stunden.' },
-                { label: 'Die Musikliebhaberin', shape: 'circle', result: 'Eine Musikliebhaberin mit Gespür für die richtigen Töne.' }
-              ]
-            }
+          // Nur die tatsaechlich im Widget verwendeten Typen aus den elf
+          // Alltagsgestalter-Persönlichkeiten (siehe ueber-uns.html): vier als
+          // direkt waehlbarer Haupt-Charakter (Schritt 3), vier weitere als
+          // Vertreter ihrer Kategorie fuer die ergaenzenden Facetten im Ergebnis.
+          var PERSONAS = {
+            ruhepol: { label: 'Der Ruhepol', shape: 'circle', category: 'ruhe' },
+            organisierte: { label: 'Die Organisierte', shape: 'rect', category: 'ruhe' },
+            tueftler: { label: 'Der Tüftler', shape: 'triangle', category: 'ruhe' },
+            plauderin: { label: 'Die Plauderin', shape: 'circle', category: 'gesellschaft' },
+            entdecker: { label: 'Der Entdecker', shape: 'triangle', category: 'gesellschaft' },
+            geniesserin: { label: 'Die Genießerin', shape: 'triangle', category: 'genuss' },
+            gartenfreund: { label: 'Der Gartenfreund', shape: 'circle', category: 'genuss' },
+            buecherwurm: { label: 'Der Bücherwurm', shape: 'rect', category: 'aktivitaet' }
           };
+          var CATEGORY_COLOR = {
+            ruhe: 'var(--color-violett-card)',
+            gesellschaft: 'var(--color-orange-card)',
+            genuss: 'var(--color-sand)',
+            aktivitaet: 'var(--color-gruen)'
+          };
+          var CATEGORY_OUTLINE = { genuss: true };
+          var CATEGORY_ORDER = ['ruhe', 'gesellschaft', 'genuss', 'aktivitaet'];
+          // Je Kategorie der Alltagstyp, der als ergaenzende Facette auftaucht,
+          // wenn diese Kategorie NICHT der gewaehlte Haupt-Charakter ist - bewusst
+          // andere Typen als die vier direkt waehlbaren, damit das Ergebnis wie
+          // eine echte Erweiterung wirkt statt die eigene Auswahl zu wiederholen.
+          var FACET_REP = { ruhe: 'tueftler', gesellschaft: 'entdecker', genuss: 'gartenfreund', aktivitaet: 'buecherwurm' };
+          var MOOD_LABEL = {
+            genuss: 'Entspannung & Genuss',
+            ruhe: 'Ruhe & Begleitung',
+            gesellschaft: 'Gute Gespräche',
+            aktivitaet: 'Aktivität & Kreativität'
+          };
+          var WHO_LABEL = { self: 'für sich selbst', angehoerige: 'für ihre Eltern / Angehörige' };
+
+          var state = { who: null, mood: null, mainId: null };
+
+          function iconFor(persona) {
+            return shapeIcon(persona.shape, CATEGORY_COLOR[persona.category], CATEGORY_OUTLINE[persona.category]);
+          }
 
           function showPanel(step) {
             Object.keys(panels).forEach(function (key) {
@@ -631,32 +638,83 @@ try {
             });
           }
 
-          function selectPersona(persona, category) {
-            resultAvatar.innerHTML = shapeIcon(persona.shape, category.color, category.outline);
-            resultHeadline.textContent = 'Ihr perfektes Miteinander: ' + persona.result;
-            showPanel(3);
+          // Es gibt (noch) kein eigenes Kontaktformular auf der Seite - "#kontakt"
+          // fuehrt zum Footer mit einem mailto-Link. Als bestmoegliche Uebergabe
+          // wird dieser Link um Betreff/Text mit dem Ergebnis ergaenzt, damit die
+          // Anfrage im E-Mail-Programm bereits vorausgefuellt ankommt.
+          function primeContactHandoff(main, facet1, facet2) {
+            var mailLink = document.querySelector('a[href^="mailto:info@alltagsgestalter.de"]');
+            if (!mailLink) return;
+            var subject = 'Erstgespräch – Alltagsprofil: ' + main.label;
+            var body = [
+              'Hallo Alltagsgestalter-Team,',
+              '',
+              'ich interessiere mich für ein Erstgespräch. Mein Alltagsprofil:',
+              '– Unterstützung gesucht: ' + (WHO_LABEL[state.who] || '-'),
+              '– Aktuell am wichtigsten: ' + (MOOD_LABEL[state.mood] || '-'),
+              '– Passender Begleiter-Mix: ' + main.label + ', ' + facet1.label + ' & ' + facet2.label,
+              '',
+              'Bitte melden Sie sich bei mir für ein unverbindliches Erstgespräch.'
+            ].join('\n');
+            mailLink.href = 'mailto:info@alltagsgestalter.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
           }
 
-          function selectCategory(key) {
-            var category = DATA[key];
-            if (!category) return;
-            personaList.innerHTML = '';
-            category.personas.forEach(function (persona) {
-              var btn = document.createElement('button');
-              btn.type = 'button';
-              btn.className = 'profile-option-persona';
-              btn.innerHTML = shapeIcon(persona.shape, category.color, category.outline) + '<span>' + persona.label + '</span>';
-              btn.addEventListener('click', function () { selectPersona(persona, category); });
-              personaList.appendChild(btn);
+          function showResult() {
+            var main = PERSONAS[state.mainId];
+            if (!main) return;
+            var candidates = CATEGORY_ORDER.filter(function (c) { return c !== main.category; });
+            candidates.sort(function (a, b) {
+              if (a === state.mood) return -1;
+              if (b === state.mood) return 1;
+              return 0;
             });
-            showPanel(2);
+            var facet1 = PERSONAS[FACET_REP[candidates[0]]];
+            var facet2 = PERSONAS[FACET_REP[candidates[1]]];
+
+            resultAvatar.innerHTML = iconFor(main);
+            resultMain.textContent = main.label;
+            resultFacets.innerHTML = '';
+            [facet1, facet2].forEach(function (facet) {
+              var chip = document.createElement('span');
+              chip.className = 'profile-facet-chip';
+              chip.innerHTML = iconFor(facet) + '<span>' + facet.label + '</span>';
+              resultFacets.appendChild(chip);
+            });
+            resultText.textContent = 'Zu Ihnen passt unser Haupt-Typ ' + main.label + ' ideal kombiniert mit ' + facet1.label + ' & ' + facet2.label + '.';
+
+            primeContactHandoff(main, facet1, facet2);
+            showPanel(4);
           }
 
-          widget.querySelectorAll('[data-category]').forEach(function (btn) {
-            btn.addEventListener('click', function () { selectCategory(btn.getAttribute('data-category')); });
+          function reset() {
+            state = { who: null, mood: null, mainId: null };
+            showPanel(1);
+          }
+
+          widget.querySelectorAll('[data-who]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              state.who = btn.getAttribute('data-who');
+              showPanel(2);
+            });
           });
-          if (backBtn) backBtn.addEventListener('click', function () { showPanel(1); });
-          if (restartBtn) restartBtn.addEventListener('click', function () { showPanel(1); });
+          widget.querySelectorAll('[data-mood]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              state.mood = btn.getAttribute('data-mood');
+              showPanel(3);
+            });
+          });
+          widget.querySelectorAll('[data-persona]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              state.mainId = btn.getAttribute('data-persona');
+              showResult();
+            });
+          });
+          widget.querySelectorAll('[data-profile-back]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              showPanel(Number(btn.getAttribute('data-profile-back')));
+            });
+          });
+          if (restartBtn) restartBtn.addEventListener('click', reset);
         })();
 
     } catch (e) { console.error('Seiten-Skript:', e); }
