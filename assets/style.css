@@ -324,20 +324,10 @@
     .hero-grid { grid-template-columns: 1fr; }
   }
 
-  .hero-eyebrow {
-    display: inline-block;
-    font-family: var(--font-body);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--color-text-soft);
-  }
-
   .hero-tag {
     display: inline-flex;
     align-items: center;
-    margin-top: 0.7rem;
+    margin-top: 0;
     padding: 0.35rem 0.85rem;
     border-radius: 8px;
     font-family: var(--font-body);
@@ -351,7 +341,7 @@
 
   .hero-title {
     font-family: var(--font-body);
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 700;
     margin-top: 0.7rem;
     line-height: 1.25;
