@@ -326,7 +326,7 @@
 
   .hero-eyebrow {
     display: inline-block;
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     text-transform: uppercase;
     letter-spacing: 0.16em;
     font-size: 0.78rem;
@@ -340,17 +340,19 @@
     margin-top: 0.7rem;
     padding: 0.35rem 0.85rem;
     border-radius: 8px;
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-kohle);
     background: color-mix(in srgb, var(--color-violett) 20%, transparent);
   }
 
   .hero-title {
-    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    font-family: var(--font-body);
+    font-size: 48px;
+    font-weight: 700;
     margin-top: 0.7rem;
     line-height: 1.25;
   }
@@ -395,20 +397,19 @@
     }
   }
 
-  /* Mobil: fluide H1-Groesse */
   @media (max-width: 480px) {
     .hero-title {
-      font-size: clamp(1.75rem, 5.5vw, 2.2rem);
+      font-size: 36px;
       line-height: 1.25;
     }
   }
 
   .hero-subtitle {
     font-family: var(--font-body);
-    font-size: 1.275rem;
+    font-size: 18px;
     font-weight: 400;
     font-style: normal;
-    color: var(--color-text-soft);
+    color: #374151;
     margin-top: 1.4rem;
     margin-bottom: 1.5rem;
     max-width: 44ch;
@@ -447,14 +448,19 @@
   /* Qualifikationszeile unter dem Trust-Badge */
   .hero-qualifications {
     margin-top: 0;
-    font-family: var(--font-display);
-    font-size: 0.76rem;
+    font-family: var(--font-body);
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.015em;
-    color: var(--color-text-soft);
+    color: #6B7280;
   }
 
-  .hero-copy .btn { margin-top: 2.2rem; }
+  .hero-copy .btn {
+    margin-top: 2.2rem;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+  }
 
   .hero-figure {
     position: relative;
