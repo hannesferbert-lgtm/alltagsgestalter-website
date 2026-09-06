@@ -112,13 +112,16 @@ function doPost(e) {
 function sendEventConfirmation_(payload, vorname, nachname, email) {
   var eventName = str_(payload.eventName) || str_(payload.betreff);
   var personen = str_(payload.personen) || '1';
+  var anrede = (vorname || nachname)
+    ? 'Guten Tag ' + (vorname ? vorname + ' ' : '') + nachname + ','
+    : 'Guten Tag,';
   MailApp.sendEmail({
     to: email,
     subject: 'Ihre Anmeldung: ' + (str_(payload.betreff) || eventName),
-    name: 'Die Alltagsgestalter',
+    name: 'die ALLTAGSGESTALTER',
     replyTo: NOTIFY_EMAIL,
     body: [
-      'Hallo ' + (vorname ? vorname + ' ' : '') + nachname + ',',
+      anrede,
       '',
       'vielen Dank für Ihre Anmeldung! Wir haben Ihre Daten erhalten.',
       '',
@@ -130,8 +133,7 @@ function sendEventConfirmation_(payload, vorname, nachname, email) {
       'Wir freuen uns auf Sie!',
       '',
       'Herzliche Grüße',
-      'Ihre Alltagsgestalter',
-      'Tel. 0151 20147853 · ' + NOTIFY_EMAIL
+      'Ihre Alltagsgestalter'
     ].join('\n')
   });
 }
