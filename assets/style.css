@@ -303,7 +303,10 @@
 
   .nav-toggle {
     display: none;
-
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
     background: var(--color-violett);
     border: 2px solid var(--color-violett);
     color: var(--color-kohle);
@@ -312,6 +315,21 @@
     cursor: pointer;
   }
   .nav-toggle svg { width: 1.4rem; height: 1.4rem; }
+
+  /* Alle Navi- und Modal-Trigger: schnelles, zuverlaessiges Antippen auf
+     iOS/Android (kein 300ms-Delay, kein Doppeltipp-Zoom) und garantiert
+     klickbar, falls ein Elternteil pointer-events umschaltet. */
+  .nav-toggle,
+  .nav-close,
+  .nav-cta,
+  nav.main-nav a,
+  [data-modal-open],
+  [data-modal-close],
+  .event-card-signup,
+  [data-event-filter] {
+    touch-action: manipulation;
+    pointer-events: auto;
+  }
 
   /* Panel-Header, Badge, Emoji-Prefixe und Footer-CTA gehoeren nur ins
      geoeffnete Mobile-Panel (siehe Media-Query unten). */
@@ -356,13 +374,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       margin-right: -0.5rem;
       background: transparent;
       border: 0;
       color: var(--color-kohle);
       cursor: pointer;
+      pointer-events: auto;
     }
     .nav-close svg { width: 1.75rem; height: 1.75rem; }
 
@@ -377,9 +396,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
+      min-height: 48px;
       font-size: 1.3rem;
       padding: 0.5rem 0;
       border-bottom: 0;
+      pointer-events: auto;
+      touch-action: manipulation;
     }
     .nav-emoji { display: inline-block; font-size: 1.1rem; }
     .nav-primary { display: flex; flex-direction: column; align-items: flex-start; }
@@ -1717,14 +1739,14 @@
     font-size: clamp(1.3rem, 2.6vw, 1.7rem);
     line-height: 1.2;
   }
-  /* Schliessen-Button: klar beschriftet, lila Rahmen, Klickflaeche >= 44x44px */
+  /* Schliessen-Button: klar beschriftet, lila Rahmen, Klickflaeche >= 48x48px */
   .modal__close {
     -webkit-appearance: none;
     appearance: none;
     flex-shrink: 0;
     margin-left: auto;
-    min-width: 46px;
-    min-height: 46px;
+    min-width: 48px;
+    min-height: 48px;
     padding: 0.55rem 0.95rem;
     display: inline-flex;
     align-items: center;
@@ -1836,7 +1858,7 @@
   .modal__back {
     -webkit-appearance: none;
     appearance: none;
-    min-height: 44px;
+    min-height: 48px;
     padding: 0.5rem 0.9rem;
     background: none;
     border: 0;

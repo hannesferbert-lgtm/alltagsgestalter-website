@@ -155,10 +155,13 @@ try {
             document.addEventListener('keydown', function (e) {
               if (e.key === 'Escape' && nav.classList.contains('open')) setNav(false);
             });
-            // Auto-Close: jeder Klick auf einen Link oder den Footer-CTA
-            // schliesst das Panel wieder.
-            nav.querySelectorAll('a').forEach(function (link) {
-              link.addEventListener('click', function () { setNav(false); });
+            // Auto-Close: jeder Klick auf einen Link, den Footer-CTA oder
+            // einen Modal-Trigger schliesst das Panel wieder. Ein einziger
+            // delegierter Listener statt pro Element - so kann sich nichts
+            // mehrfach stapeln.
+            document.addEventListener('click', function (e) {
+              if (!nav.classList.contains('open')) return;
+              if (e.target.closest('#mainNav a, [data-modal-open]')) setNav(false);
             });
           }
           var HEADER_OFFSET = 96;
