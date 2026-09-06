@@ -153,17 +153,6 @@ try {
               });
             });
           }
-      
-          var form = document.getElementById('newsletterForm');
-          var note = document.getElementById('newsletterNote');
-          if (form && note) {
-            form.addEventListener('submit', function (e) {
-              e.preventDefault();
-              note.textContent = 'Danke! Bitte Anmeldung in Kürze per E-Mail bestätigen.';
-              form.reset();
-            });
-          }
-      
           var HEADER_OFFSET = 96;
           var pinnedCardId = null;
       
