@@ -957,7 +957,16 @@ try {
             signal: ctrl ? ctrl.signal : undefined
           }).then(function (r) {
             window.clearTimeout(timer);
-            return r.json().catch(function () { return { ok: r.ok }; });
+            return r.json().then(function (data) {
+              data = data || {};
+              // Apps-Script-Antworten sind uneinheitlich - Erfolg an mehreren
+              // moeglichen Feldern erkennen, sonst greift der Fallback.
+              var s = String(data.status || data.result || '').toLowerCase();
+              data.ok = data.ok === true || s === 'success' || s === 'ok';
+              return data;
+            }, function () {
+              return { ok: r.ok };
+            });
           }, function (err) {
             window.clearTimeout(timer);
             throw err;
