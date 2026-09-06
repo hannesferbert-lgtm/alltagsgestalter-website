@@ -178,6 +178,20 @@
     .wm-besen  { --wm-w: 118vw; top: 0; left: calc(var(--wm-w) * -0.5); right: auto; }
   }
 
+  /* Auf schmalen Handy-Breiten reicht die 780px-Stufe allein nicht: der
+     Topf/Moehre-Deko im Hero rueckt bei bestimmten Textumbruechen (z. B.
+     ~430px) so nah an die Ueberschrift heran, dass er sie beruehrt. Deshalb
+     hier zusaetzlich deutlich kleiner, weiter in die Ecke geschoben und
+     sehr dezent - reine Deko darf die Lesbarkeit nie gefaehrden. */
+  @media (max-width: 640px) {
+    .wm-topf {
+      --wm-w: 80px;
+      top: -10px;
+      right: -20px;
+      opacity: 0.2;
+    }
+  }
+
   .script {
     font-family: var(--font-display);
     font-weight: 700;
@@ -333,6 +347,14 @@
   }
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Garantiert unabhaengig von der Kaskade, dass die Headline immer ueber
+     der Topf/Moehre-Deko (.wm-field, z-index: 3) liegt - Text darf nie
+     hinter dekorativen Grafiken verschwinden. */
+  .hero-copy {
+    position: relative;
+    z-index: 10;
   }
 
   .hero-tag {
