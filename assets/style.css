@@ -1053,6 +1053,145 @@
     form.newsletter-form input[type="email"] { padding-left: 0.85rem; font-size: 0.95rem; }
   }
 
+  /* ============ Kontakt-/Anfrage-Formular ============ */
+  .contact-section { background: var(--color-bg-alt); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .contact-intro h2 {
+    margin-top: 0.6rem;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    max-width: 18ch;
+  }
+  .contact-intro p { margin-top: 1rem; color: var(--color-text-soft); }
+  .contact-points {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .contact-points li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .contact-points svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+    color: var(--color-violett);
+  }
+  .contact-points a { color: var(--color-kohle); text-decoration: none; }
+  .contact-points a:hover { text-decoration: underline; }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.7rem 0.9rem;
+    width: 100%;
+    min-height: 48px;
+  }
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--color-violett);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-violett) 22%, transparent);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form-field-wide { grid-column: 1 / -1; }
+  .form-hint {
+    font-size: 0.82rem;
+    color: var(--color-text-soft);
+    margin-top: -0.25rem;
+  }
+  .form-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .contact-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--color-text-soft);
+  }
+  .contact-consent input {
+    width: 1.1rem;
+    height: 1.1rem;
+    min-height: 0;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    accent-color: var(--color-violett);
+  }
+  .contact-consent a { color: var(--color-kohle); }
+  .contact-submit {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+  }
+  .contact-feedback {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+  }
+  .contact-feedback.is-pending { background: var(--color-bg-alt); color: var(--color-text-soft); }
+  .contact-feedback.is-success {
+    background: color-mix(in srgb, var(--color-gruen) 18%, var(--color-surface));
+    color: color-mix(in srgb, var(--color-kohle) 82%, var(--color-gruen));
+  }
+  .contact-feedback.is-error {
+    background: color-mix(in srgb, var(--color-orange) 14%, var(--color-surface));
+    color: color-mix(in srgb, var(--color-kohle) 80%, var(--color-orange));
+  }
+  .contact-feedback a { color: inherit; }
+
+  @media (max-width: 860px) {
+    .contact-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
   .area-section { background: var(--color-bg-alt); }
   .area-header { max-width: 62ch; }
   .area-header h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.6rem; }

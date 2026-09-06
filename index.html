@@ -48,7 +48,7 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/style.css?v=20260907e">
+<link rel="stylesheet" href="assets/style.css?v=20260907f">
 </head>
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -419,10 +419,88 @@
     </div>
   </section>
 
+  <!-- ============ KONTAKT / ANFRAGE-FORMULAR ============ -->
+  <section class="section-pad contact-section" id="kontakt" aria-labelledby="kontakt-heading">
+    <div class="wrap contact-inner">
+      <div class="contact-intro">
+        <p class="eyebrow">Kostenfreies Erstgespräch</p>
+        <h2 id="kontakt-heading">Schreiben Sie uns – wir melden uns persönlich.</h2>
+        <p>Unverbindlich und kostenfrei. Wir rufen Sie zurück oder antworten per E-Mail – meist noch am selben Werktag.</p>
+        <ul class="contact-points">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"></path></svg>
+            <a href="tel:+4915120147853">0151 20147853</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 6-10 7L2 6"></path></svg>
+            <a href="mailto:info@alltagsgestalter.de">info@alltagsgestalter.de</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <label class="form-field">
+          <span class="form-label">Worum geht es?</span>
+          <select name="anfrageTyp">
+            <option value="Kostenfreies Erstgespräch">Kostenfreies Erstgespräch</option>
+            <option value="Anmeldung Veranstaltung">Anmeldung zu einer Veranstaltung</option>
+            <option value="Mitarbeit / Bewerbung">Mitarbeit / Bewerbung</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </label>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span class="form-label">Anrede</span>
+            <select name="anrede">
+              <option value="">Keine Angabe</option>
+              <option value="Frau">Frau</option>
+              <option value="Herr">Herr</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span class="form-label">Vorname</span>
+            <input type="text" name="vorname" autocomplete="given-name">
+          </label>
+          <label class="form-field">
+            <span class="form-label">Nachname <span aria-hidden="true">*</span></span>
+            <input type="text" name="nachname" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span class="form-label">Telefonnummer</span>
+            <input type="tel" name="telefon" autocomplete="tel" inputmode="tel">
+          </label>
+          <label class="form-field form-field-wide">
+            <span class="form-label">E-Mail</span>
+            <input type="email" name="email" autocomplete="email" inputmode="email">
+          </label>
+        </div>
+        <p class="form-hint">Bitte Nachname und mindestens eine Kontaktmöglichkeit (Telefon oder E-Mail) angeben.</p>
+
+        <label class="form-field">
+          <span class="form-label">Ihre Nachricht / Ihr Alltagsprofil</span>
+          <textarea name="nachricht" rows="4" placeholder="Wobei dürfen wir Sie unterstützen? Wann sind Sie gut erreichbar?"></textarea>
+        </label>
+
+        <div class="form-hp" aria-hidden="true">
+          <label>Firma <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <label class="contact-consent">
+          <input type="checkbox" name="consent" required>
+          <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage verarbeitet werden. Hinweise dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary contact-submit">Anfrage absenden</button>
+        <p class="contact-feedback" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </section>
+
 </main>
 
 <!-- ============ FOOTER ============ -->
-<footer class="site-footer" id="kontakt">
+<footer class="site-footer" id="footer">
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a class="logo" href="#top"><span class="script">die</span> ALLTAGSGESTALTER</a>
@@ -618,6 +696,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=20260907e" defer></script>
+<script src="assets/app.js?v=20260907f" defer></script>
 </body>
 </html>

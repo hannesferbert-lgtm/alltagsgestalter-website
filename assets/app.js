@@ -908,5 +908,125 @@ try {
           });
         })();
 
+        // ---------- Kontakt-/Anfrage-Formular ----------
+        // Sendet die Angaben per fetch-POST an die Google-Apps-Script-
+        // Web-App (siehe apps-script/README.md). Diese schreibt die Zeile
+        // ins Sheet UND verschickt die Benachrichtigungs-Mail; schlaegt
+        // das Sheet fehl, geht trotzdem die Mail raus -> Frontend zeigt
+        // Erfolg. Antwortet die Web-App gar nicht, blenden wir einen
+        // vorbefuellten mailto:-Link als Fallback ein.
+        (function contactForm() {
+          var form = document.getElementById('contactForm');
+          if (!form) return;
+
+          // TODO: Nach dem Apps-Script-Deploy die .../exec-URL eintragen.
+          var CONTACT_ENDPOINT = '';
+
+          var feedback = form.querySelector('.contact-feedback');
+          var submitBtn = form.querySelector('.contact-submit');
+
+          function showFeedback(kind, html) {
+            feedback.innerHTML = html;
+            feedback.hidden = false;
+            feedback.classList.remove('is-error', 'is-success', 'is-pending');
+            if (kind) feedback.classList.add('is-' + kind);
+          }
+
+          function collect() {
+            return {
+              anfrageTyp: form.anfrageTyp.value,
+              anrede: form.anrede.value,
+              vorname: form.vorname.value.trim(),
+              nachname: form.nachname.value.trim(),
+              telefon: form.telefon.value.trim(),
+              email: form.email.value.trim(),
+              nachricht: form.nachricht.value.trim(),
+              company: form.company.value // Honeypot
+            };
+          }
+
+          function mailtoHref(d) {
+            var subject = 'Anfrage über die Website – ' + (d.vorname ? d.vorname + ' ' : '') + d.nachname;
+            var body = [
+              'Anfrage-Typ: ' + d.anfrageTyp,
+              'Anrede: ' + (d.anrede || '–'),
+              'Name: ' + (d.vorname + ' ' + d.nachname).trim(),
+              'Telefon: ' + (d.telefon || '–'),
+              'E-Mail: ' + (d.email || '–'),
+              '',
+              d.nachricht || ''
+            ].join('\n');
+            return 'mailto:info@alltagsgestalter.de?subject=' + encodeURIComponent(subject) +
+              '&body=' + encodeURIComponent(body);
+          }
+
+          function fallback(d) {
+            submitBtn.disabled = false;
+            showFeedback('error',
+              'Das Formular ließ sich gerade nicht senden. Bitte schicken Sie uns Ihre Anfrage ' +
+              'kurz direkt: <a href="' + mailtoHref(d) + '">per E-Mail</a> – oder rufen Sie an: ' +
+              '<a href="tel:+4915120147853">0151 20147853</a>.');
+          }
+
+          function success() {
+            form.reset();
+            submitBtn.disabled = false;
+            showFeedback('success',
+              'Vielen Dank! Ihre Anfrage ist bei uns eingegangen – wir melden uns persönlich bei Ihnen.');
+          }
+
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var d = collect();
+
+            if (!d.nachname) {
+              showFeedback('error', 'Bitte geben Sie mindestens Ihren Nachnamen an.');
+              form.nachname.focus();
+              return;
+            }
+            if (!d.email && !d.telefon) {
+              showFeedback('error', 'Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.');
+              form.telefon.focus();
+              return;
+            }
+            if (!form.consent.checked) {
+              showFeedback('error', 'Bitte bestätigen Sie die Einverständniserklärung.');
+              return;
+            }
+
+            submitBtn.disabled = true;
+            showFeedback('pending', 'Wird gesendet …');
+
+            if (!CONTACT_ENDPOINT || CONTACT_ENDPOINT.indexOf('/exec') === -1) {
+              fallback(d);
+              return;
+            }
+
+            var ctrl = ('AbortController' in window) ? new AbortController() : null;
+            var timer = window.setTimeout(function () { if (ctrl) ctrl.abort(); }, 12000);
+
+            // Bewusst ohne Content-Type-Header (=> "simple request", kein
+            // CORS-Preflight, den Apps Script nicht beantworten wuerde).
+            fetch(CONTACT_ENDPOINT, {
+              method: 'POST',
+              body: JSON.stringify(d),
+              redirect: 'follow',
+              signal: ctrl ? ctrl.signal : undefined
+            })
+              .then(function (r) {
+                return r.json().catch(function () { return { ok: r.ok }; });
+              })
+              .then(function (res) {
+                window.clearTimeout(timer);
+                if (res && res.ok) success();
+                else fallback(d);
+              })
+              .catch(function () {
+                window.clearTimeout(timer);
+                fallback(d);
+              });
+          });
+        })();
+
     } catch (e) { console.error('Seiten-Skript:', e); }
 });
