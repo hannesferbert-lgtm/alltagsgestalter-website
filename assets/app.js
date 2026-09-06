@@ -141,16 +141,24 @@ try {
         (function () {
           var toggle = document.getElementById('navToggle');
           var nav = document.getElementById('mainNav');
+          var navClose = document.getElementById('navClose');
           if (toggle && nav) {
-            toggle.addEventListener('click', function () {
-              var open = nav.classList.toggle('open');
+            var setNav = function (open) {
+              nav.classList.toggle('open', open);
+              document.body.classList.toggle('nav-open', open);
               toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            };
+            toggle.addEventListener('click', function () {
+              setNav(!nav.classList.contains('open'));
             });
+            if (navClose) navClose.addEventListener('click', function () { setNav(false); });
+            document.addEventListener('keydown', function (e) {
+              if (e.key === 'Escape' && nav.classList.contains('open')) setNav(false);
+            });
+            // Auto-Close: jeder Klick auf einen Link oder den Footer-CTA
+            // schliesst das Panel wieder.
             nav.querySelectorAll('a').forEach(function (link) {
-              link.addEventListener('click', function () {
-                nav.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-              });
+              link.addEventListener('click', function () { setNav(false); });
             });
           }
           var HEADER_OFFSET = 96;
@@ -757,7 +765,15 @@ try {
           widget.querySelectorAll('[data-mood]').forEach(function (btn) {
             btn.addEventListener('click', function () {
               state.mood = btn.getAttribute('data-mood');
-              showPanel(3);
+              // "Kulinarisches Erbe & Lieblingsrezepte" fuehrt direkt zum
+              // Ergebnis-Charakter "Die Genießerin".
+              var shortcut = btn.getAttribute('data-persona-shortcut');
+              if (shortcut && PERSONAS[shortcut]) {
+                state.mainId = shortcut;
+                showResult();
+              } else {
+                showPanel(3);
+              }
             });
           });
           widget.querySelectorAll('[data-persona]').forEach(function (btn) {
