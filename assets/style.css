@@ -417,11 +417,29 @@
       font-size: 0.7rem;
       letter-spacing: 0.02em;
     }
-    .nav-cta {
-      display: block;
+    /* Footer-CTA im Mobile-Panel: weisse Schrift, normale Schreibweise,
+       kein Uppercase - ueberschreibt bewusst .btn / .btn-primary und die
+       generische nav.main-nav a-Regel (daher die hoehere Spezifitaet). */
+    nav.main-nav a.nav-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       width: 100%;
-      text-align: center;
+      min-height: 0;
+      padding: 1rem 1.5rem;
+      border-radius: 999px;
+      background: #9980C0;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: normal;
+      text-transform: none;
+      box-shadow: 0 4px 6px -1px rgba(30, 22, 15, 0.18), 0 2px 4px -2px rgba(30, 22, 15, 0.18);
     }
+    nav.main-nav a.nav-cta:hover,
+    nav.main-nav a.nav-cta:focus-visible { background: color-mix(in srgb, #9980C0 88%, #000); }
+    nav.main-nav a.nav-cta svg { width: 1.15rem; height: 1.15rem; flex-shrink: 0; }
   }
 
   section { position: relative; }
