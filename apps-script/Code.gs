@@ -67,36 +67,45 @@ function doPost(e) {
   ];
 
   var sheetOk = false;
+  var sheetError = '';
   try {
-    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
-    if (sheet) {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) {
+      sheetError = 'Tabellenblatt "' + SHEET_NAME + '" nicht gefunden. Vorhandene Blätter: ' +
+        ss.getSheets().map(function (s) { return s.getName(); }).join(' | ');
+    } else {
       var targetRow = Math.max(sheet.getLastRow() + 1, FIRST_DATA_ROW);
       sheet.getRange(targetRow, 1, 1, row.length).setValues([row]);
       SpreadsheetApp.flush();
       sheetOk = true;
     }
   } catch (sheetErr) {
-    // bewusst schlucken -> Mail-Fallback greift
+    sheetError = String(sheetErr && sheetErr.message ? sheetErr.message : sheetErr);
   }
 
   var mailOk = false;
   try {
-    sendNotification_(row, sheetOk);
+    sendNotification_(row, sheetOk, sheetError);
     mailOk = true;
   } catch (mailErr) {}
 
   if (sheetOk || mailOk) {
-    return jsonOut_({ ok: true, leadId: leadId, sheet: sheetOk, mail: mailOk });
+    return jsonOut_({ ok: true, leadId: leadId, sheet: sheetOk, mail: mailOk, sheetError: sheetError });
   }
-  return jsonOut_({ ok: false, error: 'Weder Tabelle noch E-Mail erreichbar.' });
+  return jsonOut_({ ok: false, error: 'Weder Tabelle noch E-Mail erreichbar.', sheetError: sheetError });
 }
 
-function sendNotification_(row, sheetOk) {
+function sendNotification_(row, sheetOk, sheetError) {
   var lines = COLUMNS.map(function (label, i) {
     return label + ': ' + (row[i] || '–');
   });
   if (!sheetOk) {
-    lines.unshift('!! Konnte NICHT ins Google Sheet geschrieben werden – bitte manuell nachtragen.', '');
+    lines.unshift(
+      '!! Konnte NICHT ins Google Sheet geschrieben werden – bitte manuell nachtragen.',
+      'Grund: ' + (sheetError || 'unbekannt'),
+      ''
+    );
   }
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,

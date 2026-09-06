@@ -919,8 +919,8 @@ try {
           var form = document.getElementById('contactForm');
           if (!form) return;
 
-          // TODO: Nach dem Apps-Script-Deploy die .../exec-URL eintragen.
-          var CONTACT_ENDPOINT = '';
+          // Google-Apps-Script-Web-App (siehe apps-script/README.md).
+          var CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzMedSmRx_yXWBzj1LIY-yF3a4nu_0Oxi2aKHScURmT4ppS6IqmpBWSGAr-2CnUou-0/exec';
 
           var feedback = form.querySelector('.contact-feedback');
           var submitBtn = form.querySelector('.contact-submit');
