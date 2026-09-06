@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light only">
 <link rel="canonical" href="https://die-alltagsgestalter.de/ratgeber">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20260906y">
+<link rel="stylesheet" href="assets/style.css?v=20260907b">
 <style>
   .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; text-decoration: underline; text-underline-offset: 0.2em; color: var(--color-violett); }
   .back-link svg { width: 24px; height: 24px; max-width: 24px; flex-shrink: 0; }
@@ -27,16 +27,22 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
     </button>
     <nav class="main-nav" id="mainNav" aria-label="Hauptnavigation">
+      <div class="nav-panel-header">
+        <a class="logo" href="/"><span class="script">die</span> ALLTAGSGESTALTER</a>
+        <button type="button" class="nav-close" id="navClose" aria-label="Menü schließen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
       <ul>
-        <li><a href="/#leistungen">Leistungen</a></li>
-        <li><a href="/kulinarisches-erbe">Kulinarisches Erbe</a></li>
-        <li><a href="/ratgeber">Ratgeber</a></li>
-        <li><a href="/ueber-uns">Über uns</a></li>
-        <li><a href="/ueber-uns#persoenlichkeiten">Chemie-Check</a></li>
-        <li><a href="/veranstaltungen">Veranstaltungen</a></li>
-        <li><a href="/#jobs">Jobs</a></li>
-        <li><a href="/#kontakt">Kontakt</a></li>
+        <li class="nav-primary">
+          <a href="/#alltagsprofil"><span class="nav-emoji" aria-hidden="true">💜</span> Wer passt zu Ihnen?</a>
+          <span class="nav-badge">Alltagsprofil</span>
+        </li>
+        <li><a href="/#veranstaltungen"><span class="nav-emoji" aria-hidden="true">📅</span> Veranstaltungen &amp; Termine</a></li>
+        <li><a href="/#leistungen"><span class="nav-emoji" aria-hidden="true">🌿</span> Unsere Leistungen</a></li>
+        <li><a href="/#ueber-uns"><span class="nav-emoji" aria-hidden="true">👥</span> Über uns</a></li>
       </ul>
+      <a class="btn btn-primary nav-cta" href="/#kontakt">Erstgespräch anfragen</a>
     </nav>
   </div>
 </header>
@@ -198,6 +204,6 @@
     </ul>
   </div>
 </footer>
-<script src="assets/app.js?v=20260906y" defer></script>
+<script src="assets/app.js?v=20260907b" defer></script>
 </body>
 </html>

@@ -284,24 +284,15 @@
   }
   .logo .script { font-size: 1.5rem; }
 
-  nav.main-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 0.4rem clamp(0.75rem, 1.5vw, 1.4rem);
-  }
-  /* Auf dem Desktop bilden Haupt- und Sekundaerliste eine einzige,
-     durchgehende Zeile; die Trennung greift erst im Mobile-Panel. */
-  nav.main-nav > ul { display: contents; }
   nav.main-nav ul {
-    gap: clamp(0.75rem, 1.5vw, 1.4rem);
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
     flex-wrap: wrap;
   }
   nav.main-nav a {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     text-decoration: none;
     padding: 0.4rem 0.1rem;
     border-bottom: 2px solid transparent;
@@ -322,9 +313,12 @@
   }
   .nav-toggle svg { width: 1.4rem; height: 1.4rem; }
 
-  /* Nur im geoeffneten Mobile-Panel sichtbar (siehe Media-Query unten). */
+  /* Panel-Header, Badge, Emoji-Prefixe und Footer-CTA gehoeren nur ins
+     geoeffnete Mobile-Panel (siehe Media-Query unten). */
+  .nav-panel-header,
   .nav-close,
   .nav-badge,
+  .nav-emoji,
   .nav-cta { display: none; }
 
   @media (max-width: 780px) {
@@ -335,75 +329,75 @@
       top: 0;
       left: 0;
       right: 0;
+      width: 100vw;
       height: 100vh;
       height: 100dvh;
       z-index: 200;
       flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: stretch;
-      justify-content: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
       background: #FAF7F2;
       border: 0;
-      padding: 4.75rem clamp(1.5rem, 6vw, 2.5rem) 2rem;
+      padding: 1.5rem;
       overflow-y: auto;
       overscroll-behavior: contain;
     }
     nav.main-nav.open { display: flex; }
-    nav.main-nav > ul { display: flex; }
-    nav.main-nav ul {
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      gap: 0.15rem;
+
+    .nav-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
-    nav.main-nav a {
-      display: block;
-      font-size: 1.15rem;
-      padding: 0.7rem 0;
-      border-bottom: 0;
-    }
+    .nav-panel-header .logo { font-size: 1.15rem; }
+    .nav-panel-header .logo .script { font-size: 1.4rem; }
     .nav-close {
       display: inline-flex;
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      width: 44px;
-      height: 44px;
       align-items: center;
       justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -0.5rem;
       background: transparent;
       border: 0;
       color: var(--color-kohle);
       cursor: pointer;
     }
-    .nav-close svg { width: 1.6rem; height: 1.6rem; }
-    .nav-primary { display: flex; flex-direction: column; }
+    .nav-close svg { width: 1.75rem; height: 1.75rem; }
+
+    nav.main-nav > ul {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+      width: 100%;
+    }
+    nav.main-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.3rem;
+      padding: 0.5rem 0;
+      border-bottom: 0;
+    }
+    .nav-emoji { display: inline-block; font-size: 1.1rem; }
+    .nav-primary { display: flex; flex-direction: column; align-items: flex-start; }
     .nav-badge {
       display: inline-block;
-      align-self: flex-start;
-      margin: 0.1rem 0 0.5rem;
-      padding: 0.2rem 0.7rem;
+      margin: 0.15rem 0 0 2.3rem;
+      padding: 0.15rem 0.65rem;
       border-radius: 999px;
-      background: color-mix(in srgb, var(--color-violett) 20%, transparent);
-      color: color-mix(in srgb, var(--color-kohle) 78%, var(--color-violett));
+      background: color-mix(in srgb, var(--color-violett) 22%, transparent);
+      color: color-mix(in srgb, var(--color-kohle) 75%, var(--color-violett));
       font-family: var(--font-body);
       font-weight: 600;
-      font-size: 0.72rem;
-      letter-spacing: 0.01em;
-    }
-    .nav-secondary {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--color-border);
-    }
-    .nav-secondary a {
-      font-size: 0.98rem;
-      color: var(--color-text-soft);
+      font-size: 0.7rem;
+      letter-spacing: 0.02em;
     }
     .nav-cta {
       display: block;
       width: 100%;
-      margin-top: 1.75rem;
       text-align: center;
     }
   }
