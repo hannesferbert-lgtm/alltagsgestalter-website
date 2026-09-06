@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light only">
 <link rel="canonical" href="https://die-alltagsgestalter.de/veranstaltungen">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20260907g">
+<link rel="stylesheet" href="assets/style.css?v=20260907i">
 </head>
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -75,7 +75,7 @@
       </div>
 
       <div class="event-teaser-actions">
-        <a class="btn btn-primary" href="#kontakt" data-event-signup="kaffee-2026-10-28">Zu diesem Termin anmelden <span aria-hidden="true">&rarr;</span></a>
+        <button type="button" class="btn btn-primary" data-event-signup="kaffee-2026-10-28" aria-haspopup="dialog">Zu diesem Termin anmelden <span aria-hidden="true">&rarr;</span></button>
         <button type="button" class="btn btn-ghost" data-modal-open="eventsPanel" aria-haspopup="dialog" aria-expanded="false">Alle kommenden Termine entdecken <span aria-hidden="true">&rarr;</span></button>
       </div>
     </div>
@@ -101,6 +101,74 @@
         <button type="button" class="events-filter-tab" data-event-filter="aktivitaet" aria-pressed="false">🎨 Aktivität</button>
       </div>
       <div class="events-list" data-events-list></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: Event-Anmeldung ============ -->
+<div class="modal" id="eventSignupModal" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="eventSignup-title" tabindex="-1">
+    <div class="modal__header">
+      <h2 class="modal__title" id="eventSignup-title">Zu diesem Termin anmelden</h2>
+      <button type="button" class="modal__close" data-modal-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        <span>Schließen</span>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form class="contact-form event-signup-form" id="eventSignupForm" novalidate>
+        <p class="event-signup-event">
+          <span class="form-label">Veranstaltung</span>
+          <strong data-event-name>Auf einen gemütlichen Kaffee mit den Alltagsgestaltern (28.10.2026)</strong>
+        </p>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span class="form-label">Vorname <span aria-hidden="true">*</span></span>
+            <input type="text" name="vorname" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span class="form-label">Nachname <span aria-hidden="true">*</span></span>
+            <input type="text" name="nachname" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span class="form-label">E-Mail</span>
+            <input type="email" name="email" autocomplete="email" inputmode="email">
+          </label>
+          <label class="form-field">
+            <span class="form-label">Telefonnummer</span>
+            <input type="tel" name="telefon" autocomplete="tel" inputmode="tel">
+          </label>
+          <label class="form-field">
+            <span class="form-label">Anzahl Personen</span>
+            <select name="personen">
+              <option value="1">1 Person</option>
+              <option value="2">2 Personen</option>
+              <option value="3">3 Personen</option>
+              <option value="4+">4 oder mehr Personen</option>
+            </select>
+          </label>
+        </div>
+        <p class="form-hint">Bitte Vor- und Nachname sowie E-Mail oder Telefon angeben.</p>
+
+        <label class="form-field">
+          <span class="form-label">Anmerkungen / Fragen</span>
+          <textarea name="nachricht" rows="3" placeholder="z. B. Anfahrt, Barrierefreiheit, besondere Wünsche"></textarea>
+        </label>
+
+        <div class="form-hp" aria-hidden="true">
+          <label>Firma <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <label class="contact-consent">
+          <input type="checkbox" name="consent" required>
+          <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung meiner Anmeldung verarbeitet werden. Hinweise dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary contact-submit">Verbindlich anmelden</button>
+        <p class="contact-feedback" role="status" aria-live="polite" hidden></p>
+      </form>
     </div>
   </div>
 </div>
@@ -156,6 +224,6 @@
     </ul>
   </div>
 </footer>
-<script src="assets/app.js?v=20260907g" defer></script>
+<script src="assets/app.js?v=20260907i" defer></script>
 </body>
 </html>

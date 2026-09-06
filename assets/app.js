@@ -24,6 +24,7 @@ var ALLTAGSGESTALTER_EVENTS = [
     dateISO: '2026-10-28',
     day: '28',
     month: 'Okt',
+    betreff: 'Kaffee-Nachmittag 28.10.',
     title: 'Auf einen gemütlichen Kaffee mit den Alltagsgestaltern',
     highlight: 'Inklusive Impulsvortrag: Gesunde Ernährung im Alter',
     time: 'Mittwoch, 28.10.2026 | 13:30 – 16:00 Uhr',
@@ -592,6 +593,10 @@ try {
             });
           });
 
+          // Fuer Modals, die per Skript geoeffnet werden (z. B. das
+          // Event-Anmelde-Modal aus dem Veranstaltungs-Panel heraus).
+          window.AGModal = { open: openModal, close: closeModal };
+
           Array.prototype.slice.call(document.querySelectorAll('.modal')).forEach(function (modal) {
             modal.setAttribute('aria-hidden', 'true');
             modal.addEventListener('click', function (e) {
@@ -869,15 +874,12 @@ try {
                   '<p class="event-card-summary">' + evt.summary + '</p>' +
                   '<ul class="event-card-meta">' + meta.join('') + '</ul>' +
                   '<details class="event-card-more"><summary>Mehr erfahren</summary><div class="event-card-description">' + descriptionHtml + '</div></details>' +
-                  '<button type="button" class="btn btn-primary event-card-signup">Anmelden</button>' +
+                  '<button type="button" class="btn btn-primary event-card-signup">Zu diesem Termin anmelden</button>' +
                 '</div>';
 
               var signupBtn = card.querySelector('.event-card-signup');
               signupBtn.addEventListener('click', function () {
-                primeSignupMail(evt);
-                var closeBtn = panel.querySelector('.modal__close');
-                if (closeBtn) closeBtn.click();
-                window.setTimeout(goToContact, 150);
+                startEventSignup(evt, signupBtn);
               });
 
               list.appendChild(card);
@@ -897,53 +899,72 @@ try {
 
           renderList('all');
 
-          // Direkter Anmelde-Button auf der Startseite (ausserhalb des
-          // Panels): der Sanft-Scroll zu "#kontakt" laeuft bereits ueber den
-          // allgemeinen a[href^="#"]-Handler weiter oben - hier wird nur die
-          // Mail vorbereitet.
+          // Oeffnet das Event-Anmelde-Modal (siehe eventSignupForm() weiter
+          // unten). Ist eventuell noch ein anderes Modal offen (das
+          // Termine-Panel), wird es zuerst geschlossen. Fallback ohne
+          // AGModal/Formular: vorbefuellte mailto:-Anmeldung.
+          function startEventSignup(evt, trigger) {
+            if (window.AGEventSignup) {
+              window.AGEventSignup(evt, trigger);
+              return;
+            }
+            primeSignupMail(evt);
+            var closeBtn = panel.querySelector('.modal__close');
+            if (closeBtn) closeBtn.click();
+            window.setTimeout(goToContact, 150);
+          }
+
+          // Direkter "Zu diesem Termin anmelden"-Button im Veranstaltungs-
+          // Teaser (ausserhalb des Panels).
           document.querySelectorAll('[data-event-signup]').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-              primeSignupMail(findEvent(btn.getAttribute('data-event-signup')));
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              startEventSignup(findEvent(btn.getAttribute('data-event-signup')), btn);
             });
           });
         })();
 
+        // ---------- Apps-Script-Anbindung (Kontakt + Event-Anmeldung) ----------
+        // Beide Formulare posten an dieselbe Google-Apps-Script-Web-App
+        // (siehe apps-script/README.md). Bewusst ohne Content-Type-Header
+        // => "simple request", kein CORS-Preflight, den Apps Script nicht
+        // beantworten wuerde.
+        var CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzMedSmRx_yXWBzj1LIY-yF3a4nu_0Oxi2aKHScURmT4ppS6IqmpBWSGAr-2CnUou-0/exec';
+
+        function postToAppsScript(payload) {
+          if (!CONTACT_ENDPOINT || CONTACT_ENDPOINT.indexOf('/exec') === -1) {
+            return Promise.reject(new Error('Kein Endpoint konfiguriert.'));
+          }
+          var ctrl = ('AbortController' in window) ? new AbortController() : null;
+          var timer = window.setTimeout(function () { if (ctrl) ctrl.abort(); }, 12000);
+          return fetch(CONTACT_ENDPOINT, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            redirect: 'follow',
+            signal: ctrl ? ctrl.signal : undefined
+          }).then(function (r) {
+            window.clearTimeout(timer);
+            return r.json().catch(function () { return { ok: r.ok }; });
+          }, function (err) {
+            window.clearTimeout(timer);
+            throw err;
+          });
+        }
+
+        function setFormFeedback(el, kind, html) {
+          el.innerHTML = html;
+          el.hidden = false;
+          el.classList.remove('is-error', 'is-success', 'is-pending');
+          if (kind) el.classList.add('is-' + kind);
+        }
+
         // ---------- Kontakt-/Anfrage-Formular ----------
-        // Sendet die Angaben per fetch-POST an die Google-Apps-Script-
-        // Web-App (siehe apps-script/README.md). Diese schreibt die Zeile
-        // ins Sheet UND verschickt die Benachrichtigungs-Mail; schlaegt
-        // das Sheet fehl, geht trotzdem die Mail raus -> Frontend zeigt
-        // Erfolg. Antwortet die Web-App gar nicht, blenden wir einen
-        // vorbefuellten mailto:-Link als Fallback ein.
         (function contactForm() {
           var form = document.getElementById('contactForm');
           if (!form) return;
 
-          // Google-Apps-Script-Web-App (siehe apps-script/README.md).
-          var CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzMedSmRx_yXWBzj1LIY-yF3a4nu_0Oxi2aKHScURmT4ppS6IqmpBWSGAr-2CnUou-0/exec';
-
           var feedback = form.querySelector('.contact-feedback');
           var submitBtn = form.querySelector('.contact-submit');
-
-          function showFeedback(kind, html) {
-            feedback.innerHTML = html;
-            feedback.hidden = false;
-            feedback.classList.remove('is-error', 'is-success', 'is-pending');
-            if (kind) feedback.classList.add('is-' + kind);
-          }
-
-          function collect() {
-            return {
-              anfrageTyp: form.anfrageTyp.value,
-              anrede: form.anrede.value,
-              vorname: form.vorname.value.trim(),
-              nachname: form.nachname.value.trim(),
-              telefon: form.telefon.value.trim(),
-              email: form.email.value.trim(),
-              nachricht: form.nachricht.value.trim(),
-              company: form.company.value // Honeypot
-            };
-          }
 
           function mailtoHref(d) {
             var subject = 'Anfrage über die Website – ' + (d.vorname ? d.vorname + ' ' : '') + d.nachname;
@@ -962,69 +983,174 @@ try {
 
           function fallback(d) {
             submitBtn.disabled = false;
-            showFeedback('error',
+            setFormFeedback(feedback, 'error',
               'Das Formular ließ sich gerade nicht senden. Bitte schicken Sie uns Ihre Anfrage ' +
               'kurz direkt: <a href="' + mailtoHref(d) + '">per E-Mail</a> – oder rufen Sie an: ' +
               '<a href="tel:+4915120147853">0151 20147853</a>.');
           }
 
-          function success() {
-            form.reset();
-            submitBtn.disabled = false;
-            showFeedback('success',
-              'Vielen Dank! Ihre Anfrage ist bei uns eingegangen – wir melden uns persönlich bei Ihnen.');
-          }
-
           form.addEventListener('submit', function (e) {
             e.preventDefault();
-            var d = collect();
+            var d = {
+              anfrageTyp: form.anfrageTyp.value,
+              anrede: form.anrede.value,
+              vorname: form.vorname.value.trim(),
+              nachname: form.nachname.value.trim(),
+              telefon: form.telefon.value.trim(),
+              email: form.email.value.trim(),
+              nachricht: form.nachricht.value.trim(),
+              company: form.company.value // Honeypot
+            };
 
             if (!d.nachname) {
-              showFeedback('error', 'Bitte geben Sie mindestens Ihren Nachnamen an.');
+              setFormFeedback(feedback, 'error', 'Bitte geben Sie mindestens Ihren Nachnamen an.');
               form.nachname.focus();
               return;
             }
             if (!d.email && !d.telefon) {
-              showFeedback('error', 'Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.');
+              setFormFeedback(feedback, 'error', 'Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.');
               form.telefon.focus();
               return;
             }
             if (!form.consent.checked) {
-              showFeedback('error', 'Bitte bestätigen Sie die Einverständniserklärung.');
+              setFormFeedback(feedback, 'error', 'Bitte bestätigen Sie die Einverständniserklärung.');
               return;
             }
 
             submitBtn.disabled = true;
-            showFeedback('pending', 'Wird gesendet …');
+            setFormFeedback(feedback, 'pending', 'Wird gesendet …');
 
-            if (!CONTACT_ENDPOINT || CONTACT_ENDPOINT.indexOf('/exec') === -1) {
-              fallback(d);
+            postToAppsScript(d).then(function (res) {
+              if (res && res.ok) {
+                form.reset();
+                submitBtn.disabled = false;
+                setFormFeedback(feedback, 'success',
+                  'Vielen Dank! Ihre Anfrage ist bei uns eingegangen – wir melden uns persönlich bei Ihnen.');
+              } else {
+                fallback(d);
+              }
+            }).catch(function () { fallback(d); });
+          });
+        })();
+
+        // ---------- Event-Anmelde-Modal ----------
+        // Wird aus dem Veranstaltungs-Teaser bzw. dem Termine-Panel heraus
+        // geoeffnet (window.AGEventSignup). Sendet mit festem
+        // anfrageTyp "Event-Anmeldung" + betreff (Kurzname des Termins) an
+        // dieselbe Apps-Script-URL.
+        (function eventSignupForm() {
+          var modal = document.getElementById('eventSignupModal');
+          var form = document.getElementById('eventSignupForm');
+          if (!modal || !form) return;
+
+          var feedback = form.querySelector('.contact-feedback');
+          var submitBtn = form.querySelector('.contact-submit');
+          var eventNameEl = modal.querySelector('[data-event-name]');
+          var current = { display: eventNameEl ? eventNameEl.textContent.trim() : '', betreff: '' };
+
+          function formatDMY(iso) {
+            var p = (iso || '').split('-');
+            return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : (iso || '');
+          }
+
+          function eventMailtoHref(p, eventName) {
+            var subject = 'Anmeldung: ' + (p.betreff || eventName);
+            var body = [
+              'Verbindliche Anmeldung zur Veranstaltung:',
+              eventName,
+              '',
+              'Name: ' + (p.vorname + ' ' + p.nachname).trim(),
+              'Telefon: ' + (p.telefon || '–'),
+              'E-Mail: ' + (p.email || '–'),
+              p.nachricht
+            ].join('\n');
+            return 'mailto:info@alltagsgestalter.de?subject=' + encodeURIComponent(subject) +
+              '&body=' + encodeURIComponent(body);
+          }
+
+          function eventFallback(p, eventName) {
+            submitBtn.disabled = false;
+            setFormFeedback(feedback, 'error',
+              'Die Anmeldung ließ sich gerade nicht senden. Bitte kurz direkt: ' +
+              '<a href="' + eventMailtoHref(p, eventName) + '">per E-Mail anmelden</a> – ' +
+              'oder anrufen: <a href="tel:+4915120147853">0151 20147853</a>.');
+          }
+
+          // Von aussen aufgerufen: Kontext setzen + Modal oeffnen.
+          window.AGEventSignup = function (evt, trigger) {
+            if (!evt) return;
+            current.display = evt.title + ' (' + formatDMY(evt.dateISO) + ')';
+            current.betreff = evt.betreff || evt.title;
+            form.reset();
+            feedback.hidden = true;
+            feedback.className = 'contact-feedback';
+            submitBtn.disabled = false;
+            if (eventNameEl) eventNameEl.textContent = current.display;
+
+            var reopen = function () {
+              if (window.AGModal) window.AGModal.open('eventSignupModal', trigger || null);
+            };
+            if (window.AGModal && document.body.classList.contains('modal-open')) {
+              window.AGModal.close();
+              window.setTimeout(reopen, 60);
+            } else {
+              reopen();
+            }
+          };
+
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var vorname = form.vorname.value.trim();
+            var nachname = form.nachname.value.trim();
+            var email = form.email.value.trim();
+            var telefon = form.telefon.value.trim();
+            var personen = form.personen.value;
+            var anmerkung = form.nachricht.value.trim();
+            var eventName = current.display || (eventNameEl ? eventNameEl.textContent.trim() : '');
+
+            if (!vorname || !nachname) {
+              setFormFeedback(feedback, 'error', 'Bitte Vor- und Nachnamen angeben.');
+              (vorname ? form.nachname : form.vorname).focus();
+              return;
+            }
+            if (!email && !telefon) {
+              setFormFeedback(feedback, 'error', 'Bitte E-Mail-Adresse oder Telefonnummer angeben.');
+              form.email.focus();
+              return;
+            }
+            if (!form.consent.checked) {
+              setFormFeedback(feedback, 'error', 'Bitte bestätigen Sie die Einverständniserklärung.');
               return;
             }
 
-            var ctrl = ('AbortController' in window) ? new AbortController() : null;
-            var timer = window.setTimeout(function () { if (ctrl) ctrl.abort(); }, 12000);
+            var payload = {
+              anfrageTyp: 'Event-Anmeldung',
+              betreff: current.betreff || eventName,
+              anrede: '',
+              vorname: vorname,
+              nachname: nachname,
+              telefon: telefon,
+              email: email,
+              nachricht: 'Veranstaltung: ' + eventName +
+                '\nAnzahl Personen: ' + personen +
+                (anmerkung ? '\nAnmerkung/Fragen: ' + anmerkung : ''),
+              company: form.company.value // Honeypot
+            };
 
-            // Bewusst ohne Content-Type-Header (=> "simple request", kein
-            // CORS-Preflight, den Apps Script nicht beantworten wuerde).
-            fetch(CONTACT_ENDPOINT, {
-              method: 'POST',
-              body: JSON.stringify(d),
-              redirect: 'follow',
-              signal: ctrl ? ctrl.signal : undefined
-            })
-              .then(function (r) {
-                return r.json().catch(function () { return { ok: r.ok }; });
-              })
-              .then(function (res) {
-                window.clearTimeout(timer);
-                if (res && res.ok) success();
-                else fallback(d);
-              })
-              .catch(function () {
-                window.clearTimeout(timer);
-                fallback(d);
-              });
+            submitBtn.disabled = true;
+            setFormFeedback(feedback, 'pending', 'Anmeldung wird gesendet …');
+
+            postToAppsScript(payload).then(function (res) {
+              if (res && res.ok) {
+                form.reset();
+                submitBtn.disabled = false;
+                setFormFeedback(feedback, 'success',
+                  'Vielen Dank! Ihre Anmeldung für „' + eventName + '" ist eingegangen. ' +
+                  'Wir bestätigen sie Ihnen kurz per E-Mail oder Telefon.');
+              } else {
+                eventFallback(payload, eventName);
+              }
+            }).catch(function () { eventFallback(payload, eventName); });
           });
         })();
 

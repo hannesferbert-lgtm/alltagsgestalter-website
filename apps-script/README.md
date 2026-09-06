@@ -41,6 +41,17 @@ garantiert. Der frühere Versuch mit `openById('14bEf…')` scheiterte an
 `Lead-ID`, `Eingangsdatum` und `Uhrzeit` werden serverseitig erzeugt
 (`AG-JJJJMMTT-XXXX`, Zeitzone Europe/Berlin).
 
+## Zwei Formulare, ein Endpoint
+
+| Quelle | `anfrageTyp` | Besonderheit |
+|---|---|---|
+| Kontaktformular (`/#kontakt`) | frei wählbar (Dropdown) | – |
+| Event-Anmelde-Modal (`veranstaltungen`) | **fix `"Event-Anmeldung"`** | zusätzliches Payload-Feld `betreff` (Kurzname des Termins, z. B. `"Kaffee-Nachmittag 28.10."`); Termin, Personenzahl und Anmerkung stehen zusätzlich in `nachricht` (Spalte J) |
+
+Der `betreff` kommt im JSON-Payload mit; die Zuordnung im Sheet läuft
+schon über Spalte D (`Anfrage-Typ`). Wer `betreff` in eine eigene Spalte
+schreiben will, ergänzt `COLUMNS`/`row` in `Code.gs` entsprechend.
+
 ## Fallback
 
 - Schreibt das Script die Zeile nicht (Sheet nicht erreichbar/umbenannt),
