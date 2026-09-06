@@ -889,21 +889,5 @@ try {
           });
         })();
 
-        // ---------- Mobiler Floating-CTA ----------
-        // Erscheint erst, sobald der Hero-Bereich (#top) aus dem Viewport
-        // gescrollt ist; CSS beschraenkt die Sichtbarkeit zusaetzlich auf
-        // Bildschirme unter 768px, damit auf Desktop nie etwas aufblitzt.
-        (function mobileFloatingCta() {
-          var hero = document.getElementById('top');
-          var cta = document.getElementById('mobileFloatingCta');
-          if (!hero || !cta || !('IntersectionObserver' in window)) return;
-          var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              cta.classList.toggle('is-visible', !entry.isIntersecting);
-            });
-          }, { threshold: 0 });
-          observer.observe(hero);
-        })();
-
     } catch (e) { console.error('Seiten-Skript:', e); }
 });
