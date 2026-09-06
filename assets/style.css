@@ -464,8 +464,14 @@
     flex-shrink: 0;
   }
 
-  .hero-copy .btn {
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-top: 0.6rem;
+  }
+  .hero-copy .btn {
+    margin-top: 0;
     font-family: var(--font-body);
     font-size: 14px;
     font-weight: 600;
@@ -2377,3 +2383,44 @@
   }
 
   .chemie-teaser-cta { margin-top: 1.5rem; }
+
+  /* ---------- Mobiler Floating-CTA ---------- */
+  /* Nur unter 768px ueberhaupt im Layout; startet unsichtbar/nicht
+     interaktiv und wird per JS eingeblendet, sobald der Hero-Bereich
+     (#top) nicht mehr im Viewport ist (siehe mobileFloatingCta in app.js). */
+  .mobile-floating-cta {
+    display: none;
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background: var(--color-violett);
+    color: var(--color-kohle);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  }
+  @media (max-width: 767px) {
+    .mobile-floating-cta { display: flex; }
+  }
+  .mobile-floating-cta.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-floating-cta { transition: opacity 0.01s linear, visibility 0.01s linear; }
+  }
