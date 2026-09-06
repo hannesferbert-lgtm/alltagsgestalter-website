@@ -2317,3 +2317,45 @@
       #eventsPanel .modal__dialog { animation: none; }
     }
   }
+
+  /* ---------- Chemie-Check-Teaser (unter dem Alltagsprofil-Widget) ---------- */
+  .chemie-teaser {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--color-tile-border);
+    text-align: center;
+  }
+  .chemie-teaser-title { font-size: 1.3rem; }
+  .chemie-teaser-sub {
+    margin: 0.5rem auto 0;
+    max-width: 52ch;
+    color: var(--color-text-soft);
+  }
+
+  .chemie-teaser-cards {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1.5rem auto 0;
+    max-width: 620px;
+  }
+  .chemie-teaser-card {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.9rem 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-tile-border);
+    border-radius: 14px;
+  }
+  .chemie-teaser-icon svg { width: 36px; height: 36px; }
+  .chemie-teaser-card h4 {
+    margin-top: 0.55rem;
+    font-size: 0.9rem;
+  }
+  .chemie-teaser-card p {
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--color-text-soft);
+  }
+
+  .chemie-teaser-cta { margin-top: 1.5rem; }
