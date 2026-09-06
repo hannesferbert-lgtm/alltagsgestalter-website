@@ -337,8 +337,12 @@
 
   .hero-tag {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
+    width: fit-content;
+    max-width: 90%;
     margin-top: 0;
+    margin-right: auto;
     padding: 0.35rem 0.85rem;
     border-radius: 8px;
     font-family: var(--font-body);
@@ -348,6 +352,20 @@
     text-transform: uppercase;
     color: var(--color-kohle);
     background: color-mix(in srgb, var(--color-violett) 20%, transparent);
+    text-wrap: balance;
+  }
+
+  /* Auf schmalen Displays reicht der Text (inkl. Mittelpunkten) oft nicht
+     auf eine Zeile - kleinere Schrift und normales Letter-Spacing halten
+     die Badge kompakt, max-width + pr-Sicherheitsabstand verhindern, dass
+     sie unter die Moehren-Deko rechts oben laeuft. */
+  @media (max-width: 640px) {
+    .hero-tag {
+      max-width: calc(100% - 1rem);
+      padding-right: 1rem;
+      font-size: 11px;
+      letter-spacing: normal;
+    }
   }
 
   .hero-title {
