@@ -164,6 +164,19 @@ try {
               if (!nav.classList.contains('open')) return;
               if (e.target.closest('#mainNav a, [data-modal-open]')) setNav(false);
             });
+
+            // Logo (Header + Panel) fuehrt zur Startseite. Ist man schon
+            // dort, kein Reload - nur Panel schliessen und sanft nach oben.
+            var onHome = location.pathname === '/' || location.pathname === '/index.html';
+            document.querySelectorAll('a.logo').forEach(function (logo) {
+              logo.addEventListener('click', function (e) {
+                setNav(false);
+                if (onHome) {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              });
+            });
           }
           var HEADER_OFFSET = 96;
           var pinnedCardId = null;
@@ -1152,6 +1165,40 @@ try {
               }
             }).catch(function () { eventFallback(payload, eventName); });
           });
+        })();
+
+        // ---------- "Nach oben"-Button ----------
+        // Dezenter Floating-Button unten rechts; erscheint erst ab 400px
+        // Scrolltiefe und scrollt sanft an den Seitenanfang.
+        (function scrollTopButton() {
+          if (document.getElementById('scrollTopBtn')) return;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.id = 'scrollTopBtn';
+          btn.className = 'scroll-top-btn';
+          btn.setAttribute('aria-label', 'Nach oben scrollen');
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>';
+          btn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+          document.body.appendChild(btn);
+
+          var shown = false;
+          var ticking = false;
+          function apply() {
+            ticking = false;
+            var should = (window.pageYOffset || document.documentElement.scrollTop || 0) > 400;
+            if (should !== shown) {
+              shown = should;
+              btn.classList.toggle('is-visible', shown);
+            }
+          }
+          window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(apply);
+          }, { passive: true });
+          apply();
         })();
 
     } catch (e) { console.error('Seiten-Skript:', e); }
