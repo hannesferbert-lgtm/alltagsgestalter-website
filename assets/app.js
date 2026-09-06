@@ -1,3 +1,71 @@
+// ============================================================
+// VERANSTALTUNGEN — hier Termine eintragen, ändern oder entfernen.
+// Jeder Eintrag ist ein Objekt mit denselben Feldern wie unten:
+//   id           eindeutiger Kurzname, nur intern (erscheint nirgends im Text)
+//   categories   ein oder mehrere Filter: 'geselligkeit', 'vortraege', 'aktivitaet'
+//   dateISO      Datum als 'JJJJ-MM-TT' (wird zum zeitlichen Sortieren benutzt)
+//   day / month  wie das Datum im runden Lila-Badge angezeigt wird, z. B. '28' / 'Okt'
+//   title        Titel der Veranstaltung
+//   highlight    kurzer Zusatz-Satz, kann leer bleiben: ''
+//   time         Zeile mit Datum/Uhrzeit als Text
+//   location     Zeile mit dem Veranstaltungsort
+//   cost         Zeile mit Kosten/Hinweis zur Teilnahme
+//   summary      kurzer 2-Zeiler für die Terminliste im Panel
+//   description  ausführlicher Einladungstext als Liste von Absätzen
+//
+// Die zwei mit "[Beispiel]" markierten Einträge sind nur Platzhalter zum
+// Testen der Filter-Kategorien "Vorträge & Beratung" und "Aktivität" - bitte
+// vor dem Livegang durch echte Termine ersetzen oder entfernen.
+// ============================================================
+var ALLTAGSGESTALTER_EVENTS = [
+  {
+    id: 'kaffee-2026-10-28',
+    categories: ['geselligkeit', 'vortraege'],
+    dateISO: '2026-10-28',
+    day: '28',
+    month: 'Okt',
+    title: 'Auf einen gemütlichen Kaffee mit den Alltagsgestaltern',
+    highlight: 'Inklusive Impulsvortrag: Gesunde Ernährung im Alter',
+    time: 'Mittwoch, 28.10.2026 | 13:30 – 16:00 Uhr',
+    location: 'Gemeindehaus Alte Post, Gertrud-Caspari-Str. 10, 01109 Dresden',
+    cost: 'Kostenfrei · Inklusive Kaffee, kleinen Snacks & Getränken',
+    summary: 'Kaffee, gute Gespräche und ein Impulsvortrag zur gesunden Ernährung im Alter – lernen Sie Hannes Ferbert & Fynn Silbermann unverbindlich kennen.',
+    description: [
+      'Wünschen Sie sich manchmal etwas mehr Schwung im Alltag, Hilfe im Haushalt oder einfach ein gutes Gespräch bei einem Kaffee? Wir von den Alltagsgestaltern helfen älteren Menschen in Dresden, gut begleitet Zuhause zu leben.',
+      'Freuen Sie sich an diesem Nachmittag auf einen spannenden Gastbeitrag einer zertifizierten Ernährungsfachkraft zum Thema „Gesunde & genussvolle Ernährung im Alter“. Als Heilerziehungspfleger und gelernter Koch verknüpfen wir professionelle Alltagsbegleitung mit der Freude am gemeinsamen Kochen und Genuss.',
+      'Lernen Sie Hannes Ferbert & Fynn Silbermann unverbindlich kennen! Wir beantworten Ihre Fragen zur Alltagsunterstützung sowie dazu, wie die Pflegekasse diese Unterstützung finanziert (§ 45b SGB XI).'
+    ]
+  },
+  {
+    id: 'beispiel-vortrag',
+    categories: ['vortraege'],
+    dateISO: '2026-11-12',
+    day: '12',
+    month: 'Nov',
+    title: '[Beispiel] Vortrag: Sicher zuhause wohnen im Alter',
+    highlight: '',
+    time: 'Donnerstag, 12.11.2026 | 15:00 – 16:30 Uhr',
+    location: 'Beispielsaal, Musterstraße 1, 01067 Dresden',
+    cost: 'Kostenfrei',
+    summary: 'Platzhalter-Termin zum Testen der Kategorie „Vorträge & Beratung“ – bitte vor Veröffentlichung ersetzen oder entfernen.',
+    description: ['Dies ist ein Platzhalter-Eintrag, damit die Kategorie „Vorträge & Beratung“ beim Testen sichtbar ist. Bitte vor Veröffentlichung durch einen echten Termin ersetzen oder löschen.']
+  },
+  {
+    id: 'beispiel-aktivitaet',
+    categories: ['aktivitaet'],
+    dateISO: '2026-11-20',
+    day: '20',
+    month: 'Nov',
+    title: '[Beispiel] Gemeinsamer Spaziergang & Gedächtnistraining',
+    highlight: '',
+    time: 'Freitag, 20.11.2026 | 10:00 – 11:30 Uhr',
+    location: 'Treffpunkt Beispielpark, Dresden',
+    cost: 'Kostenfrei',
+    summary: 'Platzhalter-Termin zum Testen der Kategorie „Aktivität“ – bitte vor Veröffentlichung ersetzen oder entfernen.',
+    description: ['Dies ist ein Platzhalter-Eintrag, damit die Kategorie „Aktivität“ beim Testen sichtbar ist. Bitte vor Veröffentlichung durch einen echten Termin ersetzen oder löschen.']
+  }
+];
+
 // Verhindert, dass der Browser bei einem Seitenaufruf mit Hash in der URL
 // (z. B. Sprung von "ueber-uns" zu "/#zuhause") sofort hart zum Anker
 // springt; stattdessen bleibt die Seite oben, bis der eigene, sanfte
@@ -715,6 +783,121 @@ try {
             });
           });
           if (restartBtn) restartBtn.addEventListener('click', reset);
+        })();
+
+        // ---------- Veranstaltungen: Panel, Filter & Anmeldung ----------
+        // Nutzt die vorhandene, generische Modal-Logik (siehe modalDialogs
+        // oben) fuer Oeffnen/Schliessen/Fokus-Falle/ESC/Backdrop-Klick - der
+        // Trigger-Button braucht dafuer nur [data-modal-open="eventsPanel"].
+        (function eventsFeature() {
+          var panel = document.getElementById('eventsPanel');
+          var list = panel ? panel.querySelector('[data-events-list]') : null;
+          var tabs = panel ? Array.prototype.slice.call(panel.querySelectorAll('[data-event-filter]')) : [];
+          if (!panel || !list) return;
+
+          function findEvent(id) {
+            for (var i = 0; i < ALLTAGSGESTALTER_EVENTS.length; i++) {
+              if (ALLTAGSGESTALTER_EVENTS[i].id === id) return ALLTAGSGESTALTER_EVENTS[i];
+            }
+            return null;
+          }
+
+          // Es gibt (noch) kein eigenes Kontaktformular - "#kontakt" fuehrt
+          // zum Footer mit einem mailto-Link. Betreff/Text werden vor dem
+          // Hinscrollen mit den Termin-Angaben vorausgefuellt.
+          function primeSignupMail(evt) {
+            var mailLink = document.querySelector('a[href^="mailto:info@alltagsgestalter.de"]');
+            if (!mailLink || !evt) return;
+            var subject = 'Anmeldung: ' + evt.title;
+            var bodyLines = [
+              'Hallo Alltagsgestalter-Team,',
+              '',
+              'ich möchte mich gern für folgende Veranstaltung anmelden:',
+              '„' + evt.title + '“',
+              evt.time ? ('Termin: ' + evt.time) : null,
+              evt.location ? ('Ort: ' + evt.location) : null,
+              '',
+              'Bitte bestätigen Sie mir die Teilnahme.'
+            ].filter(function (line) { return line !== null; });
+            mailLink.href = 'mailto:info@alltagsgestalter.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+          }
+
+          function goToContact() {
+            var target = document.getElementById('kontakt');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+
+          function renderList(filter) {
+            var items = ALLTAGSGESTALTER_EVENTS
+              .filter(function (evt) { return filter === 'all' || evt.categories.indexOf(filter) !== -1; })
+              .slice()
+              .sort(function (a, b) { return a.dateISO < b.dateISO ? -1 : a.dateISO > b.dateISO ? 1 : 0; });
+
+            list.innerHTML = '';
+
+            if (!items.length) {
+              var empty = document.createElement('p');
+              empty.className = 'events-empty';
+              empty.textContent = 'Aktuell keine Termine in dieser Kategorie.';
+              list.appendChild(empty);
+              return;
+            }
+
+            items.forEach(function (evt) {
+              var card = document.createElement('article');
+              card.className = 'event-card';
+
+              var meta = ['<li><span aria-hidden="true">🕒</span> ' + evt.time + '</li>'];
+              if (evt.location) meta.push('<li><span aria-hidden="true">📍</span> ' + evt.location + '</li>');
+              if (evt.cost) meta.push('<li><span aria-hidden="true">💶</span> ' + evt.cost + '</li>');
+
+              var descriptionHtml = evt.description.map(function (p) { return '<p>' + p + '</p>'; }).join('');
+
+              card.innerHTML =
+                '<div class="event-card-date" aria-hidden="true"><span class="event-card-day">' + evt.day + '</span><span class="event-card-month">' + evt.month + '</span></div>' +
+                '<div class="event-card-body">' +
+                  '<h3 class="event-card-title">' + evt.title + '</h3>' +
+                  (evt.highlight ? '<p class="event-card-highlight">' + evt.highlight + '</p>' : '') +
+                  '<p class="event-card-summary">' + evt.summary + '</p>' +
+                  '<ul class="event-card-meta">' + meta.join('') + '</ul>' +
+                  '<details class="event-card-more"><summary>Mehr erfahren</summary><div class="event-card-description">' + descriptionHtml + '</div></details>' +
+                  '<button type="button" class="btn btn-primary event-card-signup">Anmelden</button>' +
+                '</div>';
+
+              var signupBtn = card.querySelector('.event-card-signup');
+              signupBtn.addEventListener('click', function () {
+                primeSignupMail(evt);
+                var closeBtn = panel.querySelector('.modal__close');
+                if (closeBtn) closeBtn.click();
+                window.setTimeout(goToContact, 150);
+              });
+
+              list.appendChild(card);
+            });
+          }
+
+          tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+              tabs.forEach(function (t) {
+                var active = t === tab;
+                t.classList.toggle('is-active', active);
+                t.setAttribute('aria-pressed', active ? 'true' : 'false');
+              });
+              renderList(tab.getAttribute('data-event-filter'));
+            });
+          });
+
+          renderList('all');
+
+          // Direkter Anmelde-Button auf der Startseite (ausserhalb des
+          // Panels): der Sanft-Scroll zu "#kontakt" laeuft bereits ueber den
+          // allgemeinen a[href^="#"]-Handler weiter oben - hier wird nur die
+          // Mail vorbereitet.
+          document.querySelectorAll('[data-event-signup]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              primeSignupMail(findEvent(btn.getAttribute('data-event-signup')));
+            });
+          });
         })();
 
     } catch (e) { console.error('Seiten-Skript:', e); }
