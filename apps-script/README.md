@@ -4,14 +4,17 @@ Die Website ist statisch (Hostinger). Das Formular auf `/#kontakt` schickt
 seine Daten per `fetch`-POST an eine **Google-Apps-Script-Web-App**, die
 in die Tabelle schreibt und eine Benachrichtigungs-E-Mail verschickt.
 
-## Einrichtung
+## Einrichtung (container-gebunden)
 
-1. **script.google.com** öffnen → **Neues Projekt**.
+Das Script läuft **direkt am Ziel-Spreadsheet** (nicht als eigenständiges
+Projekt) – so ist der Zugriff über `getActiveSpreadsheet()` ohne ID/Freigabe
+garantiert. Der frühere Versuch mit `openById('14bEf…')` scheiterte an
+„Illegal spreadsheet id or key".
+
+1. Ziel-Spreadsheet öffnen → **Erweiterungen → Apps Script**.
 2. Inhalt von [`Code.gs`](./Code.gs) komplett hineinkopieren, speichern.
 3. **Bereitstellen → Neue Bereitstellung → Typ: Web-App**
-   - *Beschreibung:* z. B. „Kontaktformular v1"
-   - *Ausführen als:* **Ich** (die Google-Konto-Adresse, die Zugriff auf
-     das Spreadsheet und auf `info@alltagsgestalter.de` / Gmail hat)
+   - *Ausführen als:* **Ich**
    - *Zugriff:* **Jeder**
 4. **Bereitstellen** klicken, beim ersten Mal die Berechtigungen
    bestätigen (Tabellen lesen/schreiben + E-Mail senden).
@@ -19,11 +22,15 @@ in die Tabelle schreibt und eine Benachrichtigungs-E-Mail verschickt.
 6. In [`../assets/app.js`](../assets/app.js) die Konstante
    `CONTACT_ENDPOINT` auf diese `/exec`-URL setzen, committen, deployen.
 
+> Code ändern → wirkt erst nach **neuer Version**:
+> *Bereitstellen → Bereitstellungen verwalten → Stift → Version: „Neue Version" → Bereitstellen*.
+> Die `/exec`-URL bleibt dabei gleich.
+
 ## Test
 
 - `…/exec` im Browser öffnen → JSON `{"ok":true,"service":…}` = läuft.
 - Formular auf der Seite abschicken → neue Zeile ab Zeile 10 im Blatt
-  **Formular_Anmeldungen**, Mail an `info@alltagsgestalter.de`.
+  **Formular_Anmeldungen**, Mail an `hannes.ferbert@alltagsgestalter.de`.
 
 ## Spalten (Reihenfolge = Append-Reihenfolge)
 

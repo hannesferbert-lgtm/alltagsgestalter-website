@@ -7,21 +7,24 @@
  * ins Sheet fehl, wird trotzdem die Mail versendet (Fallback), damit
  * keine Anfrage verloren geht.
  *
- * Deploy:
- *   1. script.google.com  →  Neues Projekt  →  diesen Code einfügen.
- *   2. Bereitstellen  →  Neue Bereitstellung  →  Typ „Web-App"
- *        - Ausführen als:  Ich (die Inhaber-Adresse des Sheets)
+ * Deploy (CONTAINER-GEBUNDEN – wichtig wegen getActiveSpreadsheet):
+ *   1. Ziel-Spreadsheet öffnen → Erweiterungen → Apps Script.
+ *   2. Diesen Code einfügen, speichern.
+ *   3. Bereitstellen → Neue Bereitstellung → Typ „Web-App"
+ *        - Ausführen als:  Ich
  *        - Zugriff:        Jeder
- *   3. Die erzeugte  …/exec-URL  in  assets/app.js  bei
+ *   4. Die erzeugte  …/exec-URL  in  assets/app.js  bei
  *      CONTACT_ENDPOINT  eintragen.
- *   4. Beim ersten Aufruf einmal die Berechtigungen bestätigen
+ *   5. Beim ersten Aufruf einmal die Berechtigungen bestätigen
  *      (Zugriff auf Tabellen + Gmail-Versand).
+ *
+ * Live-Stand: container-gebunden am Ziel-Spreadsheet, Benachrichtigung
+ * an hannes.ferbert@alltagsgestalter.de.
  */
 
-var SPREADSHEET_ID = '14bEfTyTSJjdSs6TFfYooxiE0Yiz1I5Z-_C2VUqjkDvw';
 var SHEET_NAME     = 'Formular_Anmeldungen';   // gid: 1669242116
 var FIRST_DATA_ROW = 10;                        // erste Datenzeile
-var NOTIFY_EMAIL   = 'info@alltagsgestalter.de';
+var NOTIFY_EMAIL   = 'hannes.ferbert@alltagsgestalter.de';
 var TZ             = 'Europe/Berlin';
 
 var COLUMNS = [
@@ -69,7 +72,7 @@ function doPost(e) {
   var sheetOk = false;
   var sheetError = '';
   try {
-    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(SHEET_NAME);
     if (!sheet) {
       sheetError = 'Tabellenblatt "' + SHEET_NAME + '" nicht gefunden. Vorhandene Blätter: ' +
