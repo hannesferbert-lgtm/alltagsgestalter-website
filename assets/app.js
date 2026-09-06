@@ -1059,7 +1059,24 @@ try {
           var feedback = form.querySelector('.contact-feedback');
           var submitBtn = form.querySelector('.contact-submit');
           var eventNameEl = modal.querySelector('[data-event-name]');
+          var successBox = modal.querySelector('[data-signup-success]');
+          var successText = modal.querySelector('[data-signup-success-text]');
+          var successDefault = successText ? successText.textContent : '';
           var current = { display: eventNameEl ? eventNameEl.textContent.trim() : '', betreff: '' };
+
+          function showForm() {
+            if (successBox) successBox.hidden = true;
+            form.hidden = false;
+          }
+          function showSuccess(withEmail) {
+            if (successText) {
+              successText.textContent = withEmail ? successDefault :
+                'Vielen Dank für Ihre Anmeldung! Wir haben Ihre Daten erhalten und melden ' +
+                'uns telefonisch bei Ihnen zur Bestätigung. Wir freuen uns auf Sie!';
+            }
+            form.hidden = true;
+            if (successBox) successBox.hidden = false;
+          }
 
           function formatDMY(iso) {
             var p = (iso || '').split('-');
@@ -1098,6 +1115,7 @@ try {
             feedback.hidden = true;
             feedback.className = 'contact-feedback';
             submitBtn.disabled = false;
+            showForm();
             if (eventNameEl) eventNameEl.textContent = current.display;
 
             var reopen = function () {
@@ -1144,6 +1162,11 @@ try {
               nachname: nachname,
               telefon: telefon,
               email: email,
+              // Strukturierte Zusatzfelder fuer die Bestaetigungs-Mail an
+              // den Anmelder (das Apps Script nutzt sie fuer die Mail,
+              // im Sheet stehen die Infos ohnehin in "nachricht"/"betreff").
+              eventName: eventName,
+              personen: personen,
               nachricht: 'Veranstaltung: ' + eventName +
                 '\nAnzahl Personen: ' + personen +
                 (anmerkung ? '\nAnmerkung/Fragen: ' + anmerkung : ''),
@@ -1155,11 +1178,9 @@ try {
 
             postToAppsScript(payload).then(function (res) {
               if (res && res.ok) {
-                form.reset();
                 submitBtn.disabled = false;
-                setFormFeedback(feedback, 'success',
-                  'Vielen Dank! Ihre Anmeldung für „' + eventName + '" ist eingegangen. ' +
-                  'Wir bestätigen sie Ihnen kurz per E-Mail oder Telefon.');
+                feedback.hidden = true;
+                showSuccess(!!email);
               } else {
                 eventFallback(payload, eventName);
               }

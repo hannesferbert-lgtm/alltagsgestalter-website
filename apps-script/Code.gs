@@ -93,10 +93,47 @@ function doPost(e) {
     mailOk = true;
   } catch (mailErr) {}
 
+  // Bestaetigungs-Mail an den Anmelder - nur bei Event-Anmeldung mit
+  // E-Mail-Adresse. Schlaegt sie fehl, bleibt die Anmeldung trotzdem gueltig.
+  var confirmOk = false;
+  if (str_(payload.anfrageTyp) === 'Event-Anmeldung' && email) {
+    try {
+      sendEventConfirmation_(payload, vorname, nachname, email);
+      confirmOk = true;
+    } catch (confErr) {}
+  }
+
   if (sheetOk || mailOk) {
-    return jsonOut_({ ok: true, leadId: leadId, sheet: sheetOk, mail: mailOk, sheetError: sheetError });
+    return jsonOut_({ ok: true, leadId: leadId, sheet: sheetOk, mail: mailOk, confirm: confirmOk, sheetError: sheetError });
   }
   return jsonOut_({ ok: false, error: 'Weder Tabelle noch E-Mail erreichbar.', sheetError: sheetError });
+}
+
+function sendEventConfirmation_(payload, vorname, nachname, email) {
+  var eventName = str_(payload.eventName) || str_(payload.betreff);
+  var personen = str_(payload.personen) || '1';
+  MailApp.sendEmail({
+    to: email,
+    subject: 'Ihre Anmeldung: ' + (str_(payload.betreff) || eventName),
+    name: 'Die Alltagsgestalter',
+    replyTo: NOTIFY_EMAIL,
+    body: [
+      'Hallo ' + (vorname ? vorname + ' ' : '') + nachname + ',',
+      '',
+      'vielen Dank für Ihre Anmeldung! Wir haben Ihre Daten erhalten.',
+      '',
+      'Ihre Anmeldung im Überblick:',
+      '– Veranstaltung: ' + eventName,
+      '– Name: ' + (vorname + ' ' + nachname).trim(),
+      '– Anzahl Personen: ' + personen,
+      '',
+      'Wir freuen uns auf Sie!',
+      '',
+      'Herzliche Grüße',
+      'Ihre Alltagsgestalter',
+      'Tel. 0151 20147853 · ' + NOTIFY_EMAIL
+    ].join('\n')
+  });
 }
 
 function sendNotification_(row, sheetOk, sheetError) {

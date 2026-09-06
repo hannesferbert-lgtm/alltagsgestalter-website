@@ -1210,6 +1210,64 @@
     color: var(--color-kohle);
   }
 
+  /* Haupt-Button des Anmelde-Formulars: weisse Schrift, mittlere Staerke,
+     normale Schreibweise - ueberschreibt .btn / .btn-primary. */
+  .event-signup-submit {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  /* Erfolgs-Zustand: Formular ausgeblendet, an gleicher Stelle Bestaetigung. */
+  .event-signup-success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+  .event-signup-success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-gruen) 22%, var(--color-surface));
+    color: color-mix(in srgb, var(--color-kohle) 78%, var(--color-gruen));
+  }
+  .event-signup-success-icon svg { width: 1.4rem; height: 1.4rem; }
+  .event-signup-success p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--color-text);
+  }
+  .event-signup-success .btn { align-self: flex-start; }
+
+  /* Schlichtes, dezentes Schliessen-Icon (nur Event-Anmelde-Modal). */
+  #eventSignupModal .modal__close {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: color-mix(in srgb, var(--color-kohle) 55%, transparent);
+    box-shadow: none;
+    letter-spacing: normal;
+  }
+  #eventSignupModal .modal__close svg { width: 1.4rem; height: 1.4rem; }
+  #eventSignupModal .modal__close:hover,
+  #eventSignupModal .modal__close:focus-visible {
+    background: color-mix(in srgb, var(--color-kohle) 8%, transparent);
+    border: 0;
+    color: var(--color-kohle);
+  }
+
   @media (max-width: 860px) {
     .contact-inner { grid-template-columns: 1fr; }
   }

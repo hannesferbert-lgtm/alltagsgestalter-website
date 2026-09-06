@@ -43,14 +43,21 @@ garantiert. Der frühere Versuch mit `openById('14bEf…')` scheiterte an
 
 ## Zwei Formulare, ein Endpoint
 
-| Quelle | `anfrageTyp` | Besonderheit |
+| Quelle | `anfrageTyp` | Zusätzliche Payload-Felder |
 |---|---|---|
 | Kontaktformular (`/#kontakt`) | frei wählbar (Dropdown) | – |
-| Event-Anmelde-Modal (`veranstaltungen`) | **fix `"Event-Anmeldung"`** | zusätzliches Payload-Feld `betreff` (Kurzname des Termins, z. B. `"Kaffee-Nachmittag 28.10."`); Termin, Personenzahl und Anmerkung stehen zusätzlich in `nachricht` (Spalte J) |
+| Event-Anmelde-Modal (`veranstaltungen`) | **fix `"Event-Anmeldung"`** | `betreff` (Kurzname, z. B. `"Kaffee-Nachmittag 28.10."`), `eventName` (voller Titel + Datum), `personen` (`1`/`2`/`3`/`4+`). Termin, Personenzahl & Anmerkung stehen außerdem in `nachricht` (Spalte J). |
 
-Der `betreff` kommt im JSON-Payload mit; die Zuordnung im Sheet läuft
-schon über Spalte D (`Anfrage-Typ`). Wer `betreff` in eine eigene Spalte
-schreiben will, ergänzt `COLUMNS`/`row` in `Code.gs` entsprechend.
+Die Zuordnung im Sheet läuft über Spalte D (`Anfrage-Typ`). `betreff`,
+`eventName` und `personen` landen **nicht** in eigenen Spalten – sie
+dienen nur der Bestätigungs-Mail. Wer sie im Sheet will, ergänzt
+`COLUMNS`/`row` in `Code.gs`.
+
+**Doppelter Mail-Versand bei Event-Anmeldung:**
+1. Teilnehmer-Benachrichtigung an `NOTIFY_EMAIL` (wie bei jeder Anfrage).
+2. Bestätigungs-Mail an den Anmelder (`sendEventConfirmation_`, nur wenn
+   eine E-Mail-Adresse angegeben wurde) mit Termin, Name und Personenzahl.
+   Die Antwort enthält dann zusätzlich `"confirm": true`.
 
 ## Fallback
 

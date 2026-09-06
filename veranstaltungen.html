@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light only">
 <link rel="canonical" href="https://die-alltagsgestalter.de/veranstaltungen">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20260907j">
+<link rel="stylesheet" href="assets/style.css?v=20260907k">
 </head>
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -111,12 +111,19 @@
   <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="eventSignup-title" tabindex="-1">
     <div class="modal__header">
       <h2 class="modal__title" id="eventSignup-title">Zu diesem Termin anmelden</h2>
-      <button type="button" class="modal__close" data-modal-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-        <span>Schließen</span>
+      <button type="button" class="modal__close modal__close-icon" data-modal-close aria-label="Schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
       </button>
     </div>
     <div class="modal__body">
+      <div class="event-signup-success" data-signup-success hidden>
+        <span class="event-signup-success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        </span>
+        <p data-signup-success-text>Vielen Dank für Ihre Anmeldung! Wir haben Ihre Daten erhalten und Ihnen eine Bestätigung an Ihre E-Mail-Adresse gesendet. Wir freuen uns auf Sie!</p>
+        <button type="button" class="btn btn-primary event-signup-submit" data-modal-close>Fenster schließen</button>
+      </div>
+
       <form class="contact-form event-signup-form" id="eventSignupForm" novalidate>
         <p class="event-signup-event">
           <span class="form-label">Veranstaltung</span>
@@ -166,7 +173,7 @@
           <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung meiner Anmeldung verarbeitet werden. Hinweise dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span>
         </label>
 
-        <button type="submit" class="btn btn-primary contact-submit">Verbindlich anmelden</button>
+        <button type="submit" class="btn btn-primary contact-submit event-signup-submit">Jetzt zum Termin anmelden</button>
         <p class="contact-feedback" role="status" aria-live="polite" hidden></p>
       </form>
     </div>
@@ -224,6 +231,6 @@
     </ul>
   </div>
 </footer>
-<script src="assets/app.js?v=20260907j" defer></script>
+<script src="assets/app.js?v=20260907k" defer></script>
 </body>
 </html>
