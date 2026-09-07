@@ -248,12 +248,29 @@ try {
           // Klick auf einen internen Link (Navigation, Footer, Buttons) als
           // auch beim Laden der Seite mit einem Hash in der URL genutzt
           // (z. B. Sprung von "ueber-uns" zu "/#zuhause").
+          // Kurzer, dezenter "hier bist du gelandet"-Hinweis auf dem
+          // angesteuerten Abschnitt (nicht auf Leistungskarten - die haben
+          // ihre eigene Hervorhebung).
+          var landingTimer = null;
+          var markLanding = function (el) {
+            if (!el || el.classList.contains('service-card')) return;
+            if (landingTimer) { window.clearTimeout(landingTimer); }
+            el.classList.remove('is-landing');
+            void el.offsetWidth; // Reflow -> Animation startet auch bei erneutem Sprung
+            el.classList.add('is-landing');
+            landingTimer = window.setTimeout(function () {
+              el.classList.remove('is-landing');
+              landingTimer = null;
+            }, 2000);
+          };
+
           var scrollToId = function (id) {
             var target = document.getElementById(id);
             if (!target) return false;
 
             pinnedCardId = id;
             requestCardUpdate(); // sofort neu bewerten, auch wenn sich die Scroll-Position nicht ändert
+            markLanding(target);
 
             // Kurze Ziele (z. B. eine Leistungskarte) werden in der Bildschirmmitte
             // platziert – das deckt sich mit der Logik, die oben erkennt, welche
@@ -287,6 +304,14 @@ try {
             var initialId = location.hash.slice(1);
             window.setTimeout(function () { scrollToId(initialId); }, 60);
           }
+
+          // Auch bei "/#..."-Links (Navigation/Footer), die der Browser als
+          // reinen Hash-Wechsel auf derselben Seite behandelt.
+          window.addEventListener('hashchange', function () {
+            if (location.hash && location.hash.length > 1) {
+              scrollToId(location.hash.slice(1));
+            }
+          });
         })();
       
         // ---------- Hero-Cursor: einmalige Begrüßungs-Geste beim ersten Laden ----------

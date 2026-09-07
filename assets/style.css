@@ -444,6 +444,18 @@
 
   section { position: relative; }
   .section-pad { padding-block: clamp(3.5rem, 7vw, 6.5rem); }
+
+  /* Dezenter "hier bist du gelandet"-Hinweis nach einem Anker-Sprung
+     (siehe markLanding in app.js). Kurzer, weicher Innen-Rahmen, der
+     ausblendet - kein Layout-Versatz, respektiert reduzierte Bewegung. */
+  .is-landing { animation: landing-hint 2s ease-out; }
+  @keyframes landing-hint {
+    0%, 12% { box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--color-violett) 50%, transparent); }
+    100% { box-shadow: inset 0 0 0 3px transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .is-landing { animation: none; }
+  }
   .blob-field { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
   .blob-field svg { position: absolute; }
 
