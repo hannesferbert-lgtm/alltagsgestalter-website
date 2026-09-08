@@ -1,0 +1,8 @@
+# Echte Proxy-Konfiguration – gehört NIE ins Repo und NIE in den Webroot.
+# Die richtige Ablage ist eine Ebene über public_html (siehe api/README.md).
+ag-form-config.php
+/api/ag-form-config.php
+/api/config.php
+
+# Lokale Rate-Limit-Zähler (falls rate_dir mal in den Repo-Ordner zeigt)
+/api/ag-form-ratelimit/

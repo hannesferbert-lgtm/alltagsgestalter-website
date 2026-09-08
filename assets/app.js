@@ -962,15 +962,17 @@ try {
           });
         })();
 
-        // ---------- Apps-Script-Anbindung (Kontakt + Event-Anmeldung) ----------
-        // Beide Formulare posten an dieselbe Google-Apps-Script-Web-App
-        // (siehe apps-script/README.md). Bewusst ohne Content-Type-Header
-        // => "simple request", kein CORS-Preflight, den Apps Script nicht
-        // beantworten wuerde.
-        var CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzMedSmRx_yXWBzj1LIY-yF3a4nu_0Oxi2aKHScURmT4ppS6IqmpBWSGAr-2CnUou-0/exec';
+        // ---------- Formular-Anbindung (Kontakt + Event-Anmeldung) ----------
+        // Beide Formulare posten an unseren eigenen PHP-Spam-Proxy
+        // (api/send-to-apps-script.php). Der prueft/rate-limitet die Anfrage
+        // serverseitig und leitet sie dann an die Google-Apps-Script-Web-App
+        // weiter (siehe api/README.md). Er liefert dieselbe JSON-Struktur
+        // ({ok: true/false, ...}) zurueck, daher bleibt die Logik hier gleich.
+        // Bewusst ohne Content-Type-Header => "simple request".
+        var CONTACT_ENDPOINT = '/api/send-to-apps-script.php';
 
         function postToAppsScript(payload) {
-          if (!CONTACT_ENDPOINT || CONTACT_ENDPOINT.indexOf('/exec') === -1) {
+          if (!CONTACT_ENDPOINT) {
             return Promise.reject(new Error('Kein Endpoint konfiguriert.'));
           }
           var ctrl = ('AbortController' in window) ? new AbortController() : null;
