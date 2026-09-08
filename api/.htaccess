@@ -1,0 +1,7 @@
+# Nur der Proxy-Endpoint (send-to-apps-script.php) soll erreichbar sein.
+Options -Indexes
+
+# Beispiel-Config, Doku, JSON-/Zähler-Dateien nicht ausliefern.
+<FilesMatch "(\.example\.php$|\.md$|\.json$|^ag-form-config\.php$|^config\.php$)">
+    Require all denied
+</FilesMatch>
