@@ -15,7 +15,8 @@
     /* ===== Design-System-Update (PDF 2026-09-08) ===== */
 
     /* --- Farbpalette --- */
-    --color-primary: #EE87BD;          /* Hauptfarbe – RGB 238 135 189 */
+    --color-primary: #EE87BD;          /* Hauptfarbe (Akzent/Deko) – RGB 238 135 189 */
+    --color-ui: #A687C7;               /* Interaktiv: Buttons, Outlines, Logo, Menue – RGB 166 135 199 */
     --color-lavendel: #D1B4DC;         /* RGB 209 180 220 */
     --color-akzent-hell: #E2E0F0;      /* RGB 226 224 240 */
 
@@ -26,9 +27,9 @@
     --area-genuss:       #E8651F;  --area-genuss-2:     #FFE08F;  --area-genuss-3:     #9BF06B;
 
     /* Alt-Variablennamen auf die neue Palette gebogen -> Rest des
-       Stylesheets zieht automatisch mit. --color-violett war die alte
-       Hauptfarbe -> jetzt = neue Hauptfarbe (#EE87BD). */
-    --color-violett:      var(--color-primary);
+       Stylesheets zieht automatisch mit. --color-violett treibt Buttons,
+       Badges, Fokus-Ringe etc. -> = interaktive Farbe #A687C7. */
+    --color-violett:      var(--color-ui);
     --color-violett-card: var(--color-lavendel);
     --color-orange:       var(--area-genuss);
     --color-orange-card:  var(--area-genuss);
@@ -63,7 +64,7 @@
     --fs-brand: 12px;           /* Firmenname / Tagline */
 
     --color-tile-bg: #FFFFFF;
-    --color-tile-border: var(--color-primary);
+    --color-tile-border: var(--color-ui);
 
     --shadow-soft: 0 18px 40px -24px rgba(0, 0, 0, 0.16);
     --radius-lg: 28px;
@@ -307,7 +308,7 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--color-ui);
     display: flex;
     align-items: baseline;
     gap: 0.4rem;
@@ -325,12 +326,13 @@
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
+    color: var(--color-ui);
     padding: 0.4rem 0.1rem;
     border-bottom: 2px solid transparent;
     transition: border-color 0.15s ease, color 0.15s ease;
   }
   nav.main-nav a:hover,
-  nav.main-nav a[aria-current="true"] { border-color: var(--color-primary); }
+  nav.main-nav a[aria-current="true"] { border-color: var(--color-ui); }
 
   .nav-toggle {
     display: none;
@@ -460,7 +462,7 @@
       min-height: 0;
       padding: 1rem 1.5rem;
       border-radius: 999px;
-      background: #9980C0;
+      background: var(--color-ui);
       color: #fff;
       font-size: 1rem;
       font-weight: 600;
@@ -469,7 +471,7 @@
       box-shadow: 0 4px 6px -1px rgba(30, 22, 15, 0.18), 0 2px 4px -2px rgba(30, 22, 15, 0.18);
     }
     nav.main-nav a.nav-cta:hover,
-    nav.main-nav a.nav-cta:focus-visible { background: color-mix(in srgb, #9980C0 88%, #000); }
+    nav.main-nav a.nav-cta:focus-visible { background: color-mix(in srgb, var(--color-ui) 88%, #000); }
     nav.main-nav a.nav-cta svg { width: 1.15rem; height: 1.15rem; flex-shrink: 0; }
   }
 
@@ -1965,7 +1967,7 @@
     gap: 0.6rem;
     padding: 0.5rem 1.1rem 0.5rem 0.5rem;
     background: var(--color-surface);
-    border: 1.5px solid var(--color-tile-border);
+    border: 1.5px solid var(--color-violett);
     border-radius: 999px;
     box-shadow: 0 2px 8px -4px rgba(30, 22, 15, 0.18);
     cursor: pointer;
