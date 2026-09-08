@@ -11,38 +11,61 @@
   }
 
   :root {
-    
-    --color-violett: #A688C7;
-    --color-blau: #2C3E50;
-    --color-orange: #FF6A00;
-    --color-gruen: #6DBA6D;
-    --color-sand: #F2E7D6;
-    --color-kohle: #1E1E1E;
 
-    --color-violett-card: #baa2d3;
-    --color-orange-card: #ff8b38;
+    /* ===== Design-System-Update (PDF 2026-09-08) ===== */
 
-    --color-primary: var(--color-violett);
-    --color-secondary: var(--color-blau);
-    --color-green: var(--color-gruen);
+    /* --- Farbpalette --- */
+    --color-primary: #EE87BD;          /* Hauptfarbe – RGB 238 135 189 */
+    --color-lavendel: #D1B4DC;         /* RGB 209 180 220 */
+    --color-akzent-hell: #E2E0F0;      /* RGB 226 224 240 */
+
+    /* Bereichsfarben: Primaer / Sekundaer(e) */
+    --area-zuhause:      #826C93;  --area-zuhause-2:    #B2CCFA;
+    --area-zeit:         #9BBA7A;  --area-zeit-2:       #FAECE3;
+    --area-aktivitaet:   #7AC897;  --area-aktivitaet-2: #B2E9CC;  --area-aktivitaet-3: #D9F0E3;
+    --area-genuss:       #E8651F;  --area-genuss-2:     #FFE08F;  --area-genuss-3:     #9BF06B;
+
+    /* Alt-Variablennamen auf die neue Palette gebogen -> Rest des
+       Stylesheets zieht automatisch mit. --color-violett war die alte
+       Hauptfarbe -> jetzt = neue Hauptfarbe (#EE87BD). */
+    --color-violett:      var(--color-primary);
+    --color-violett-card: var(--color-lavendel);
+    --color-orange:       var(--area-genuss);
+    --color-orange-card:  var(--area-genuss);
+    --color-gruen:        var(--area-aktivitaet);
+    --color-green:        var(--area-aktivitaet);
+    --color-sand:         var(--color-akzent-hell);
+    --color-blau:         #2C3E50;
+    --color-secondary:    var(--color-blau);
+
+    /* --- Text: einheitlich Schwarz --- */
+    --color-text: #000000;
+    --color-kohle: #000000;
+    --color-text-soft: #333333;
 
     --color-bg: #FAFAF8;
     --color-bg-alt: #F5F4F0;
     --color-surface: #FFFFFF;
-    --color-text: #1E1E1E;
-    --color-text-soft: #4A4540;
-    --color-border: #DCCBAE;
+    --color-border: #E6E1EC;
 
-    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    /* --- Schrift: eine Familie --- */
     --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-    --font-script: 'Caveat', cursive;
+    --font-display: var(--font-body);
+    --font-script: var(--font-body);
+    --font-readable: var(--font-body);
 
-    --font-readable: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    /* --- Schriftgroessen --- */
+    --fs-body: 18px;            /* Fliesstext */
+    --fs-button: 14px;          /* Buttons */
+    --fs-heading-lg: 48px;      /* Ueberschrift gross */
+    --fs-heading-inner: 32px;   /* Ueberschrift innen */
+    --fs-heading-sm: 24px;      /* Ueberschrift klein */
+    --fs-brand: 12px;           /* Firmenname / Tagline */
 
     --color-tile-bg: #FFFFFF;
-    --color-tile-border: color-mix(in srgb, var(--color-violett) 28%, white);
+    --color-tile-border: var(--color-primary);
 
-    --shadow-soft: 0 20px 45px -25px rgba(30, 22, 15, 0.35);
+    --shadow-soft: 0 18px 40px -24px rgba(0, 0, 0, 0.16);
     --radius-lg: 28px;
     --radius-md: 18px;
     --content-width: 1180px;
@@ -63,7 +86,7 @@
     color: var(--color-text);
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: var(--fs-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
@@ -74,7 +97,14 @@
     line-height: 1.12;
     text-wrap: balance;
     margin: 0;
+    color: var(--color-text);
   }
+  /* Ueberschriften-Groessen aus dem Design-System (Desktop = Zielwert,
+     darunter fluid, damit Mobil nicht bricht). */
+  h1 { font-size: clamp(2rem, 6.5vw, var(--fs-heading-lg)); }
+  h2 { font-size: clamp(1.5rem, 4.5vw, var(--fs-heading-inner)); }
+  h3 { font-size: var(--fs-heading-sm); }
+  h4 { font-size: 1rem; }
 
   p { margin: 0; }
   ul { margin: 0; padding: 0; list-style: none; }
@@ -214,7 +244,7 @@
     gap: 0.6rem;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: var(--fs-button);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
@@ -273,16 +303,17 @@
   .logo {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.25rem;
-    letter-spacing: 0.01em;
+    font-size: var(--fs-brand);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     text-decoration: none;
     color: var(--color-text);
     display: flex;
     align-items: baseline;
-    gap: 0.35rem;
+    gap: 0.4rem;
     white-space: nowrap;
   }
-  .logo .script { font-size: 1.5rem; }
+  .logo .script { font-size: calc(var(--fs-brand) * 1.25); text-transform: none; }
 
   nav.main-nav ul {
     display: flex;
@@ -494,12 +525,12 @@
     padding: 0.35rem 0.85rem;
     border-radius: 8px;
     font-family: var(--font-body);
-    font-size: 12px;
+    font-size: var(--fs-brand);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-kohle);
-    background: color-mix(in srgb, var(--color-violett) 20%, transparent);
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
     text-wrap: balance;
   }
 
@@ -518,7 +549,7 @@
 
   .hero-title {
     font-family: var(--font-body);
-    font-size: 40px;
+    font-size: clamp(2rem, 6.5vw, var(--fs-heading-lg));
     font-weight: 700;
     margin-top: 0.7rem;
     line-height: 1.25;
@@ -634,16 +665,8 @@
     position: relative;
     width: min(420px, 100%);
   }
-  .hero-frame::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translate(16px, 16px);
-    
-    background: var(--color-violett);
-    border-radius: var(--radius-lg);
-    z-index: 0;
-  }
+  /* Lilafarbener Versatz-"Schatten" hinter dem Foto entfernt (Design-Update). */
+  .hero-frame::before { content: none; }
   .hero-frame .art-panel {
     position: relative;
     z-index: 1;
@@ -775,25 +798,29 @@
     transform: translateY(-4px);
   }
   .card-violet:hover, .card-violet:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(166, 136, 199, 0.35);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-zuhause) 40%, transparent);
   }
   .card-orange:hover, .card-orange:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(255, 106, 0, 0.3);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-zeit) 40%, transparent);
   }
   .card-green:hover, .card-green:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(109, 186, 109, 0.3);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-aktivitaet) 40%, transparent);
   }
   .card-sand:hover, .card-sand:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(30, 30, 30, 0.15);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-genuss) 35%, transparent);
   }
   
   .service-card:focus-visible {
     outline: 3px solid var(--color-kohle);
   }
 
-  .service-card .art-holder { width: 128px; height: 128px; overflow: visible; }
+  /* Icon/Illustration mittig in der Kachel ausrichten (Design-Update). */
+  .service-card .art-holder {
+    width: 128px; height: 128px; overflow: visible;
+    align-self: center;
+  }
   .service-card .art-holder img {
-    width: 100%; height: 100%; object-fit: contain; object-position: center bottom; display: block;
+    width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;
     transition: transform 0.4s ease-in-out;
   }
   .service-card:hover .art-holder img,
@@ -859,14 +886,17 @@
     margin-bottom: -0.2rem;
   }
 
-  .card-violet { border-top-width: 4px; border-top-color: #8A72B8; }
-  .card-violet .kicker { color: var(--color-kohle); background: color-mix(in srgb, #8A72B8 24%, transparent); }
-  .card-orange { border-top-width: 4px; border-top-color: #F28C44; }
-  .card-orange .kicker { color: var(--color-kohle); background: color-mix(in srgb, #F28C44 22%, transparent); }
-  .card-green { border-top-width: 4px; border-top-color: #60B571; }
-  .card-green .kicker { color: var(--color-kohle); background: color-mix(in srgb, #60B571 22%, transparent); }
-  .card-sand { border-top-width: 4px; border-top-color: #E2BA46; }
-  .card-sand .kicker { color: var(--color-blau); background: color-mix(in srgb, #E2BA46 32%, transparent); }
+  /* Kachelrahmen einheitlich (rundum, 2.5px) in der jeweiligen
+     Bereichsfarbe. card-violet = Zuhause, card-orange = Zeit,
+     card-green = Aktivitaet, card-sand = Genuss. */
+  .card-violet { border: 2.5px solid var(--area-zuhause); }
+  .card-violet .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--area-zuhause) 22%, transparent); }
+  .card-orange { border: 2.5px solid var(--area-zeit); }
+  .card-orange .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--area-zeit) 26%, transparent); }
+  .card-green { border: 2.5px solid var(--area-aktivitaet); }
+  .card-green .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--area-aktivitaet) 26%, transparent); }
+  .card-sand { border: 2.5px solid var(--area-genuss); }
+  .card-sand .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--area-genuss) 20%, transparent); }
 
   .pflegekasse-highlight {
     display: flex;
@@ -2427,11 +2457,12 @@
     left: 20px;
     bottom: -0.1rem;
     transform: translateX(-50%);
-    color: var(--color-violett);
+    color: var(--color-primary);
     font-size: 1.1rem;
     line-height: 1;
   }
 
+  /* Zahlen-Badges: mittig, sitzen zentriert auf der Ablauf-Linie. */
   .process-badge {
     display: flex;
     align-items: center;
@@ -2440,8 +2471,8 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--color-violett);
-    color: var(--color-kohle);
+    background: var(--color-primary);
+    color: #ffffff;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1rem;
@@ -2490,25 +2521,32 @@
       top: 50%;
       height: 2px;
       transform: translateY(-50%);
-      background: color-mix(in srgb, var(--color-violett) 45%, transparent);
+      background: color-mix(in srgb, var(--color-primary) 55%, transparent);
       z-index: 0;
     }
 
     .process-step {
       display: grid;
-      grid-template-rows: 1fr auto 1fr;
-      row-gap: 0.85rem;
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      row-gap: 3.25rem;
       flex: 1;
       min-width: 0;
       justify-items: center;
       text-align: center;
       padding-bottom: 0;
+      position: relative;
     }
     .process-step:not(:last-child)::after { content: none; }
 
-    .process-badge { grid-row: 2; }
-    .process-step-up .process-step-card { grid-row: 1; align-self: end; }
-    .process-step-down .process-step-card { grid-row: 3; align-self: start; }
+    /* Zahl exakt auf der senkrechten Schritt-Mitte = auf der Ablauf-Linie. */
+    .process-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .process-step-up .process-step-card { grid-row: 1; align-self: end; margin-bottom: 0.5rem; }
+    .process-step-down .process-step-card { grid-row: 2; align-self: start; margin-top: 0.5rem; }
 
     .process-step-card {
       width: 100%;
