@@ -14,14 +14,14 @@
      MARKEN-DESIGN-SYSTEM (Die Alltagsgestalter)
      ========================================================================== */
   :root {
-    /* Typografie & Hauptfarben */
+    /* Schriften & Hauptfarben */
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     --color-text-main: #000000;
-    --color-primary: #EE87BD;       /* Echtes Marken-Pink */
+    --color-primary: #EE87BD;       /* Das neue Marken-Pink */
     --color-lavender: #D1B4DC;      /* Soft Purple */
     --color-accent-light: #E2E0F0;  /* Light Accent */
 
-    /* Typografie-Größen */
+    /* Schriftgrößen aus dem Handbuch */
     --font-size-body: 18px;
     --font-size-btn: 14px;
     --font-size-h1: 48px;
@@ -29,11 +29,11 @@
     --font-size-h3: 24px;
     --font-size-tagline: 12px;
 
-    /* Bereichsfarben */
-    --b1-primary: #826C93; --b1-bg: #B2CCFA; /* Zuhause */
-    --b2-primary: #9BBA7A; --b2-bg: #FAECE3; /* Zeit */
+    /* Die 4 Bereichsfarben */
+    --b1-primary: #826C93; --b1-bg: #B2CCFA; /* Zuhause & Wohlbefinden */
+    --b2-primary: #9BBA7A; --b2-bg: #FAECE3; /* Zeit & Begleitung */
     --b3-primary: #7AC897; --b3-mint: #B2E9CC; --b3-light: #D9F0E3; /* Aktivität */
-    --b4-orange: #E8651F; --b4-yellow: #FFE08F; --b4-green: #9BF06B; /* Genuss */
+    --b4-orange: #E8651F; --b4-yellow: #FFE08F; --b4-green: #9BF06B; /* Genuss & Ernährung */
   }
 
   /* ===================================================================
@@ -101,8 +101,8 @@
     color: #000000 !important;
   }
 
-  /* Buttons auf das neue Pink umstellen */
-  .btn-primary, button[type="submit"], .btn-purple, .btn-main {
+  /* Buttons auf das Marken-Pink umstellen */
+  .btn-primary, button[type="submit"], .btn-purple, .btn-main, a.btn {
     background-color: var(--color-primary) !important;
     color: #000000 !important;
     font-size: var(--font-size-btn) !important;
