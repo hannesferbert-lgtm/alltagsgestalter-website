@@ -14,17 +14,20 @@
 
     /* ===== Design-System-Update (PDF 2026-09-08) ===== */
 
-    /* --- Farbpalette --- */
-    --color-primary: #EE87BD;          /* Hauptfarbe (Akzent/Deko) – RGB 238 135 189 */
-    --color-ui: #A687C7;               /* Interaktiv: Buttons, Outlines, Logo, Menue – RGB 166 135 199 */
-    --color-lavendel: #D1B4DC;         /* RGB 209 180 220 */
-    --color-akzent-hell: #E2E0F0;      /* RGB 226 224 240 */
+    /* --- Farbpalette (Markenvorgaben) --- */
+    --color-primary:      #EE87BD;     /* Hauptfarbe – RGB 238 135 189 */
+    --color-lavender:     #D1B4DC;     /* RGB 209 180 220 */
+    --color-accent-light: #E2E0F0;     /* RGB 226 224 240 */
+    --color-ui:           #A687C7;     /* Interaktiv: Buttons, Outlines, Logo, Menue – RGB 166 135 199 */
+    /* deutsche Alt-Namen als Alias */
+    --color-lavendel:     var(--color-lavender);
+    --color-akzent-hell:  var(--color-accent-light);
 
-    /* Bereichsfarben: Primaer / Sekundaer(e) */
-    --area-zuhause:      #826C93;  --area-zuhause-2:    #B2CCFA;
-    --area-zeit:         #9BBA7A;  --area-zeit-2:       #FAECE3;
-    --area-aktivitaet:   #7AC897;  --area-aktivitaet-2: #B2E9CC;  --area-aktivitaet-3: #D9F0E3;
-    --area-genuss:       #E8651F;  --area-genuss-2:     #FFE08F;  --area-genuss-3:     #9BF06B;
+    /* --- Die 4 Bereichsfarben: Primaer | Akzent(e) --- */
+    --area-zuhause:      #826C93;  --area-zuhause-2:    #B2CCFA;  /* Zuhause & Wohlbefinden */
+    --area-zeit:         #9BBA7A;  --area-zeit-2:       #FAECE3;  /* Zeit & Begleitung */
+    --area-aktivitaet:   #7AC897;  --area-aktivitaet-2: #B2E9CC;  --area-aktivitaet-3: #D9F0E3; /* Aktivitaet */
+    --area-genuss:       #E8651F;  --area-genuss-2:     #FFE08F;  --area-genuss-3:     #9BF06B; /* Genuss & Ernaehrung */
 
     /* Alt-Variablennamen auf die neue Palette gebogen -> Rest des
        Stylesheets zieht automatisch mit. --color-violett treibt Buttons,
@@ -49,11 +52,12 @@
     --color-surface: #FFFFFF;
     --color-border: #E6E1EC;
 
-    /* --- Schrift: eine Familie --- */
-    --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-    --font-display: var(--font-body);
-    --font-script: var(--font-body);
-    --font-readable: var(--font-body);
+    /* --- Schrift: ausschliesslich Inter --- */
+    --font-family: 'Inter', sans-serif;
+    --font-body: var(--font-family);
+    --font-display: var(--font-family);
+    --font-script: var(--font-family);
+    --font-readable: var(--font-family);
 
     /* --- Schriftgroessen --- */
     --fs-body: 18px;            /* Fliesstext */
@@ -315,6 +319,8 @@
     white-space: nowrap;
   }
   .logo .script { font-size: calc(var(--fs-brand) * 1.25); text-transform: none; }
+  /* Das 'a' von "alltagsgestalter" in der Hauptfarbe hervorheben. */
+  .logo .logo-mark { color: var(--color-primary); font-weight: 800; }
 
   nav.main-nav ul {
     display: flex;
@@ -676,7 +682,8 @@
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
+    /* Kein Schlagschatten an Bildern (Markenvorgabe). */
+    box-shadow: none;
   }
   .hero-frame .art-panel img {
     display: block;
@@ -1775,7 +1782,7 @@
     height: auto;
     display: block;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
   }
   .ratgeber-article .article-photo figcaption {
     margin-top: 0.6rem;
