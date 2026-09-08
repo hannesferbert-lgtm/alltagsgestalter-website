@@ -10,15 +10,18 @@
     forced-color-adjust: none;
   }
 
+  /* ==========================================================================
+     MARKEN-DESIGN-SYSTEM (Die Alltagsgestalter)
+     ========================================================================== */
   :root {
-    /* Schriften & Hauptfarben */
+    /* Typografie & Hauptfarben */
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     --color-text-main: #000000;
-    --color-primary: #EE87BD;       /* Primary Pink */
+    --color-primary: #EE87BD;       /* Echtes Marken-Pink */
     --color-lavender: #D1B4DC;      /* Soft Purple */
     --color-accent-light: #E2E0F0;  /* Light Accent */
 
-    /* Schriftgrößen */
+    /* Typografie-Größen */
     --font-size-body: 18px;
     --font-size-btn: 14px;
     --font-size-h1: 48px;
@@ -26,39 +29,26 @@
     --font-size-h3: 24px;
     --font-size-tagline: 12px;
 
-    /* Bereich 1: Zuhause & Wohlbefinden */
-    --b1-primary: #826C93;
-    --b1-bg: #B2CCFA;
+    /* Bereichsfarben */
+    --b1-primary: #826C93; --b1-bg: #B2CCFA; /* Zuhause */
+    --b2-primary: #9BBA7A; --b2-bg: #FAECE3; /* Zeit */
+    --b3-primary: #7AC897; --b3-mint: #B2E9CC; --b3-light: #D9F0E3; /* Aktivität */
+    --b4-orange: #E8651F; --b4-yellow: #FFE08F; --b4-green: #9BF06B; /* Genuss */
+  }
 
-    /* Bereich 2: Zeit & Begleitung */
-    --b2-primary: #9BBA7A;
-    --b2-bg: #FAECE3;
-
-    /* Bereich 3: Aktivität */
-    --b3-primary: #7AC897;
-    --b3-mint: #B2E9CC;
-    --b3-light: #D9F0E3;
-
-    /* Bereich 4: Genuss & Ernährung */
-    --b4-orange: #E8651F;
-    --b4-yellow: #FFE08F;
-    --b4-green: #9BF06B;
-
-    /* ===================================================================
-       Interne Aliase – NICHT direkt verwenden. Mappen die im restlichen
-       Stylesheet verstreuten Alt-Namen auf die Markenvorgaben oben.
-       =================================================================== */
-
-    /* Interaktivfarbe (Buttons, Outlines, Logo-Wortmarke, Menue) */
+  /* ===================================================================
+     Interne Aliase – NICHT direkt verwenden. Mappen die im restlichen
+     Stylesheet verstreuten Alt-Namen auf die Markenvorgaben oben.
+     =================================================================== */
+  :root {
+    /* Interaktivfarbe (nicht-primäre Buttons, Outlines, Logo-Wortmarke, Menü) */
     --color-ui: #A687C7;
 
-    /* Schrift */
     --font-body:     var(--font-family);
     --font-display:  var(--font-family);
     --font-script:   var(--font-family);
     --font-readable: var(--font-family);
 
-    /* Schriftgroessen (Alt-Namen -> Markennamen) */
     --fs-body:          var(--font-size-body);
     --fs-button:        var(--font-size-btn);
     --fs-heading-lg:    var(--font-size-h1);
@@ -66,18 +56,15 @@
     --fs-heading-sm:    var(--font-size-h3);
     --fs-brand:         var(--font-size-tagline);
 
-    /* Bereichsfarben (Alt-Namen -> Markennamen) */
     --area-zuhause:      var(--b1-primary);  --area-zuhause-2:    var(--b1-bg);
     --area-zeit:         var(--b2-primary);  --area-zeit-2:       var(--b2-bg);
     --area-aktivitaet:   var(--b3-primary);  --area-aktivitaet-2: var(--b3-mint);   --area-aktivitaet-3: var(--b3-light);
     --area-genuss:       var(--b4-orange);   --area-genuss-2:     var(--b4-yellow); --area-genuss-3:     var(--b4-green);
 
-    /* Text */
     --color-text:      var(--color-text-main);
     --color-kohle:     var(--color-text-main);
     --color-text-soft: #333333;
 
-    /* deutsche / historische Farbnamen */
     --color-lavendel:     var(--color-lavender);
     --color-akzent-hell:  var(--color-accent-light);
     --color-violett:      var(--color-ui);
@@ -90,7 +77,6 @@
     --color-blau:         #2C3E50;
     --color-secondary:    var(--color-blau);
 
-    /* Flaechen / Rahmen / Schatten */
     --color-bg: #FAFAF8;
     --color-bg-alt: #F5F4F0;
     --color-surface: #FFFFFF;
@@ -102,6 +88,47 @@
     --radius-md: 18px;
     --content-width: 1180px;
   }
+
+  /* Globale Schriften & Farben */
+  body, p, li, span {
+    font-family: var(--font-family) !important;
+    color: var(--color-text-main) !important;
+    font-size: var(--font-size-body) !important;
+  }
+
+  h1, .hero-title {
+    font-size: var(--font-size-h1) !important;
+    color: #000000 !important;
+  }
+
+  /* Buttons auf das neue Pink umstellen */
+  .btn-primary, button[type="submit"], .btn-purple, .btn-main {
+    background-color: var(--color-primary) !important;
+    color: #000000 !important;
+    font-size: var(--font-size-btn) !important;
+    border: none !important;
+  }
+
+  /* Schlagschatten bei Bildern entfernen */
+  img, .hero-frame, .card-img, .shadow-soft {
+    box-shadow: none !important;
+  }
+
+  /* --- Ausnahmen: Klein-/Markentext, den die pauschale span-Regel oben
+         sonst auf 18px/Schwarz zwingt. Größen aus dem Handbuch. --- */
+  .hero-title .hero-title-line,
+  .hero-title span { font-size: inherit !important; color: inherit !important; }
+
+  .hero-tag, .hero-tag *,
+  .eyebrow,
+  .nav-badge,
+  .logo, .logo span { font-size: var(--font-size-tagline) !important; }
+  .service-card .kicker { font-size: 0.72rem !important; }
+  .logo .script { font-size: calc(var(--font-size-tagline) * 1.25) !important; }
+
+  /* Logo- & Menüfarben bleiben erhalten */
+  .logo, nav.main-nav a { color: var(--color-ui) !important; }
+  .logo .logo-mark { color: var(--color-primary) !important; }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; overflow-x: hidden; }
