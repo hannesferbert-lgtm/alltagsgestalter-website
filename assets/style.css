@@ -11,65 +11,92 @@
   }
 
   :root {
+    /* Schriften & Hauptfarben */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --color-text-main: #000000;
+    --color-primary: #EE87BD;       /* Primary Pink */
+    --color-lavender: #D1B4DC;      /* Soft Purple */
+    --color-accent-light: #E2E0F0;  /* Light Accent */
 
-    /* ===== Design-System-Update (PDF 2026-09-08) ===== */
+    /* Schriftgrößen */
+    --font-size-body: 18px;
+    --font-size-btn: 14px;
+    --font-size-h1: 48px;
+    --font-size-h2: 32px;
+    --font-size-h3: 24px;
+    --font-size-tagline: 12px;
 
-    /* --- Farbpalette (Markenvorgaben) --- */
-    --color-primary:      #EE87BD;     /* Hauptfarbe – RGB 238 135 189 */
-    --color-lavender:     #D1B4DC;     /* RGB 209 180 220 */
-    --color-accent-light: #E2E0F0;     /* RGB 226 224 240 */
-    --color-ui:           #A687C7;     /* Interaktiv: Buttons, Outlines, Logo, Menue – RGB 166 135 199 */
-    /* deutsche Alt-Namen als Alias */
+    /* Bereich 1: Zuhause & Wohlbefinden */
+    --b1-primary: #826C93;
+    --b1-bg: #B2CCFA;
+
+    /* Bereich 2: Zeit & Begleitung */
+    --b2-primary: #9BBA7A;
+    --b2-bg: #FAECE3;
+
+    /* Bereich 3: Aktivität */
+    --b3-primary: #7AC897;
+    --b3-mint: #B2E9CC;
+    --b3-light: #D9F0E3;
+
+    /* Bereich 4: Genuss & Ernährung */
+    --b4-orange: #E8651F;
+    --b4-yellow: #FFE08F;
+    --b4-green: #9BF06B;
+
+    /* ===================================================================
+       Interne Aliase – NICHT direkt verwenden. Mappen die im restlichen
+       Stylesheet verstreuten Alt-Namen auf die Markenvorgaben oben.
+       =================================================================== */
+
+    /* Interaktivfarbe (Buttons, Outlines, Logo-Wortmarke, Menue) */
+    --color-ui: #A687C7;
+
+    /* Schrift */
+    --font-body:     var(--font-family);
+    --font-display:  var(--font-family);
+    --font-script:   var(--font-family);
+    --font-readable: var(--font-family);
+
+    /* Schriftgroessen (Alt-Namen -> Markennamen) */
+    --fs-body:          var(--font-size-body);
+    --fs-button:        var(--font-size-btn);
+    --fs-heading-lg:    var(--font-size-h1);
+    --fs-heading-inner: var(--font-size-h2);
+    --fs-heading-sm:    var(--font-size-h3);
+    --fs-brand:         var(--font-size-tagline);
+
+    /* Bereichsfarben (Alt-Namen -> Markennamen) */
+    --area-zuhause:      var(--b1-primary);  --area-zuhause-2:    var(--b1-bg);
+    --area-zeit:         var(--b2-primary);  --area-zeit-2:       var(--b2-bg);
+    --area-aktivitaet:   var(--b3-primary);  --area-aktivitaet-2: var(--b3-mint);   --area-aktivitaet-3: var(--b3-light);
+    --area-genuss:       var(--b4-orange);   --area-genuss-2:     var(--b4-yellow); --area-genuss-3:     var(--b4-green);
+
+    /* Text */
+    --color-text:      var(--color-text-main);
+    --color-kohle:     var(--color-text-main);
+    --color-text-soft: #333333;
+
+    /* deutsche / historische Farbnamen */
     --color-lavendel:     var(--color-lavender);
     --color-akzent-hell:  var(--color-accent-light);
-
-    /* --- Die 4 Bereichsfarben: Primaer | Akzent(e) --- */
-    --area-zuhause:      #826C93;  --area-zuhause-2:    #B2CCFA;  /* Zuhause & Wohlbefinden */
-    --area-zeit:         #9BBA7A;  --area-zeit-2:       #FAECE3;  /* Zeit & Begleitung */
-    --area-aktivitaet:   #7AC897;  --area-aktivitaet-2: #B2E9CC;  --area-aktivitaet-3: #D9F0E3; /* Aktivitaet */
-    --area-genuss:       #E8651F;  --area-genuss-2:     #FFE08F;  --area-genuss-3:     #9BF06B; /* Genuss & Ernaehrung */
-
-    /* Alt-Variablennamen auf die neue Palette gebogen -> Rest des
-       Stylesheets zieht automatisch mit. --color-violett treibt Buttons,
-       Badges, Fokus-Ringe etc. -> = interaktive Farbe #A687C7. */
     --color-violett:      var(--color-ui);
-    --color-violett-card: var(--color-lavendel);
-    --color-orange:       var(--area-genuss);
-    --color-orange-card:  var(--area-genuss);
-    --color-gruen:        var(--area-aktivitaet);
-    --color-green:        var(--area-aktivitaet);
-    --color-sand:         var(--color-akzent-hell);
+    --color-violett-card: var(--color-lavender);
+    --color-orange:       var(--b4-orange);
+    --color-orange-card:  var(--b4-orange);
+    --color-gruen:        var(--b3-primary);
+    --color-green:        var(--b3-primary);
+    --color-sand:         var(--color-accent-light);
     --color-blau:         #2C3E50;
     --color-secondary:    var(--color-blau);
 
-    /* --- Text: einheitlich Schwarz --- */
-    --color-text: #000000;
-    --color-kohle: #000000;
-    --color-text-soft: #333333;
-
+    /* Flaechen / Rahmen / Schatten */
     --color-bg: #FAFAF8;
     --color-bg-alt: #F5F4F0;
     --color-surface: #FFFFFF;
     --color-border: #E6E1EC;
-
-    /* --- Schrift: ausschliesslich Inter --- */
-    --font-family: 'Inter', sans-serif;
-    --font-body: var(--font-family);
-    --font-display: var(--font-family);
-    --font-script: var(--font-family);
-    --font-readable: var(--font-family);
-
-    /* --- Schriftgroessen --- */
-    --fs-body: 18px;            /* Fliesstext */
-    --fs-button: 14px;          /* Buttons */
-    --fs-heading-lg: 48px;      /* Ueberschrift gross */
-    --fs-heading-inner: 32px;   /* Ueberschrift innen */
-    --fs-heading-sm: 24px;      /* Ueberschrift klein */
-    --fs-brand: 12px;           /* Firmenname / Tagline */
-
     --color-tile-bg: #FFFFFF;
     --color-tile-border: var(--color-ui);
-
     --shadow-soft: 0 18px 40px -24px rgba(0, 0, 0, 0.16);
     --radius-lg: 28px;
     --radius-md: 18px;
