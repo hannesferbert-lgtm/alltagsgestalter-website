@@ -1860,12 +1860,12 @@
     display: inline-flex;
     align-items: center;
     max-width: 100%;
-    padding: 0.375rem 0.75rem;
+    padding: 0.45rem 0.95rem;
     border-radius: 999px;
-    background: var(--color-lavender);
-    color: var(--color-text-main);
+    background: var(--color-accent-light);
+    color: var(--color-primary);
     font-family: var(--font-body);
-    font-weight: 500;
+    font-weight: 600;
     font-size: var(--font-size-tagline);
     line-height: 1.3;
   }
