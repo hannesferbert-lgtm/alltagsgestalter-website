@@ -1135,7 +1135,7 @@
   }
 
   /* ============ Kontakt-/Anfrage-Formular ============ */
-  .contact-section { background: var(--color-accent-light); }  /* Hintergrund Erstgespräch (Handbuch #E5E0F0) */
+  .contact-section { background: var(--color-bg-alt); }  /* Designer-Mockup: Creme wie die übrigen Sektionen (nicht #E5E0F0) */
   .contact-inner {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
