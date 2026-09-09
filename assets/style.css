@@ -2234,6 +2234,43 @@
   .modal__back:hover,
   .modal__back:focus-visible { color: var(--color-kohle); }
 
+  /* ---- Kachel-Detail-Modals exakt auf die jeweilige Kachel abgestimmt ----
+     mid  = Kachel-Outline (Handbuch "Outlines bei Kacheln")
+     dark = "+"-Kreis / Button-Outline der Kachel ("Outlines bei Buttons, +") */
+  .modal--violet { --modal-mid: var(--b1-mid); --modal-dark: var(--b1-dark); }
+  .modal--orange { --modal-mid: var(--b2-mid); --modal-dark: var(--b2-dark); }
+  .modal--green  { --modal-mid: var(--b3-mid); --modal-dark: var(--b3-dark); }
+  .modal--sand   { --modal-mid: var(--b4-mid); --modal-dark: var(--b4-dark); }
+
+  .modal--tinted .modal__dialog {
+    border: 2.5px solid var(--modal-mid);   /* = Kachelrahmen */
+  }
+  .modal--tinted .modal__header,
+  .modal--tinted .modal__footer { border-color: var(--modal-mid); }
+
+  .modal--tinted .modal__block::before {   /* Zahlen = "+"-Kreis der Kachel */
+    background: var(--modal-dark);
+    color: #fff;
+  }
+  .modal--tinted .modal__footer .btn-primary {   /* Button = Bereichston */
+    background: var(--modal-dark);
+    color: #fff;
+    box-shadow: none;
+  }
+  .modal--tinted .modal__footer .btn-primary:hover {
+    box-shadow: 0 22px 40px -22px color-mix(in srgb, var(--modal-dark) 70%, transparent);
+  }
+  .modal--tinted .modal__close { border-color: var(--modal-dark); }   /* = Trigger-Outline */
+  .modal--tinted .modal__close:hover,
+  .modal--tinted .modal__close:focus-visible {
+    background: color-mix(in srgb, var(--modal-dark) 16%, var(--color-surface));
+    border-color: var(--modal-dark);
+  }
+  .modal--tinted .modal__note {
+    background: color-mix(in srgb, var(--modal-mid) 22%, var(--color-surface));
+    border-color: var(--modal-mid);
+  }
+
   @media (max-width: 768px) {
     .modal { padding: 0; align-items: stretch; }
     .modal__dialog {
