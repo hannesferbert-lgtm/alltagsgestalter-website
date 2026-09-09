@@ -27,7 +27,7 @@
     --font-size-body: 18px;
     --font-size-btn: 14px;
     --font-size-h1: 48px;
-    --font-size-h2: 32px;
+    --font-size-h2: 36px;
     --font-size-h3: 24px;
     --font-size-tagline: 12px;
 
@@ -253,9 +253,9 @@
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    font-size: 0.78rem;
+    font-size: var(--font-size-tagline);
     font-weight: 700;
-    color: var(--color-text-soft);
+    color: var(--color-text-main);
   }
 
   .btn {
@@ -1835,18 +1835,18 @@
 
   .jobs-section { background: var(--color-bg-alt); color: var(--color-kohle); }
   .jobs-inner { max-width: 46rem; }
-  .jobs-inner .eyebrow { color: var(--color-kohle); opacity: 0.72; }
+  .jobs-inner .eyebrow { color: var(--color-text-main); }
   .jobs-inner h2 { margin-top: 0.6rem; font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); }
   .jobs-inner .jobs-pitch {
     margin-top: 1.1rem;
     font-family: var(--font-body);
-    font-size: 1.08rem;
+    font-size: var(--font-size-body);
     line-height: 1.6;
   }
   .jobs-inner .jobs-note {
     margin-top: 0.9rem;
-    font-size: 0.95rem;
-    color: color-mix(in srgb, var(--color-kohle) 78%, transparent);
+    font-size: var(--font-size-body);
+    color: var(--color-text-main);
   }
 
   .jobs-badges {
@@ -1866,7 +1866,7 @@
     color: var(--color-text-main);
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 0.88rem;
+    font-size: var(--font-size-tagline);
     line-height: 1.3;
   }
   .jobs-inner .btn {
