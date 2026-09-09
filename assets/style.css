@@ -2563,13 +2563,13 @@
       z-index: 0;
     }
 
+    /* Jede Karte wird absolut mit gleichem Abstand ober- bzw. unterhalb der
+       Linie (= 50 % des Schritts) platziert -> Ober-/Unterkante immer exakt
+       symmetrisch zur Mittellinie, unabhaengig von der Kartenhoehe. */
     .process-step {
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-      row-gap: 3.25rem;
       flex: 1;
       min-width: 0;
-      justify-items: center;
+      min-height: 24rem;
       text-align: center;
       padding-bottom: 0;
       position: relative;
@@ -2583,13 +2583,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
-    .process-step-up .process-step-card { grid-row: 1; align-self: end; margin-bottom: 0.5rem; }
-    .process-step-down .process-step-card { grid-row: 2; align-self: start; margin-top: 0.5rem; }
 
     .process-step-card {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       width: 210px;
       max-width: none;
     }
+    .process-step-up .process-step-card { bottom: calc(50% + 2.75rem); }
+    .process-step-down .process-step-card { top: calc(50% + 2.75rem); }
   }
 
   /* ---------- Naechste Veranstaltung (Startseiten-Teaser) ---------- */
