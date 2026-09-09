@@ -333,11 +333,11 @@
     display: block;
     width: auto;
     height: auto;
-    max-height: 48px;
+    max-height: 54px;
     max-width: 100%;
   }
   @media (max-width: 768px) {
-    .site-logo { max-height: 38px; }
+    .site-logo { max-height: 42px; }
   }
 
   nav.main-nav ul {
@@ -428,7 +428,7 @@
     /* Logo-Link im Menue-Panel: die generische nav.main-nav a-Regel
        (Padding, Unterstrich) zuruecknehmen. */
     .nav-panel-header .logo { padding: 0; border: 0; }
-    .nav-panel-header .site-logo { max-height: 34px; }
+    .nav-panel-header .site-logo { max-height: 40px; }
     .nav-close {
       display: inline-flex;
       align-items: center;
@@ -1900,7 +1900,7 @@
   /* Footer-Logo: dezent, monochrom-hell auf dunklem Grund. */
   .footer-brand .logo { display: inline-flex; }
   .footer-brand .site-logo {
-    max-height: 34px;
+    max-height: 38px;
     filter: brightness(0) invert(1);
     opacity: 0.8;
   }
