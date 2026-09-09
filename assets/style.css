@@ -10,39 +10,82 @@
     forced-color-adjust: none;
   }
 
+  /* ==========================================================================
+     MARKEN-DESIGN-SYSTEM (Die Alltagsgestalter) – Farbcodes lt. Handbuch
+     ========================================================================== */
   :root {
-    
-    --color-violett: #A688C7;
-    --color-blau: #2C3E50;
-    --color-orange: #FF6A00;
-    --color-gruen: #6DBA6D;
-    --color-sand: #F2E7D6;
-    --color-kohle: #1E1E1E;
+    /* Schrift */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
-    --color-violett-card: #baa2d3;
-    --color-orange-card: #ff8b38;
+    /* Hauptfarbe (3 Töne) */
+    --color-primary:      #A687C7;   /* Buttons, Button-Outlines, Logo, Menü-Schrift */
+    --color-lavender:     #D1BDE5;   /* Trennlinien, Outlines bei Kacheln/Kästen */
+    --color-accent-light: #E5E0F0;   /* Kasten „100 % Entlastung", Hintergrund Erstgespräch */
+    --color-text-main:    #000000;
 
-    --color-primary: var(--color-violett);
-    --color-secondary: var(--color-blau);
-    --color-green: var(--color-gruen);
+    /* Schriftgrößen */
+    --font-size-body: 18px;
+    --font-size-btn: 14px;
+    --font-size-h1: 48px;
+    --font-size-h2: 36px;
+    --font-size-h3: 24px;
+    --font-size-tagline: 12px;
+
+    /* Bereichsfarben – dunkel (Button-Outline / „+")  |  mittel (Kachel-Outline / Icons)  |  hell (Kasten / Trennlinie) */
+    --b1-dark: #82A8F7; --b1-mid: #B2CCFA; --b1-light: #D9E5FC;  /* 1  Zuhause & Wohlbefinden  */
+    --b2-dark: #FF8F38; --b2-mid: #FFC79E; --b2-light: #FFE3CC;  /* 2  Zeit & Begleitung       */
+    --b3-dark: #85D1A6; --b3-mid: #B0E8CC; --b3-light: #D9F0E3;  /* 3  Leben & Aktivität       */
+    --b4-dark: #E8B51F; --b4-mid: #FFE08F; --b4-light: #FFF0C7;  /* 4  Genuss & Ernährung      */
+  }
+
+  /* ===================================================================
+     Interne Aliase – NICHT direkt verwenden. Mappen die im restlichen
+     Stylesheet verstreuten Alt-Namen auf die Handbuch-Variablen oben.
+     =================================================================== */
+  :root {
+    --color-ui: var(--color-primary);
+
+    --font-body:     var(--font-family);
+    --font-display:  var(--font-family);
+    --font-script:   var(--font-family);
+    --font-readable: var(--font-family);
+
+    --fs-body:          var(--font-size-body);
+    --fs-button:        var(--font-size-btn);
+    --fs-heading-lg:    var(--font-size-h1);
+    --fs-heading-inner: var(--font-size-h2);
+    --fs-heading-sm:    var(--font-size-h3);
+    --fs-brand:         var(--font-size-tagline);
+
+    /* "Kartenfarbe" eines Bereichs = mittlerer Ton (Kachel-Outline / Icons) */
+    --area-zuhause:      var(--b1-mid);  --area-zuhause-2:    var(--b1-light);
+    --area-zeit:         var(--b2-mid);  --area-zeit-2:       var(--b2-light);
+    --area-aktivitaet:   var(--b3-mid);  --area-aktivitaet-2: var(--b3-mid);   --area-aktivitaet-3: var(--b3-light);
+    --area-genuss:       var(--b4-mid);  --area-genuss-2:     var(--b4-mid);   --area-genuss-3:     var(--b4-light);
+
+    --color-text:      var(--color-text-main);
+    --color-kohle:     var(--color-text-main);
+    --color-text-soft: #333333;
+
+    --color-lavendel:     var(--color-lavender);
+    --color-akzent-hell:  var(--color-accent-light);
+    --color-violett:      var(--color-primary);
+    --color-violett-card: var(--b1-mid);          /* Icons Kachel 1 */
+    --color-orange:       var(--b2-dark);
+    --color-orange-card:  var(--b2-mid);          /* Icons Kachel 2 */
+    --color-gruen:        var(--b3-dark);
+    --color-green:        var(--b3-mid);
+    --color-sand:         var(--color-accent-light);
+    --color-blau:         #2C3E50;
+    --color-secondary:    var(--color-blau);
 
     --color-bg: #FAFAF8;
     --color-bg-alt: #F5F4F0;
     --color-surface: #FFFFFF;
-    --color-text: #1E1E1E;
-    --color-text-soft: #4A4540;
-    --color-border: #DCCBAE;
-
-    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
-    --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-    --font-script: 'Caveat', cursive;
-
-    --font-readable: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-
+    --color-border:       var(--color-lavender);   /* Trennlinien */
     --color-tile-bg: #FFFFFF;
-    --color-tile-border: color-mix(in srgb, var(--color-violett) 28%, white);
-
-    --shadow-soft: 0 20px 45px -25px rgba(30, 22, 15, 0.35);
+    --color-tile-border:  var(--color-lavender);   /* generischer Kachel-/Kastenrahmen */
+    --shadow-soft: 0 18px 40px -24px rgba(0, 0, 0, 0.16);
     --radius-lg: 28px;
     --radius-md: 18px;
     --content-width: 1180px;
@@ -63,7 +106,7 @@
     color: var(--color-text);
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: var(--fs-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
@@ -74,7 +117,14 @@
     line-height: 1.12;
     text-wrap: balance;
     margin: 0;
+    color: var(--color-text);
   }
+  /* Ueberschriften-Groessen aus dem Design-System (Desktop = Zielwert,
+     darunter fluid, damit Mobil nicht bricht). */
+  h1 { font-size: clamp(2rem, 6.5vw, var(--fs-heading-lg)); }
+  h2 { font-size: clamp(1.5rem, 4.5vw, var(--fs-heading-inner)); }
+  h3 { font-size: var(--fs-heading-sm); }
+  h4 { font-size: 1rem; }
 
   p { margin: 0; }
   ul { margin: 0; padding: 0; list-style: none; }
@@ -203,9 +253,9 @@
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    font-size: 0.78rem;
+    font-size: var(--font-size-tagline);
     font-weight: 700;
-    color: var(--color-text-soft);
+    color: var(--color-text-main);
   }
 
   .btn {
@@ -214,7 +264,7 @@
     gap: 0.6rem;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: var(--fs-button);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
@@ -229,20 +279,20 @@
 
   .btn-primary {
     background: var(--color-violett);
-    color: var(--color-kohle);
+    color: #fff;
     box-shadow: var(--shadow-soft);
   }
   .btn-primary:hover { box-shadow: 0 25px 45px -22px color-mix(in srgb, var(--color-violett) 70%, transparent); }
 
   .btn-dark {
     background: var(--color-violett);
-    color: var(--color-kohle);
+    color: #fff;
   }
 
   .btn-outline {
     background: var(--color-violett);
     border-color: var(--color-violett);
-    color: var(--color-kohle);
+    color: #fff;
   }
 
   .btn-ghost {
@@ -271,18 +321,24 @@
   }
 
   .logo {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.25rem;
-    letter-spacing: 0.01em;
     text-decoration: none;
-    color: var(--color-text);
     display: flex;
-    align-items: baseline;
-    gap: 0.35rem;
-    white-space: nowrap;
+    align-items: center;
+    flex-shrink: 0;
   }
-  .logo .script { font-size: 1.5rem; }
+
+  /* Bild-Logo (Header, Menue-Panel, Footer) – fuegt sich vertikal zentriert
+     und ohne Layout-Sprung ins Header-Flexlayout ein. */
+  .site-logo {
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 54px;
+    max-width: 100%;
+  }
+  @media (max-width: 768px) {
+    .site-logo { max-height: 42px; }
+  }
 
   nav.main-nav ul {
     display: flex;
@@ -294,12 +350,13 @@
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
+    color: var(--color-ui);
     padding: 0.4rem 0.1rem;
     border-bottom: 2px solid transparent;
     transition: border-color 0.15s ease, color 0.15s ease;
   }
   nav.main-nav a:hover,
-  nav.main-nav a[aria-current="true"] { border-color: var(--color-primary); }
+  nav.main-nav a[aria-current="true"] { border-color: var(--color-ui); }
 
   .nav-toggle {
     display: none;
@@ -368,8 +425,10 @@
       justify-content: space-between;
       width: 100%;
     }
-    .nav-panel-header .logo { font-size: 1.15rem; }
-    .nav-panel-header .logo .script { font-size: 1.4rem; }
+    /* Logo-Link im Menue-Panel: die generische nav.main-nav a-Regel
+       (Padding, Unterstrich) zuruecknehmen. */
+    .nav-panel-header .logo { padding: 0; border: 0; }
+    .nav-panel-header .site-logo { max-height: 40px; }
     .nav-close {
       display: inline-flex;
       align-items: center;
@@ -429,7 +488,7 @@
       min-height: 0;
       padding: 1rem 1.5rem;
       border-radius: 999px;
-      background: #9980C0;
+      background: var(--color-ui);
       color: #fff;
       font-size: 1rem;
       font-weight: 600;
@@ -438,7 +497,7 @@
       box-shadow: 0 4px 6px -1px rgba(30, 22, 15, 0.18), 0 2px 4px -2px rgba(30, 22, 15, 0.18);
     }
     nav.main-nav a.nav-cta:hover,
-    nav.main-nav a.nav-cta:focus-visible { background: color-mix(in srgb, #9980C0 88%, #000); }
+    nav.main-nav a.nav-cta:focus-visible { background: color-mix(in srgb, var(--color-ui) 88%, #000); }
     nav.main-nav a.nav-cta svg { width: 1.15rem; height: 1.15rem; flex-shrink: 0; }
   }
 
@@ -494,12 +553,12 @@
     padding: 0.35rem 0.85rem;
     border-radius: 8px;
     font-family: var(--font-body);
-    font-size: 12px;
+    font-size: var(--fs-brand);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-kohle);
-    background: color-mix(in srgb, var(--color-violett) 20%, transparent);
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
     text-wrap: balance;
   }
 
@@ -518,7 +577,7 @@
 
   .hero-title {
     font-family: var(--font-body);
-    font-size: 40px;
+    font-size: clamp(2rem, 6.5vw, var(--fs-heading-lg));
     font-weight: 700;
     margin-top: 0.7rem;
     line-height: 1.25;
@@ -634,16 +693,8 @@
     position: relative;
     width: min(420px, 100%);
   }
-  .hero-frame::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translate(16px, 16px);
-    
-    background: var(--color-violett);
-    border-radius: var(--radius-lg);
-    z-index: 0;
-  }
+  /* Lilafarbener Versatz-"Schatten" hinter dem Foto entfernt (Design-Update). */
+  .hero-frame::before { content: none; }
   .hero-frame .art-panel {
     position: relative;
     z-index: 1;
@@ -651,7 +702,8 @@
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
+    /* Kein Schlagschatten an Bildern (Markenvorgabe). */
+    box-shadow: none;
   }
   .hero-frame .art-panel img {
     display: block;
@@ -775,25 +827,29 @@
     transform: translateY(-4px);
   }
   .card-violet:hover, .card-violet:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(166, 136, 199, 0.35);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-zuhause) 40%, transparent);
   }
   .card-orange:hover, .card-orange:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(255, 106, 0, 0.3);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-zeit) 40%, transparent);
   }
   .card-green:hover, .card-green:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(109, 186, 109, 0.3);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-aktivitaet) 40%, transparent);
   }
   .card-sand:hover, .card-sand:focus-visible {
-    box-shadow: 0 10px 25px -5px rgba(30, 30, 30, 0.15);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--area-genuss) 35%, transparent);
   }
   
   .service-card:focus-visible {
     outline: 3px solid var(--color-kohle);
   }
 
-  .service-card .art-holder { width: 128px; height: 128px; overflow: visible; }
+  /* Icon/Illustration mittig in der Kachel ausrichten (Design-Update). */
+  .service-card .art-holder {
+    width: 128px; height: 128px; overflow: visible;
+    align-self: center;
+  }
   .service-card .art-holder img {
-    width: 100%; height: 100%; object-fit: contain; object-position: center bottom; display: block;
+    width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;
     transition: transform 0.4s ease-in-out;
   }
   .service-card:hover .art-holder img,
@@ -813,7 +869,7 @@
       transform: none;
     }
   }
-  .service-card h3 { font-size: 1.35rem; }
+  .service-card h3 { font-size: var(--fs-heading-sm); }
   .service-card p {
     font-family: var(--font-readable);
     font-size: 1rem;
@@ -859,14 +915,33 @@
     margin-bottom: -0.2rem;
   }
 
-  .card-violet { border-top-width: 4px; border-top-color: #8A72B8; }
-  .card-violet .kicker { color: var(--color-kohle); background: color-mix(in srgb, #8A72B8 24%, transparent); }
-  .card-orange { border-top-width: 4px; border-top-color: #F28C44; }
-  .card-orange .kicker { color: var(--color-kohle); background: color-mix(in srgb, #F28C44 22%, transparent); }
-  .card-green { border-top-width: 4px; border-top-color: #60B571; }
-  .card-green .kicker { color: var(--color-kohle); background: color-mix(in srgb, #60B571 22%, transparent); }
-  .card-sand { border-top-width: 4px; border-top-color: #E2BA46; }
-  .card-sand .kicker { color: var(--color-blau); background: color-mix(in srgb, #E2BA46 32%, transparent); }
+  /* Kachelrahmen = mittlerer Bereichston (Handbuch: "Outlines bei Kacheln").
+     card-violet = Zuhause, card-orange = Zeit, card-green = Aktivitaet,
+     card-sand = Genuss. */
+  .card-violet { border: 2.5px solid var(--b1-mid); }
+  .card-violet .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--b1-mid) 45%, transparent); }
+  .card-orange { border: 2.5px solid var(--b2-mid); }
+  .card-orange .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--b2-mid) 45%, transparent); }
+  .card-green { border: 2.5px solid var(--b3-mid); }
+  .card-green .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--b3-mid) 45%, transparent); }
+  .card-sand { border: 2.5px solid var(--b4-mid); }
+  .card-sand .kicker { color: var(--color-kohle); background: color-mix(in srgb, var(--b4-mid) 45%, transparent); }
+
+  /* "+"-Kreis und Button-Outline je Kachel = dunkler Bereichston
+     (Handbuch: "Outlines bei Buttons, +"). .service-card mit dran, damit
+     die Regel die generische .service-card .service-more-trigger schlaegt. */
+  .service-card.card-violet .service-more-trigger,
+  .service-card.card-violet .service-more-trigger:hover { border-color: var(--b1-dark); }
+  .service-card.card-violet .service-more-trigger .plus { background: var(--b1-dark); }
+  .service-card.card-orange .service-more-trigger,
+  .service-card.card-orange .service-more-trigger:hover { border-color: var(--b2-dark); }
+  .service-card.card-orange .service-more-trigger .plus { background: var(--b2-dark); }
+  .service-card.card-green .service-more-trigger,
+  .service-card.card-green .service-more-trigger:hover { border-color: var(--b3-dark); }
+  .service-card.card-green .service-more-trigger .plus { background: var(--b3-dark); }
+  .service-card.card-sand .service-more-trigger,
+  .service-card.card-sand .service-more-trigger:hover { border-color: var(--b4-dark); }
+  .service-card.card-sand .service-more-trigger .plus { background: var(--b4-dark); }
 
   .pflegekasse-highlight {
     display: flex;
@@ -874,8 +949,8 @@
     gap: 14px;
     margin-top: 1.1rem;
     max-width: 66ch;
-    background: color-mix(in srgb, var(--color-violett) 14%, var(--color-surface));
-    border: 1.5px solid color-mix(in srgb, var(--color-violett) 45%, transparent);
+    background: var(--color-accent-light);
+    border: 1.5px solid var(--color-lavender);
     border-radius: var(--radius-md);
     padding: 1.1rem 1.4rem;
   }
@@ -925,13 +1000,13 @@
     max-width: 62ch;
   }
 
-  .about-copy h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-top: 0.6rem; }
+  .about-copy h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
   .about-copy p { margin-top: 1.1rem; color: var(--color-text-soft); }
   .about-copy .btn { margin-top: 1.75rem; }
 
   .story-section { background: var(--color-bg-alt); scroll-margin-top: 5rem; }
   .story-header { max-width: 62ch; }
-  .story-header h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.6rem; }
+  .story-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
 
   .story-layout {
     margin-top: clamp(2rem, 4vw, 3rem);
@@ -1018,7 +1093,7 @@
     justify-content: space-between;
     gap: 1.75rem;
   }
-  .newsletter h2 { font-size: clamp(1.6rem, 2.8vw, 2.15rem); max-width: 20ch; }
+  .newsletter h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); max-width: 20ch; }
   .newsletter p { margin-top: 0.5rem; font-family: var(--font-body); font-size: 1.05rem; }
 
   .newsletter-signup { width: min(27rem, 100%); }
@@ -1066,7 +1141,7 @@
   }
 
   /* ============ Kontakt-/Anfrage-Formular ============ */
-  .contact-section { background: var(--color-bg-alt); }
+  .contact-section { background: var(--color-bg-alt); }  /* Designer-Mockup: Creme wie die übrigen Sektionen (nicht #E5E0F0) */
   .contact-inner {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
@@ -1075,7 +1150,7 @@
   }
   .contact-intro h2 {
     margin-top: 0.6rem;
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner));
     max-width: 18ch;
   }
   .contact-intro p { margin-top: 1rem; color: var(--color-text-soft); }
@@ -1328,7 +1403,7 @@
 
   .area-section { background: var(--color-bg-alt); }
   .area-header { max-width: 62ch; }
-  .area-header h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.6rem; }
+  .area-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
   .area-header p { margin-top: 1rem; color: var(--color-text-soft); }
 
   .area-grid {
@@ -1478,7 +1553,7 @@
     align-items: start;
   }
   @media (max-width: 900px) { .entlastung-grid { grid-template-columns: 1fr; } }
-  .entlastung-pitch h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.7rem; }
+  .entlastung-pitch h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.7rem; }
   .entlastung-pitch > p { margin-top: 1rem; color: var(--color-text-soft); max-width: 46ch; }
   .entlastung-pitch .btn { margin-top: 1.75rem; }
   .entlastung-faq .faq-list { margin-top: 0; max-width: none; }
@@ -1531,7 +1606,7 @@
 
   .erbe-section { background: var(--color-bg-alt); }
   .erbe-header { max-width: 64ch; }
-  .erbe-header h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.6rem; }
+  .erbe-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
   .erbe-header .erbe-sub { margin-top: 1rem; color: var(--color-text-soft); font-family: var(--font-body); font-size: 1.05rem; }
 
   .erbe-grid {
@@ -1649,7 +1724,7 @@
   .erbe-cta .btn { margin-top: 1.6rem; background: var(--color-violett); color: var(--color-kohle); }
 
   .ratgeber-header { max-width: 62ch; }
-  .ratgeber-header h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 0.6rem; }
+  .ratgeber-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
   .ratgeber-header p { margin-top: 1rem; color: var(--color-text-soft); }
 
   .ratgeber-grid {
@@ -1743,7 +1818,7 @@
     height: auto;
     display: block;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
   }
   .ratgeber-article .article-photo figcaption {
     margin-top: 0.6rem;
@@ -1766,18 +1841,18 @@
 
   .jobs-section { background: var(--color-bg-alt); color: var(--color-kohle); }
   .jobs-inner { max-width: 46rem; }
-  .jobs-inner .eyebrow { color: var(--color-kohle); opacity: 0.72; }
-  .jobs-inner h2 { margin-top: 0.6rem; font-size: clamp(1.7rem, 3vw, 2.3rem); }
+  .jobs-inner .eyebrow { color: var(--color-text-main); }
+  .jobs-inner h2 { margin-top: 0.6rem; font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); }
   .jobs-inner .jobs-pitch {
     margin-top: 1.1rem;
     font-family: var(--font-body);
-    font-size: 1.08rem;
+    font-size: var(--font-size-body);
     line-height: 1.6;
   }
   .jobs-inner .jobs-note {
     margin-top: 0.9rem;
-    font-size: 0.95rem;
-    color: color-mix(in srgb, var(--color-kohle) 78%, transparent);
+    font-size: var(--font-size-body);
+    color: var(--color-text-main);
   }
 
   .jobs-badges {
@@ -1791,19 +1866,19 @@
     display: inline-flex;
     align-items: center;
     max-width: 100%;
-    padding: 0.375rem 0.75rem;
+    padding: 0.45rem 0.95rem;
     border-radius: 999px;
-    background: #F3E8FF;
-    color: #581C87;
+    background: var(--color-accent-light);
+    color: var(--color-primary);
     font-family: var(--font-body);
-    font-weight: 500;
-    font-size: 0.88rem;
+    font-weight: 600;
+    font-size: var(--font-size-tagline);
     line-height: 1.3;
   }
   .jobs-inner .btn {
     margin-top: 1.8rem;
     background: var(--color-violett);
-    color: var(--color-kohle);
+    color: #fff;
     box-shadow: var(--shadow-soft);
   }
   .jobs-inner .btn:hover, .jobs-inner .btn:focus-visible {
@@ -1822,10 +1897,12 @@
   }
   @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
-  .footer-brand .logo { color: var(--color-bg); }
-  .footer-brand .script {
-    color: var(--color-bg);
-    background: color-mix(in srgb, var(--color-primary) 35%, transparent);
+  /* Footer-Logo: dezent, monochrom-hell auf dunklem Grund. */
+  .footer-brand .logo { display: inline-flex; }
+  .footer-brand .site-logo {
+    max-height: 38px;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
   }
   .footer-brand p { margin-top: 0.9rem; color: color-mix(in srgb, var(--color-bg) 70%, transparent); max-width: 32ch; font-size: 0.95rem; }
 
@@ -1935,7 +2012,7 @@
     gap: 0.6rem;
     padding: 0.5rem 1.1rem 0.5rem 0.5rem;
     background: var(--color-surface);
-    border: 1.5px solid var(--color-tile-border);
+    border: 1.5px solid var(--color-violett);
     border-radius: 999px;
     box-shadow: 0 2px 8px -4px rgba(30, 22, 15, 0.18);
     cursor: pointer;
@@ -1959,7 +2036,7 @@
     width: 1.5rem; height: 1.5rem;
     border-radius: 50%;
     background: var(--color-violett);
-    color: var(--color-kohle);
+    color: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 1rem;
     line-height: 1;
@@ -2165,6 +2242,43 @@
   .modal__back:hover,
   .modal__back:focus-visible { color: var(--color-kohle); }
 
+  /* ---- Kachel-Detail-Modals exakt auf die jeweilige Kachel abgestimmt ----
+     mid  = Kachel-Outline (Handbuch "Outlines bei Kacheln")
+     dark = "+"-Kreis / Button-Outline der Kachel ("Outlines bei Buttons, +") */
+  .modal--violet { --modal-mid: var(--b1-mid); --modal-dark: var(--b1-dark); }
+  .modal--orange { --modal-mid: var(--b2-mid); --modal-dark: var(--b2-dark); }
+  .modal--green  { --modal-mid: var(--b3-mid); --modal-dark: var(--b3-dark); }
+  .modal--sand   { --modal-mid: var(--b4-mid); --modal-dark: var(--b4-dark); }
+
+  .modal--tinted .modal__dialog {
+    border: 2.5px solid var(--modal-mid);   /* = Kachelrahmen */
+  }
+  .modal--tinted .modal__header,
+  .modal--tinted .modal__footer { border-color: var(--modal-mid); }
+
+  .modal--tinted .modal__block::before {   /* Zahlen = "+"-Kreis der Kachel */
+    background: var(--modal-dark);
+    color: #fff;
+  }
+  .modal--tinted .modal__footer .btn-primary {   /* Button = Bereichston */
+    background: var(--modal-dark);
+    color: #fff;
+    box-shadow: none;
+  }
+  .modal--tinted .modal__footer .btn-primary:hover {
+    box-shadow: 0 22px 40px -22px color-mix(in srgb, var(--modal-dark) 70%, transparent);
+  }
+  .modal--tinted .modal__close { border-color: var(--modal-dark); }   /* = Trigger-Outline */
+  .modal--tinted .modal__close:hover,
+  .modal--tinted .modal__close:focus-visible {
+    background: color-mix(in srgb, var(--modal-dark) 16%, var(--color-surface));
+    border-color: var(--modal-dark);
+  }
+  .modal--tinted .modal__note {
+    background: color-mix(in srgb, var(--modal-mid) 22%, var(--color-surface));
+    border-color: var(--modal-mid);
+  }
+
   @media (max-width: 768px) {
     .modal { padding: 0; align-items: stretch; }
     .modal__dialog {
@@ -2244,7 +2358,7 @@
   .profile-question {
     margin: 0 0 1rem;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: var(--fs-heading-sm);
   }
 
   .profile-back {
@@ -2383,20 +2497,20 @@
 
   /* ---------- Prozess-Sektion: "Vom Erstgespraech zur Entlastung" ---------- */
   .process-section {
-    background: color-mix(in srgb, var(--color-violett) 7%, var(--color-surface));
+    background: var(--color-accent-light);  /* Designer: Lavendel-Band (#E5E0F0) */
   }
 
   .process-heading {
     margin-top: 0.6rem;
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner));
     max-width: 32ch;
   }
 
   .process-sub {
     margin-top: 0.6rem;
     max-width: 58ch;
-    font-size: 1.05rem;
-    color: var(--color-text-soft);
+    font-size: var(--font-size-body);
+    color: var(--color-text-main);
   }
 
   /* Mobil (Basis): nummerierte Karten untereinander, dezenter Pfeil dazwischen */
@@ -2427,11 +2541,12 @@
     left: 20px;
     bottom: -0.1rem;
     transform: translateX(-50%);
-    color: var(--color-violett);
+    color: var(--color-primary);
     font-size: 1.1rem;
     line-height: 1;
   }
 
+  /* Zahlen-Badges: mittig, sitzen zentriert auf der Ablauf-Linie. */
   .process-badge {
     display: flex;
     align-items: center;
@@ -2440,8 +2555,8 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--color-violett);
-    color: var(--color-kohle);
+    background: var(--color-primary);
+    color: #ffffff;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1rem;
@@ -2456,19 +2571,18 @@
     background: var(--color-surface);
     border: 1px solid var(--color-tile-border);
     border-radius: 14px;
-    padding: 1rem 1.1rem;
+    padding: 0.9rem 1rem;
   }
-  .process-step-icon {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-size: 1.5rem;
-    line-height: 1;
+  .process-step-card h3 {
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--color-text-main);
   }
-  .process-step-card h3 { font-size: 1rem; }
   .process-step-card p {
-    margin-top: 0.3rem;
-    font-size: 0.9rem;
-    color: var(--color-text-soft);
+    margin-top: 0.4rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-main);
   }
 
   /* Desktop: horizontale Zeitleiste mit zarter Verbindungslinie, Karten
@@ -2490,30 +2604,40 @@
       top: 50%;
       height: 2px;
       transform: translateY(-50%);
-      background: color-mix(in srgb, var(--color-violett) 45%, transparent);
+      background: color-mix(in srgb, var(--color-primary) 55%, transparent);
       z-index: 0;
     }
 
+    /* Jede Karte wird absolut mit gleichem Abstand ober- bzw. unterhalb der
+       Linie (= 50 % des Schritts) platziert -> Ober-/Unterkante immer exakt
+       symmetrisch zur Mittellinie, unabhaengig von der Kartenhoehe. */
     .process-step {
-      display: grid;
-      grid-template-rows: 1fr auto 1fr;
-      row-gap: 0.85rem;
       flex: 1;
       min-width: 0;
-      justify-items: center;
+      min-height: 24rem;
       text-align: center;
       padding-bottom: 0;
+      position: relative;
     }
     .process-step:not(:last-child)::after { content: none; }
 
-    .process-badge { grid-row: 2; }
-    .process-step-up .process-step-card { grid-row: 1; align-self: end; }
-    .process-step-down .process-step-card { grid-row: 3; align-self: start; }
+    /* Zahl exakt auf der senkrechten Schritt-Mitte = auf der Ablauf-Linie. */
+    .process-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     .process-step-card {
-      width: 100%;
-      max-width: 220px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 210px;
+      max-width: none;
     }
+    .process-step-up .process-step-card { bottom: calc(50% + 2.75rem); }
+    .process-step-down .process-step-card { top: calc(50% + 2.75rem); }
   }
 
   /* ---------- Naechste Veranstaltung (Startseiten-Teaser) ---------- */
@@ -2760,7 +2884,7 @@
     border-top: 1px solid var(--color-tile-border);
     text-align: center;
   }
-  .chemie-teaser-title { font-size: 1.3rem; }
+  .chemie-teaser-title { font-size: var(--fs-heading-sm); }
   .chemie-teaser-sub {
     margin: 0.5rem auto 0;
     max-width: 52ch;
@@ -2780,6 +2904,10 @@
     background: var(--color-surface);
     border: 1px solid var(--color-tile-border);
     border-radius: 14px;
+  }
+  .chemie-teaser-icon {
+    display: flex;
+    justify-content: center;
   }
   .chemie-teaser-icon svg { width: 36px; height: 36px; }
   .chemie-teaser-card h4 {
