@@ -1897,13 +1897,9 @@
   }
   @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
-  /* Footer-Logo: dezent, monochrom-hell auf dunklem Grund. */
+  /* Footer-Logo: Negativ-Variante (Marke lila, Schriftzug weiss) auf dunklem Grund. */
   .footer-brand .logo { display: inline-flex; }
-  .footer-brand .site-logo {
-    max-height: 38px;
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
-  }
+  .footer-brand .site-logo { max-height: 38px; }
   .footer-brand p { margin-top: 0.9rem; color: color-mix(in srgb, var(--color-bg) 70%, transparent); max-width: 32ch; font-size: 0.95rem; }
 
   .footer-col h4 {
