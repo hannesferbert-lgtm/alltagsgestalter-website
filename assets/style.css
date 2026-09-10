@@ -316,7 +316,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 1.1rem;
+    padding-block: 1.2rem;
     gap: 1.5rem;
   }
 
@@ -333,11 +333,11 @@
     display: block;
     width: auto;
     height: auto;
-    max-height: 54px;
+    max-height: 66px;
     max-width: 100%;
   }
   @media (max-width: 768px) {
-    .site-logo { max-height: 42px; }
+    .site-logo { max-height: 50px; }
   }
 
   nav.main-nav ul {
@@ -428,7 +428,7 @@
     /* Logo-Link im Menue-Panel: die generische nav.main-nav a-Regel
        (Padding, Unterstrich) zuruecknehmen. */
     .nav-panel-header .logo { padding: 0; border: 0; }
-    .nav-panel-header .site-logo { max-height: 40px; }
+    .nav-panel-header .site-logo { max-height: 46px; }
     .nav-close {
       display: inline-flex;
       align-items: center;
@@ -1899,7 +1899,7 @@
 
   /* Footer-Logo: Negativ-Variante (Marke lila, Schriftzug weiss) auf dunklem Grund. */
   .footer-brand .logo { display: inline-flex; }
-  .footer-brand .site-logo { max-height: 38px; }
+  .footer-brand .site-logo { max-height: 44px; }
   .footer-brand p { margin-top: 0.9rem; color: color-mix(in srgb, var(--color-bg) 70%, transparent); max-width: 32ch; font-size: 0.95rem; }
 
   .footer-col h4 {
