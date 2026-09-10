@@ -316,7 +316,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 1.1rem;
+    padding-block: 1.2rem;
     gap: 1.5rem;
   }
 
@@ -333,11 +333,11 @@
     display: block;
     width: auto;
     height: auto;
-    max-height: 54px;
+    max-height: 66px;
     max-width: 100%;
   }
   @media (max-width: 768px) {
-    .site-logo { max-height: 42px; }
+    .site-logo { max-height: 50px; }
   }
 
   nav.main-nav ul {
@@ -428,7 +428,7 @@
     /* Logo-Link im Menue-Panel: die generische nav.main-nav a-Regel
        (Padding, Unterstrich) zuruecknehmen. */
     .nav-panel-header .logo { padding: 0; border: 0; }
-    .nav-panel-header .site-logo { max-height: 40px; }
+    .nav-panel-header .site-logo { max-height: 46px; }
     .nav-close {
       display: inline-flex;
       align-items: center;
@@ -1899,7 +1899,7 @@
 
   /* Footer-Logo: Negativ-Variante (Marke lila, Schriftzug weiss) auf dunklem Grund. */
   .footer-brand .logo { display: inline-flex; }
-  .footer-brand .site-logo { max-height: 38px; }
+  .footer-brand .site-logo { max-height: 44px; }
   .footer-brand p { margin-top: 0.9rem; color: color-mix(in srgb, var(--color-bg) 70%, transparent); max-width: 32ch; font-size: 0.95rem; }
 
   .footer-col h4 {
@@ -2296,7 +2296,7 @@
   }
 
   .profile-widget-eyebrow {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.6rem;
     text-align: center;
     font-family: var(--font-display);
     font-weight: 700;
@@ -2304,6 +2304,48 @@
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--color-text-soft);
+  }
+
+  .profile-widget-intro {
+    margin: 0 0 1rem;
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--color-text-main);
+  }
+
+  /* Hinweis: die Online-Auswahl ist nur eine erste Orientierung – Details
+     klaeren wir im Erstgespraech. Nimmt Druck aus der Auswahl. */
+  .matching-disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin: 0 0 1.25rem;
+    padding: clamp(0.95rem, 2.5vw, 1.3rem) clamp(1rem, 3vw, 1.4rem);
+    background: var(--color-accent-light);
+    border: 1px solid var(--color-lavender);
+    border-radius: var(--radius-md);
+    color: var(--color-text-main);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+  .matching-disclaimer svg {
+    flex-shrink: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.15rem;
+    color: var(--color-primary);
+  }
+  .matching-disclaimer p { margin: 0; }
+
+  @media (max-width: 768px) {
+    .profile-widget-intro { font-size: 1rem; }
+    .matching-disclaimer {
+      gap: 0.65rem;
+      padding: 0.9rem 1rem;
+      font-size: 0.92rem;
+    }
+    .matching-disclaimer svg { width: 1.25rem; height: 1.25rem; }
   }
 
   .profile-widget {
