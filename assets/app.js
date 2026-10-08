@@ -899,6 +899,11 @@ try {
           var tabs = panel ? Array.prototype.slice.call(panel.querySelectorAll('[data-event-filter]')) : [];
           if (!panel || !list) return;
 
+          var EVENT_ICONS = {clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>', coffee: '<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3v3M12 3v3"/>', mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>', euro: '<circle cx="12" cy="12" r="9"/><path d="M15.5 9a4 4 0 1 0 0 6M7.5 11h6M7.5 13.5h6"/>', book: '<path d="M12 6.5C10.5 5 8 4.5 3.5 4.5v13c4.5 0 7 .5 8.5 2 1.5-1.5 4-2 8.5-2v-13C16 4.5 13.5 5 12 6.5z"/><path d="M12 6.5v13"/>', palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-.9.7-1.7 1.7-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/>'};
+          function eventIcon(name) {
+            return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + EVENT_ICONS[name] + '</svg>';
+          }
+
           function findEvent(id) {
             for (var i = 0; i < ALLTAGSGESTALTER_EVENTS.length; i++) {
               if (ALLTAGSGESTALTER_EVENTS[i].id === id) return ALLTAGSGESTALTER_EVENTS[i];
@@ -951,9 +956,9 @@ try {
               var card = document.createElement('article');
               card.className = 'event-card';
 
-              var meta = ['<li><span aria-hidden="true">🕒</span> ' + evt.time + '</li>'];
-              if (evt.location) meta.push('<li><span aria-hidden="true">📍</span> ' + evt.location + '</li>');
-              if (evt.cost) meta.push('<li><span aria-hidden="true">💶</span> ' + evt.cost + '</li>');
+              var meta = ['<li>' + eventIcon('clock') + ' ' + evt.time + '</li>'];
+              if (evt.location) meta.push('<li>' + eventIcon('pin') + ' ' + evt.location + '</li>');
+              if (evt.cost) meta.push('<li>' + eventIcon('euro') + ' ' + evt.cost + '</li>');
 
               var descriptionHtml = evt.description.map(function (p) { return '<p>' + p + '</p>'; }).join('');
 

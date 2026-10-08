@@ -3020,3 +3020,12 @@
 
   .hero-grid { grid-template-columns: 1fr; }
   .hero-copy { max-width: 46rem; }
+
+  .ico { width: 1.15em; height: 1.15em; flex: none; color: var(--color-violett); vertical-align: -0.2em; margin-right: 0.2em; }
+  .events-filter-tab .ico { margin-right: 0.35em; }
+  .event-teaser-phone { margin-top: 1rem; font-size: 0.95rem; color: var(--color-text-soft); }
+  .event-teaser-phone a { color: var(--color-kohle); font-weight: 700; }
+  .event-teaser-meta li,
+  .event-card-meta li { display: flex; align-items: flex-start; gap: 0.6rem; }
+  .event-teaser-meta .ico,
+  .event-card-meta .ico { width: 1.25rem; height: 1.25rem; margin: 0.1rem 0 0; vertical-align: baseline; }
