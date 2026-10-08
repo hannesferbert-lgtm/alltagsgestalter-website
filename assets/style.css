@@ -2988,3 +2988,8 @@
   }
   .sticky-top header.site-header { position: static; }
   html { scroll-padding-top: 4rem; }
+
+  @media (max-width: 780px) {
+    img.nav-emoji { width: 1.7rem; height: 1.7rem; flex: none; margin: 0 0.25rem; }
+    .nav-badge { margin-left: 2.9rem; }
+  }
