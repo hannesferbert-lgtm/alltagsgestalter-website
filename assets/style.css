@@ -2995,3 +2995,7 @@
   }
 
   .service-matching-avatars img { height: 3.3rem; width: auto; flex-shrink: 0; }
+
+  .persona-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .persona-card .persona-icon { width: 6rem; height: 6.6rem; }
+  .chemie-teaser-icon img { width: auto; height: 56px; display: block; }
