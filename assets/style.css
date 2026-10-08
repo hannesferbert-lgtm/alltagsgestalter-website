@@ -2993,3 +2993,5 @@
     img.nav-emoji { width: 1.7rem; height: 1.7rem; flex: none; margin: 0 0.25rem; }
     .nav-badge { margin-left: 2.9rem; }
   }
+
+  .service-matching-avatars img { height: 3.3rem; width: auto; flex-shrink: 0; }
