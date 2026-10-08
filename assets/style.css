@@ -3007,3 +3007,11 @@
   img.profile-option-emoji { height: 2.6rem; width: auto; display: block; }
   .profile-result-avatar img { height: 84px; width: auto; display: block; }
   .profile-facet-chip img { height: 30px; width: auto; flex-shrink: 0; }
+
+  .profile-option-type { flex-direction: row; justify-content: flex-start; gap: 0.9rem; width: 100%; text-align: left; text-transform: none; padding: 0.7rem 1rem; }
+  .profile-option-type .profile-option-emoji { flex: none; }
+  .profile-option-text { display: flex; flex-direction: column; gap: 0.1rem; }
+  .profile-option-text strong { font-size: 1rem; font-weight: 700; }
+  .profile-option-sub { font-family: var(--font-body); font-weight: 500; font-size: 0.85rem; letter-spacing: 0; color: var(--color-text-soft); }
+  .profile-hint { margin-top: 0.8rem; font-size: 0.85rem; color: var(--color-text-soft); text-align: center; }
+  .profile-result .profile-hint { max-width: 42ch; }

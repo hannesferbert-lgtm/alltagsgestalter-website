@@ -674,7 +674,8 @@ try {
             1: widget.querySelector('[data-panel="1"]'),
             2: widget.querySelector('[data-panel="2"]'),
             3: widget.querySelector('[data-panel="3"]'),
-            4: widget.querySelector('[data-panel="4"]')
+            4: widget.querySelector('[data-panel="4"]'),
+            5: widget.querySelector('[data-panel="5"]')
           };
           var dots = Array.prototype.slice.call(widget.querySelectorAll('[data-step-dot]'));
           var resultAvatar = widget.querySelector('[data-result-avatar]');
@@ -682,41 +683,33 @@ try {
           var resultFacets = widget.querySelector('[data-result-facets]');
           var resultText = widget.querySelector('[data-result-text]');
           var restartBtn = widget.querySelector('[data-profile-restart]');
-          if (!panels[1] || !panels[2] || !panels[3] || !panels[4] || !resultAvatar || !resultMain || !resultFacets || !resultText) return;
+          var typeOptions = widget.querySelector('[data-type-options]');
+          if (!panels[1] || !panels[2] || !panels[3] || !panels[4] || !panels[5] || !resultAvatar || !resultMain || !resultFacets || !resultText) return;
 
-          function shapeIcon(shape, color, outline) {
-            var strokeAttr = outline ? ' stroke="var(--color-text)" stroke-width="1.5"' : '';
-            if (shape === 'circle') {
-              return '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="' + (outline ? 15 : 16) + '" fill="' + color + '"' + strokeAttr + '/><circle cx="11" cy="13" r="1.6" fill="var(--color-kohle)"/><circle cx="21" cy="13" r="1.6" fill="var(--color-kohle)"/><path d="M11 19q5 4.5 10 0" stroke="var(--color-kohle)" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
-            }
-            if (shape === 'rect') {
-              return '<svg viewBox="0 0 32 32"><rect width="32" height="32" rx="12" fill="' + color + '"' + strokeAttr + '/><circle cx="11" cy="13" r="1.6" fill="var(--color-kohle)"/><circle cx="21" cy="13" r="1.6" fill="var(--color-kohle)"/><path d="M11 19q5 4.5 10 0" stroke="var(--color-kohle)" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
-            }
-            return '<svg viewBox="0 0 32 32"><polygon points="16,4 28,29 4,29" fill="' + color + '"' + strokeAttr + '/><circle cx="12.5" cy="20" r="1.4" fill="var(--color-kohle)"/><circle cx="19.5" cy="20" r="1.4" fill="var(--color-kohle)"/><path d="M12.5 24.5q3.5 3 7 0" stroke="var(--color-kohle)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
-          }
-
-          // Nur die tatsaechlich im Widget verwendeten Typen aus den elf
-          // Alltagsgestalter-Persönlichkeiten (siehe ueber-uns.html): vier als
-          // direkt waehlbarer Haupt-Charakter (Schritt 3), vier weitere als
-          // Vertreter ihrer Kategorie fuer die ergaenzenden Facetten im Ergebnis.
+          // Alle zwoelf Alltagsgestalter-Persoenlichkeiten (siehe ueber-uns.html),
+          // gruppiert nach den vier Leistungsbereichen. Das Icon ist je Typ die
+          // Charakter-Grafik unter /charaktere/<id>.svg.
           var PERSONAS = {
-            ruhepol: { label: 'Der Ruhepol', shape: 'circle', category: 'ruhe' },
-            organisierte: { label: 'Die Organisierte', shape: 'rect', category: 'ruhe' },
-            tueftler: { label: 'Der Tüftler', shape: 'triangle', category: 'ruhe' },
-            erzaehlerin: { label: 'Die Erzählerin', shape: 'circle', category: 'gesellschaft' },
-            entdecker: { label: 'Der Entdecker', shape: 'triangle', category: 'gesellschaft' },
-            geniesserin: { label: 'Die Genießerin', shape: 'triangle', category: 'genuss' },
-            gartenfreund: { label: 'Der Gartenfreund', shape: 'circle', category: 'genuss' },
-            buecherwurm: { label: 'Der Bücherwurm', shape: 'rect', category: 'aktivitaet' }
+            ruhepol: { label: 'Der Ruhepol', tagline: 'bringt Gelassenheit', trait: 'ruhig und gelassen', category: 'ruhe' },
+            organisierte: { label: 'Die Organisierte', tagline: 'liebt Struktur und Listen', trait: 'verlässlich und strukturiert', category: 'ruhe' },
+            tueftler: { label: 'Der Tüftler', tagline: 'kriegt alles irgendwie hin', trait: 'praktisch und findig', category: 'ruhe' },
+            erzaehlerin: { label: 'Die Erzählerin', tagline: 'hat für jeden eine Geschichte', trait: 'herzlich und gesprächig', category: 'gesellschaft' },
+            fruehaufsteher: { label: 'Der Frühaufsteher', tagline: 'startet voller Energie', trait: 'tatkräftig und voller Energie', category: 'gesellschaft' },
+            entdecker: { label: 'Der Entdecker', tagline: 'probiert gern Neues aus', trait: 'neugierig und unternehmungslustig', category: 'gesellschaft' },
+            buecherwurm: { label: 'Der Bücherwurm', tagline: 'liest für sein Leben gern', trait: 'belesen und nachdenklich', category: 'aktivitaet' },
+            kreative: { label: 'Die Kreative', tagline: 'sieht das Schöne in allem', trait: 'fantasievoll mit Blick fürs Schöne', category: 'aktivitaet' },
+            musikliebhaberin: { label: 'Die Musikliebhaberin', tagline: 'hat immer einen guten Ton', trait: 'musikalisch und lebensfroh', category: 'aktivitaet' },
+            geniesserin: { label: 'Die Genießerin', tagline: 'freut sich über die kleinen Dinge', trait: 'genussvoll und achtsam', category: 'genuss' },
+            gartenfreund: { label: 'Der Gartenfreund', tagline: 'blüht im Grünen auf', trait: 'naturverbunden und geduldig', category: 'genuss' },
+            gastgeber: { label: 'Der Gastgeber', tagline: 'macht jeden Geburtstag zum Fest', trait: 'gesellig und festlich', category: 'genuss' }
           };
           Object.keys(PERSONAS).forEach(function (k) { PERSONAS[k].id = k; });
-          var CATEGORY_COLOR = {
-            ruhe: 'var(--color-violett-card)',
-            gesellschaft: 'var(--color-orange-card)',
-            genuss: 'var(--color-sand)',
-            aktivitaet: 'var(--color-gruen)'
+          var CATEGORY_TYPES = {
+            ruhe: ['ruhepol', 'organisierte', 'tueftler'],
+            gesellschaft: ['erzaehlerin', 'fruehaufsteher', 'entdecker'],
+            aktivitaet: ['buecherwurm', 'kreative', 'musikliebhaberin'],
+            genuss: ['geniesserin', 'gartenfreund', 'gastgeber']
           };
-          var CATEGORY_OUTLINE = { genuss: true };
           var CATEGORY_ORDER = ['ruhe', 'gesellschaft', 'genuss', 'aktivitaet'];
           // Je Kategorie der Alltagstyp, der als ergaenzende Facette auftaucht,
           // wenn diese Kategorie NICHT der gewaehlte Haupt-Charakter ist - bewusst
@@ -724,14 +717,15 @@ try {
           // eine echte Erweiterung wirkt statt die eigene Auswahl zu wiederholen.
           var FACET_REP = { ruhe: 'tueftler', gesellschaft: 'entdecker', genuss: 'gartenfreund', aktivitaet: 'buecherwurm' };
           var MOOD_LABEL = {
-            genuss: 'Entspannung & Genuss',
-            ruhe: 'Ruhe & Begleitung',
-            gesellschaft: 'Gute Gespräche',
-            aktivitaet: 'Aktivität & Kreativität'
+            ruhe: 'Haushalt & Zuhause',
+            gesellschaft: 'Termine, Wege & Begleitung',
+            aktivitaet: 'Aktiv bleiben & Freizeit',
+            genuss: 'Essen, Kochen & Lieblingsrezepte'
           };
-          var WHO_LABEL = { self: 'für sich selbst', angehoerige: 'für ihre Eltern / Angehörige' };
+          var PG_LABEL = { ja: 'ja, vorhanden', nein: 'noch nicht', unklar: 'noch unklar' };
+          var WHO_LABEL = { self: 'für mich selbst', angehoerige: 'für meine Eltern / Angehörige' };
 
-          var state = { who: null, mood: null, mainId: null };
+          var state = { who: null, mood: null, mainId: null, pg: null };
 
           function iconFor(persona) {
             return '<img src="charaktere/' + persona.id + '.svg" alt="">';
@@ -750,36 +744,32 @@ try {
             });
           }
 
-          // Es gibt (noch) kein eigenes Kontaktformular auf der Seite - "#kontakt"
-          // fuehrt zum Footer mit einem mailto-Link. Als bestmoegliche Uebergabe
-          // wird dieser Link um Betreff/Text mit dem Ergebnis ergaenzt, damit die
-          // Anfrage im E-Mail-Programm bereits vorausgefuellt ankommt.
+          function lcFirst(str) { return str.charAt(0).toLowerCase() + str.slice(1); }
+
+          // Uebergabe ans Kontaktformular: Das Ergebnis wird als Vorschlag in das
+          // Nachrichtenfeld geschrieben, solange dort nichts Eigenes steht.
           function primeContactHandoff(main, facet1, facet2) {
-            var mailLink = document.querySelector('a[href^="mailto:info@alltagsgestalter.de"]');
-            if (!mailLink) return;
-            var subject = 'Erstgespräch – Alltagsprofil: ' + main.label;
-            var body = [
-              'Hallo Alltagsgestalter-Team,',
-              '',
-              'ich interessiere mich für ein Erstgespräch. Mein Alltagsprofil:',
+            var ta = document.querySelector('#contactForm textarea[name="nachricht"]');
+            if (!ta) return;
+            if (ta.value.trim() && ta.getAttribute('data-autofill') !== '1') return;
+            ta.value = [
+              'Mein Alltagsprofil:',
               '– Unterstützung gesucht: ' + (WHO_LABEL[state.who] || '-'),
-              '– Aktuell am wichtigsten: ' + (MOOD_LABEL[state.mood] || '-'),
-              '– Passender Begleiter-Mix: ' + main.label + ', ' + facet1.label + ' & ' + facet2.label,
-              '',
-              'Bitte melden Sie sich bei mir für ein unverbindliches Erstgespräch.'
+              '– Entlastung gewünscht bei: ' + (MOOD_LABEL[state.mood] || '-'),
+              '– Pflegegrad: ' + (PG_LABEL[state.pg] || '-'),
+              '– Passender Begleiter-Mix: ' + main.label + ', ' + facet1.label + ' & ' + facet2.label
             ].join('\n');
-            mailLink.href = 'mailto:info@alltagsgestalter.de?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            ta.setAttribute('data-autofill', '1');
+            if (!ta.hasAttribute('data-autofill-bound')) {
+              ta.setAttribute('data-autofill-bound', '1');
+              ta.addEventListener('input', function () { ta.removeAttribute('data-autofill'); });
+            }
           }
 
           function showResult() {
             var main = PERSONAS[state.mainId];
             if (!main) return;
             var candidates = CATEGORY_ORDER.filter(function (c) { return c !== main.category; });
-            candidates.sort(function (a, b) {
-              if (a === state.mood) return -1;
-              if (b === state.mood) return 1;
-              return 0;
-            });
             var facet1 = PERSONAS[FACET_REP[candidates[0]]];
             var facet2 = PERSONAS[FACET_REP[candidates[1]]];
 
@@ -792,14 +782,30 @@ try {
               chip.innerHTML = iconFor(facet) + '<span>' + facet.label + '</span>';
               resultFacets.appendChild(chip);
             });
-            resultText.textContent = 'Zu Ihnen passt unser Haupt-Typ ' + main.label + ' ideal kombiniert mit ' + facet1.label + ' & ' + facet2.label + '.';
+            resultText.innerHTML = 'Wir empfehlen Ihnen eine Begleitung wie <strong>' + lcFirst(main.label) + '</strong> – ' + main.trait +
+              '. Dazu passen <strong>' + lcFirst(facet1.label) + '</strong> und <strong>' + lcFirst(facet2.label) + '</strong>.';
 
             primeContactHandoff(main, facet1, facet2);
-            showPanel(4);
+            showPanel(5);
+          }
+
+          function renderTypeOptions(category) {
+            if (!typeOptions) return;
+            typeOptions.innerHTML = '';
+            (CATEGORY_TYPES[category] || []).forEach(function (id) {
+              var p = PERSONAS[id];
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'profile-option profile-option-type';
+              btn.setAttribute('data-persona', id);
+              btn.innerHTML = '<img class="profile-option-emoji" src="charaktere/' + id + '.svg" alt="" aria-hidden="true">' +
+                '<span class="profile-option-text"><strong>' + p.label + '</strong><span class="profile-option-sub">' + p.tagline + '</span></span>';
+              typeOptions.appendChild(btn);
+            });
           }
 
           function reset() {
-            state = { who: null, mood: null, mainId: null };
+            state = { who: null, mood: null, mainId: null, pg: null };
             showPanel(1);
           }
 
@@ -812,20 +818,21 @@ try {
           widget.querySelectorAll('[data-mood]').forEach(function (btn) {
             btn.addEventListener('click', function () {
               state.mood = btn.getAttribute('data-mood');
-              // "Kulinarisches Erbe & Lieblingsrezepte" fuehrt direkt zum
-              // Ergebnis-Charakter "Die Genießerin".
-              var shortcut = btn.getAttribute('data-persona-shortcut');
-              if (shortcut && PERSONAS[shortcut]) {
-                state.mainId = shortcut;
-                showResult();
-              } else {
-                showPanel(3);
-              }
+              renderTypeOptions(state.mood);
+              showPanel(3);
             });
           });
-          widget.querySelectorAll('[data-persona]').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+          if (typeOptions) {
+            typeOptions.addEventListener('click', function (e) {
+              var btn = e.target.closest('[data-persona]');
+              if (!btn) return;
               state.mainId = btn.getAttribute('data-persona');
+              showPanel(4);
+            });
+          }
+          widget.querySelectorAll('[data-pg]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              state.pg = btn.getAttribute('data-pg');
               showResult();
             });
           });
