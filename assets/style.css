@@ -2999,3 +2999,7 @@
   .persona-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .persona-card .persona-icon { width: 6rem; height: 6.6rem; }
   .chemie-teaser-icon img { width: auto; height: 56px; display: block; }
+
+  .persona-cta { margin-top: 2.5rem; text-align: center; }
+  .persona-cta > p { max-width: 52ch; margin: 0 auto; font-weight: 600; }
+  .persona-cta-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; }
