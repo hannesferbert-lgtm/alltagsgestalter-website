@@ -703,12 +703,13 @@ try {
             ruhepol: { label: 'Der Ruhepol', shape: 'circle', category: 'ruhe' },
             organisierte: { label: 'Die Organisierte', shape: 'rect', category: 'ruhe' },
             tueftler: { label: 'Der Tüftler', shape: 'triangle', category: 'ruhe' },
-            plauderin: { label: 'Die Plauderin', shape: 'circle', category: 'gesellschaft' },
+            erzaehlerin: { label: 'Die Erzählerin', shape: 'circle', category: 'gesellschaft' },
             entdecker: { label: 'Der Entdecker', shape: 'triangle', category: 'gesellschaft' },
             geniesserin: { label: 'Die Genießerin', shape: 'triangle', category: 'genuss' },
             gartenfreund: { label: 'Der Gartenfreund', shape: 'circle', category: 'genuss' },
             buecherwurm: { label: 'Der Bücherwurm', shape: 'rect', category: 'aktivitaet' }
           };
+          Object.keys(PERSONAS).forEach(function (k) { PERSONAS[k].id = k; });
           var CATEGORY_COLOR = {
             ruhe: 'var(--color-violett-card)',
             gesellschaft: 'var(--color-orange-card)',
@@ -733,7 +734,7 @@ try {
           var state = { who: null, mood: null, mainId: null };
 
           function iconFor(persona) {
-            return shapeIcon(persona.shape, CATEGORY_COLOR[persona.category], CATEGORY_OUTLINE[persona.category]);
+            return '<img src="charaktere/' + persona.id + '.svg" alt="">';
           }
 
           function showPanel(step) {

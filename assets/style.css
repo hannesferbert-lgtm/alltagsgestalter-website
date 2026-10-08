@@ -3003,3 +3003,7 @@
   .persona-cta { margin-top: 2.5rem; text-align: center; }
   .persona-cta > p { max-width: 52ch; margin: 0 auto; font-weight: 600; }
   .persona-cta-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; }
+
+  img.profile-option-emoji { height: 2.6rem; width: auto; display: block; }
+  .profile-result-avatar img { height: 84px; width: auto; display: block; }
+  .profile-facet-chip img { height: 30px; width: auto; flex-shrink: 0; }
