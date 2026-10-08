@@ -725,7 +725,7 @@ try {
           var PG_LABEL = { ja: 'ja, vorhanden', nein: 'noch nicht', unklar: 'noch unklar' };
           var WHO_LABEL = { self: 'für mich selbst', angehoerige: 'für meine Eltern / Angehörige' };
 
-          var state = { who: null, mood: null, mainId: null, pg: null };
+          var state = { who: null, moods: [], mainId: null, pg: null };
 
           function iconFor(persona) {
             return '<img src="charaktere/' + persona.id + '.svg" alt="">';
@@ -755,7 +755,7 @@ try {
             ta.value = [
               'Mein Alltagsprofil:',
               '– Unterstützung gesucht: ' + (WHO_LABEL[state.who] || '-'),
-              '– Entlastung gewünscht bei: ' + (MOOD_LABEL[state.mood] || '-'),
+              '– Entlastung gewünscht bei: ' + (state.moods.map(function (m) { return MOOD_LABEL[m]; }).join(', ') || '-'),
               '– Pflegegrad: ' + (PG_LABEL[state.pg] || '-'),
               '– Passender Begleiter-Mix: ' + main.label + ', ' + facet1.label + ' & ' + facet2.label
             ].join('\n');
@@ -769,9 +769,14 @@ try {
           function showResult() {
             var main = PERSONAS[state.mainId];
             if (!main) return;
-            var candidates = CATEGORY_ORDER.filter(function (c) { return c !== main.category; });
-            var facet1 = PERSONAS[FACET_REP[candidates[0]]];
-            var facet2 = PERSONAS[FACET_REP[candidates[1]]];
+            // Ergaenzende Figuren: zuerst die weiteren gewaehlten Bereiche, danach
+            // (falls weniger als zwei) die uebrigen Bereiche in fester Reihenfolge.
+            var others = state.moods.filter(function (c) { return c !== main.category; });
+            CATEGORY_ORDER.forEach(function (c) {
+              if (c !== main.category && others.indexOf(c) === -1) others.push(c);
+            });
+            var facet1 = PERSONAS[FACET_REP[others[0]]];
+            var facet2 = PERSONAS[FACET_REP[others[1]]];
 
             resultAvatar.innerHTML = iconFor(main);
             resultMain.textContent = main.label;
@@ -789,10 +794,15 @@ try {
             showPanel(5);
           }
 
-          function renderTypeOptions(category) {
+          var TYPE_REP = { ruhe: 'ruhepol', gesellschaft: 'erzaehlerin', aktivitaet: 'kreative', genuss: 'geniesserin' };
+
+          function renderTypeOptions(categories) {
             if (!typeOptions) return;
             typeOptions.innerHTML = '';
-            (CATEGORY_TYPES[category] || []).forEach(function (id) {
+            var ids = categories.length === 1
+              ? (CATEGORY_TYPES[categories[0]] || [])
+              : categories.map(function (c) { return TYPE_REP[c]; });
+            ids.forEach(function (id) {
               var p = PERSONAS[id];
               var btn = document.createElement('button');
               btn.type = 'button';
@@ -804,8 +814,27 @@ try {
             });
           }
 
+          var moodButtons = Array.prototype.slice.call(widget.querySelectorAll('[data-mood]'));
+          var moodAllBtn = widget.querySelector('[data-mood-all]');
+          var moodNextBtn = widget.querySelector('[data-moods-next]');
+
+          function syncMoodUI() {
+            moodButtons.forEach(function (b) {
+              var on = state.moods.indexOf(b.getAttribute('data-mood')) !== -1;
+              b.classList.toggle('is-selected', on);
+              b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            var all = state.moods.length === moodButtons.length;
+            if (moodAllBtn) {
+              moodAllBtn.classList.toggle('is-selected', all);
+              moodAllBtn.setAttribute('aria-pressed', all ? 'true' : 'false');
+            }
+            if (moodNextBtn) moodNextBtn.disabled = state.moods.length === 0;
+          }
+
           function reset() {
-            state = { who: null, mood: null, mainId: null, pg: null };
+            state = { who: null, moods: [], mainId: null, pg: null };
+            syncMoodUI();
             showPanel(1);
           }
 
@@ -815,13 +844,29 @@ try {
               showPanel(2);
             });
           });
-          widget.querySelectorAll('[data-mood]').forEach(function (btn) {
+          moodButtons.forEach(function (btn) {
             btn.addEventListener('click', function () {
-              state.mood = btn.getAttribute('data-mood');
-              renderTypeOptions(state.mood);
-              showPanel(3);
+              var m = btn.getAttribute('data-mood');
+              var i = state.moods.indexOf(m);
+              if (i === -1) state.moods.push(m); else state.moods.splice(i, 1);
+              syncMoodUI();
             });
           });
+          if (moodAllBtn) {
+            moodAllBtn.addEventListener('click', function () {
+              state.moods = state.moods.length === moodButtons.length
+                ? []
+                : moodButtons.map(function (b) { return b.getAttribute('data-mood'); });
+              syncMoodUI();
+            });
+          }
+          if (moodNextBtn) {
+            moodNextBtn.addEventListener('click', function () {
+              if (!state.moods.length) return;
+              renderTypeOptions(state.moods);
+              showPanel(3);
+            });
+          }
           if (typeOptions) {
             typeOptions.addEventListener('click', function (e) {
               var btn = e.target.closest('[data-persona]');

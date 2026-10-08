@@ -77,7 +77,7 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/style.css?v=20261013-quiz2">
+<link rel="stylesheet" href="assets/style.css?v=20261014-multi2">
 </head>
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -259,13 +259,16 @@
 
           <div class="profile-panel" data-panel="2" hidden>
             <button type="button" class="profile-back" data-profile-back="1">&larr; Zurück</button>
-            <h3 class="profile-question">Wobei wünschen Sie sich am meisten Entlastung?</h3>
+            <h3 class="profile-question">Wobei wünschen Sie sich Entlastung?</h3>
+            <p class="profile-hint profile-hint-top">Mehrfachauswahl möglich</p>
             <div class="profile-options profile-options-grid">
-              <button type="button" class="profile-option" data-mood="ruhe"><img class="profile-option-emoji" src="charaktere/organisierte.svg" alt="" aria-hidden="true">Haushalt &amp; Zuhause</button>
-              <button type="button" class="profile-option" data-mood="gesellschaft"><img class="profile-option-emoji" src="charaktere/entdecker.svg" alt="" aria-hidden="true">Termine, Wege &amp; Begleitung</button>
-              <button type="button" class="profile-option" data-mood="aktivitaet"><img class="profile-option-emoji" src="charaktere/kreative.svg" alt="" aria-hidden="true">Aktiv bleiben &amp; Freizeit</button>
-              <button type="button" class="profile-option" data-mood="genuss"><img class="profile-option-emoji" src="charaktere/geniesserin.svg" alt="" aria-hidden="true">Essen, Kochen &amp; Lieblingsrezepte</button>
+              <button type="button" class="profile-option" data-mood="ruhe" aria-pressed="false"><img class="profile-option-emoji" src="charaktere/organisierte.svg" alt="" aria-hidden="true">Haushalt &amp; Zuhause</button>
+              <button type="button" class="profile-option" data-mood="gesellschaft" aria-pressed="false"><img class="profile-option-emoji" src="charaktere/entdecker.svg" alt="" aria-hidden="true">Termine, Wege &amp; Begleitung</button>
+              <button type="button" class="profile-option" data-mood="aktivitaet" aria-pressed="false"><img class="profile-option-emoji" src="charaktere/kreative.svg" alt="" aria-hidden="true">Aktiv bleiben &amp; Freizeit</button>
+              <button type="button" class="profile-option" data-mood="genuss" aria-pressed="false"><img class="profile-option-emoji" src="charaktere/geniesserin.svg" alt="" aria-hidden="true">Essen, Kochen &amp; Lieblingsrezepte</button>
+              <button type="button" class="profile-option profile-option-span profile-option-all" data-mood-all aria-pressed="false">Alles davon</button>
             </div>
+            <button type="button" class="btn btn-primary profile-next" data-moods-next disabled>Weiter <span aria-hidden="true">&rarr;</span></button>
           </div>
 
           <div class="profile-panel" data-panel="3" hidden>
@@ -725,6 +728,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=20261013-quiz2" defer></script>
+<script src="assets/app.js?v=20261014-multi" defer></script>
 </body>
 </html>
