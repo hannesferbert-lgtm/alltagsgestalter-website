@@ -3021,3 +3021,6 @@
   .profile-hint-top { margin: -0.4rem 0 0.8rem; }
   .profile-next { width: 100%; margin-top: 1rem; justify-content: center; }
   .profile-next:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy { max-width: 46rem; }
