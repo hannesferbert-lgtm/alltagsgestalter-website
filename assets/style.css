@@ -1745,22 +1745,22 @@
     padding: 1.6rem;
     scroll-margin-top: 6.5rem;
   }
-  .ratgeber-card h3 { font-size: 1.15rem; }
+  .ratgeber-card h2,
+  .ratgeber-card h3 { font-size: var(--font-size-h3); line-height: 1.25; }
   .ratgeber-card > p { color: var(--color-text-soft); font-size: 0.98rem; }
 
   .pill {
     align-self: flex-start;
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: var(--font-body);
+    font-size: var(--fs-brand);
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 8px;
+    color: var(--color-kohle);
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
   }
-  .pill-beratung { background: var(--color-blau); color: var(--color-sand); }
-  .pill-gesundheit { background: var(--color-gruen); color: var(--color-kohle); }
-  .pill-teilhabe { background: var(--color-orange); color: var(--color-kohle); }
 
   .ratgeber-card .card-meta {
     margin-top: auto;
@@ -1773,15 +1773,11 @@
   }
   .ratgeber-card .read-time { color: var(--color-text-soft); }
   .ratgeber-card .read-link {
-    font-family: var(--font-display);
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    color: var(--color-text);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+    padding: 0.7rem 1.3rem;
+    font-size: var(--font-size-btn);
+    white-space: nowrap;
   }
+  .ratgeber-card .card-meta { flex-wrap: wrap; gap: 0.8rem 1rem; }
   .ratgeber-card .read-link svg { width: 1em; height: 1em; }
 
   .ratgeber-articles {
