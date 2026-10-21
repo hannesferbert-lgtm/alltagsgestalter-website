@@ -110,22 +110,22 @@
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-modal', 'false');
     banner.setAttribute('aria-labelledby', 'consent-title');
-    banner.setAttribute('aria-describedby', 'consent-text');
+    banner.setAttribute('aria-describedby', 'consent-desc');
     banner.tabIndex = -1;
     banner.hidden = true;
     banner.innerHTML =
-      '<h2 id="consent-title" class="visually-hidden">Cookies und Statistik</h2>' +
       '<div class="consent-inner">' +
-      '<p id="consent-text" class="consent-text">Wir nutzen Google Analytics, um unsere Website zu verbessern. ' +
+      '<p id="consent-text" class="consent-text"><strong id="consent-title">Cookies &amp; Statistik.</strong> ' +
+      '<span id="consent-desc">Wir nutzen Google Analytics, um unsere Website zu verbessern. ' +
       'Dabei werden Cookies gesetzt und Daten an Google übertragen. ' +
-      'Per Klick auf „Zustimmen“ willigen Sie ein, mit „Alle ablehnen“ wird nichts erfasst. ' +
+      'Mit „Zustimmen“ willigen Sie ein, mit „Alle ablehnen“ wird nichts erfasst.</span> ' +
       '<a href="/datenschutz">Datenschutzerklärung</a></p>' +
       '<p class="consent-status visually-hidden"></p>' +
       '<div class="consent-actions">' +
       '<button type="button" class="btn consent-btn" data-consent="denied">Alle ablehnen</button>' +
       '<button type="button" class="btn consent-btn" data-consent="granted">Zustimmen</button>' +
       '<button type="button" class="consent-close" data-consent-close aria-label="Hinweis schließen, ohne eine Auswahl zu speichern">' +
-      '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
       '</button>' +
       '</div>' +
       '</div>';
