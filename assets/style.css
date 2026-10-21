@@ -284,17 +284,6 @@
   }
   .btn-primary:hover { box-shadow: 0 25px 45px -22px color-mix(in srgb, var(--color-violett) 70%, transparent); }
 
-  .btn-dark {
-    background: var(--color-violett);
-    color: #fff;
-  }
-
-  .btn-outline {
-    background: var(--color-violett);
-    border-color: var(--color-violett);
-    color: #fff;
-  }
-
   .btn-ghost {
     background: transparent;
     border-color: var(--color-violett);
@@ -584,10 +573,7 @@
   }
 
   /* Hero-H1: Wort-fuer-Wort-Einblendung + handgezeichnete SVG-Unterstreichung */
-  .word-group {
-    display: inline-block;
-    white-space: nowrap;
-  }
+  
 
   .word-fade {
     display: inline-block;
@@ -641,36 +627,6 @@
     max-width: 44ch;
   }
 
-  /* Trust-Badge im Hero: "Abrechenbar ueber alle Pflegekassen ..." */
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 1.25rem;
-    background: color-mix(in srgb, var(--color-violett) 14%, var(--color-surface));
-    border: 1.5px solid color-mix(in srgb, var(--color-violett) 45%, transparent);
-    border-radius: 999px;
-    padding: 10px 22px 10px 12px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--color-text);
-    line-height: 1.3;
-  }
-  .hero-badge .badge-icon,
-  .hero-badge span:first-child {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    background-color: var(--color-violett);
-    color: var(--color-kohle);
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
@@ -682,35 +638,6 @@
     font-family: var(--font-body);
     font-size: 14px;
     font-weight: 600;
-  }
-
-  .hero-figure {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-  .hero-frame {
-    position: relative;
-    width: min(420px, 100%);
-  }
-  /* Lilafarbener Versatz-"Schatten" hinter dem Foto entfernt (Design-Update). */
-  .hero-frame::before { content: none; }
-  .hero-frame .art-panel {
-    position: relative;
-    z-index: 1;
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    overflow: hidden;
-    /* Kein Schlagschatten an Bildern (Markenvorgabe). */
-    box-shadow: none;
-  }
-  .hero-frame .art-panel img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
   }
 
   .services-grid {
@@ -1078,66 +1005,6 @@
     font-weight: 700;
     color: var(--color-kohle);
     margin-right: 0.35em;
-  }
-
-  .newsletter {
-    background: color-mix(in srgb, var(--color-violett) 8%, var(--color-surface));
-    color: var(--color-kohle);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .newsletter-inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.75rem;
-  }
-  .newsletter h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); max-width: 20ch; }
-  .newsletter p { margin-top: 0.5rem; font-family: var(--font-body); font-size: 1.05rem; }
-
-  .newsletter-signup { width: min(27rem, 100%); }
-
-  form.newsletter-form {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-    background: var(--color-surface);
-    padding: 0.5rem;
-    border-radius: 999px;
-    box-shadow: var(--shadow-soft);
-  }
-  form.newsletter-form input[type="email"] {
-    border: none;
-    background: transparent;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    padding: 0.7rem 0.5rem 0.7rem 1rem;
-    flex: 1 1 auto;
-    min-width: 0;
-    width: 100%;
-    color: var(--color-text);
-  }
-  form.newsletter-form input[type="email"]:focus { outline: none; }
-  form.newsletter-form input[type="email"]::placeholder { color: var(--color-text-soft); }
-  form.newsletter-form .btn {
-    flex: 0 0 auto;
-    padding: 1.05rem 2.3rem;
-    border-radius: 999px;
-    border-color: var(--color-kohle);
-  }
-  .newsletter-note { font-size: 0.85rem; margin-top: 0.7rem; padding-left: 1.1rem; color: var(--color-kohle); }
-  .newsletter-note:empty { display: none; }
-
-  @media (max-width: 560px) {
-    
-    form.newsletter-form .btn {
-      padding: 0.95rem 1.15rem;
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-    }
-    form.newsletter-form input[type="email"] { padding-left: 0.85rem; font-size: 0.95rem; }
   }
 
   /* ============ Kontakt-/Anfrage-Formular ============ */

@@ -4,6 +4,9 @@ RewriteEngine On
 # /meine-geschichte.html -> /ueber-uns (alte URL dauerhaft umgeleitet)
 RewriteRule ^meine-geschichte\.html?$ /ueber-uns [R=301,L]
 
+# Entfernte Seite /kulinarisches-erbe -> Startseite (dauerhaft)
+RewriteRule ^kulinarisches-erbe(\.html)?/?$ / [R=301,L]
+
 # Direktaufruf einer .html-Datei auf die schoene URL umleiten
 RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
