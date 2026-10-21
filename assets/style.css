@@ -1271,7 +1271,7 @@
   .area-section { background: var(--color-bg-alt); }
   .area-header { max-width: 62ch; }
   .area-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
-  .area-header p { margin-top: 1rem; color: var(--color-text-soft); }
+  .area-header p { margin-top: 1rem; color: var(--color-text-main); }
 
   .area-grid {
     margin-top: clamp(2rem, 4vw, 3rem);
@@ -1288,26 +1288,43 @@
     border-radius: var(--radius-md);
     padding: 1.5rem;
   }
+  /* Markenkonzept: Pille 12px (wie .pill/.hero-tag), Titel 24px, Text 18px, alles #000, eine Schrift (Inter) */
   .area-card .plz {
     display: inline-block;
-    font-family: var(--font-display);
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--color-kohle);
-    background: var(--color-orange);
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: var(--fs-brand);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-main);
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+    padding: 0.35rem 0.85rem;
+    border-radius: 8px;
   }
+  .area-card h2,
   .area-card h3 {
-    font-size: 1.1rem;
-    margin-top: 0.4rem;
+    font-family: var(--font-body);
+    font-size: var(--fs-heading-sm);
+    line-height: 1.25;
+    color: var(--color-text-main);
+    margin-top: 0.9rem;
   }
   .area-card p {
-    margin-top: 0.55rem;
-    font-size: 0.95rem;
-    color: var(--color-text-soft);
+    margin-top: 0.7rem;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    line-height: 1.55;
+    color: var(--color-text-main);
   }
+  .area-card p.plz { margin-top: 0; }
+  .area-card p a {
+    color: var(--color-text-main);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .area-card p a:hover,
+  .area-card p a:focus-visible { color: var(--color-primary); }
 
   .persona-section { background: var(--color-bg-alt); }
   .persona-groups {
