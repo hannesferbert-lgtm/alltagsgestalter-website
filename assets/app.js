@@ -1073,6 +1073,20 @@ try {
           var feedback = form.querySelector('.contact-feedback');
           var submitBtn = form.querySelector('.contact-submit');
 
+          // Buttons mit data-prefill-type (z. B. "Jetzt initiativ bewerben") wählen beim Klick
+          // den passenden Anfrage-Typ vor; der Anker-Scroll zum Formular läuft separat.
+          Array.prototype.forEach.call(document.querySelectorAll('[data-prefill-type]'), function (trigger) {
+            trigger.addEventListener('click', function () {
+              var wanted = trigger.getAttribute('data-prefill-type');
+              var known = Array.prototype.some.call(form.anfrageTyp.options, function (o) { return o.value === wanted; });
+              if (!known) return;
+              form.anfrageTyp.value = wanted;
+              window.setTimeout(function () {
+                try { form.anfrageTyp.focus({ preventScroll: true }); } catch (err) { form.anfrageTyp.focus(); }
+              }, 700);
+            });
+          });
+
           function mailtoHref(d) {
             var subject = 'Anfrage über die Website – ' + (d.vorname ? d.vorname + ' ' : '') + d.nachname;
             var body = [
