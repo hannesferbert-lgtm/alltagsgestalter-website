@@ -1317,14 +1317,17 @@
     color: var(--color-text-main);
   }
   .area-card p.plz { margin-top: 0; }
-  .area-card p a {
+  .area-card p a:not(.btn) {
     color: var(--color-text-main);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .area-card p a:hover,
-  .area-card p a:focus-visible { color: var(--color-primary); }
+  .area-card p a:not(.btn):hover,
+  .area-card p a:not(.btn):focus-visible { color: var(--color-primary); }
+  /* Button in der Karte: gefüllt, weiße Schrift (wie alle Buttons der Seite) */
+  .area-card .area-card-cta { margin-top: 1.1rem; }
+  .area-card .area-card-cta .btn { padding: 0.7rem 1.3rem; color: #fff; }
 
   .persona-section { background: var(--color-bg-alt); }
   .persona-groups {
