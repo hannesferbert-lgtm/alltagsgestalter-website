@@ -13,9 +13,8 @@
 //   summary      kurzer 2-Zeiler für die Terminliste im Panel
 //   description  ausführlicher Einladungstext als Liste von Absätzen
 //
-// Die zwei mit "[Beispiel]" markierten Einträge sind nur Platzhalter zum
-// Testen der Filter-Kategorien "Vorträge & Beratung" und "Aktivität" - bitte
-// vor dem Livegang durch echte Termine ersetzen oder entfernen.
+// Kategorien ohne Termin zeigen im Panel automatisch "Aktuell keine Termine in
+// dieser Kategorie."; die Filter bleiben bestehen.
 // ============================================================
 var ALLTAGSGESTALTER_EVENTS = [
   {
@@ -36,34 +35,6 @@ var ALLTAGSGESTALTER_EVENTS = [
       'Freuen Sie sich an diesem Nachmittag auf einen spannenden Gastbeitrag einer zertifizierten Ernährungsfachkraft zum Thema „Gesunde & genussvolle Ernährung im Alter“. Als Heilerziehungspfleger und gelernter Koch verknüpfen wir professionelle Alltagsbegleitung mit der Freude am gemeinsamen Kochen und Genuss.',
       'Lernen Sie Hannes Ferbert & Fynn Silbermann unverbindlich kennen! Wir beantworten Ihre Fragen zur Alltagsunterstützung sowie dazu, wie die Pflegekasse diese Unterstützung finanziert (§ 45b SGB XI).'
     ]
-  },
-  {
-    id: 'beispiel-vortrag',
-    categories: ['vortraege'],
-    dateISO: '2026-11-12',
-    day: '12',
-    month: 'Nov',
-    title: '[Beispiel] Vortrag: Sicher zuhause wohnen im Alter',
-    highlight: '',
-    time: 'Donnerstag, 12.11.2026 | 15:00 – 16:30 Uhr',
-    location: 'Beispielsaal, Musterstraße 1, 01067 Dresden',
-    cost: 'Kostenfrei',
-    summary: 'Platzhalter-Termin zum Testen der Kategorie „Vorträge & Beratung“ – bitte vor Veröffentlichung ersetzen oder entfernen.',
-    description: ['Dies ist ein Platzhalter-Eintrag, damit die Kategorie „Vorträge & Beratung“ beim Testen sichtbar ist. Bitte vor Veröffentlichung durch einen echten Termin ersetzen oder löschen.']
-  },
-  {
-    id: 'beispiel-aktivitaet',
-    categories: ['aktivitaet'],
-    dateISO: '2026-11-20',
-    day: '20',
-    month: 'Nov',
-    title: '[Beispiel] Gemeinsamer Spaziergang & Gedächtnistraining',
-    highlight: '',
-    time: 'Freitag, 20.11.2026 | 10:00 – 11:30 Uhr',
-    location: 'Treffpunkt Beispielpark, Dresden',
-    cost: 'Kostenfrei',
-    summary: 'Platzhalter-Termin zum Testen der Kategorie „Aktivität“ – bitte vor Veröffentlichung ersetzen oder entfernen.',
-    description: ['Dies ist ein Platzhalter-Eintrag, damit die Kategorie „Aktivität“ beim Testen sichtbar ist. Bitte vor Veröffentlichung durch einen echten Termin ersetzen oder löschen.']
   }
 ];
 
