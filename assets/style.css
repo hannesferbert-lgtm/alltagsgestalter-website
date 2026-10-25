@@ -83,7 +83,7 @@
 
     --color-text:      var(--color-text-main);
     --color-kohle:     var(--color-text-main);
-    --color-text-soft: #333333;
+    --color-text-soft: #000000;   /* Grafiker: einheitliches Schwarz #000000 / RGB 0,0,0 */
 
     --color-lavendel:     var(--color-lavender);
     --color-akzent-hell:  var(--color-accent-light);
@@ -477,7 +477,7 @@
       padding: 0.15rem 0.65rem;
       border-radius: 999px;
       background: color-mix(in srgb, var(--color-violett) 22%, transparent);
-      color: color-mix(in srgb, var(--color-kohle) 75%, var(--color-violett));
+      color: var(--color-kohle);
       font-family: var(--font-body);
       font-weight: 600;
       font-size: 0.7rem;
@@ -639,7 +639,7 @@
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
-    color: #374151;
+    color: var(--color-text-main);
     margin-top: 1.4rem;
     margin-bottom: 1.5rem;
     max-width: 44ch;
@@ -918,7 +918,7 @@
     font-family: var(--font-body);
     color: var(--color-text-soft);
   }
-  .services-intro-note a { color: var(--color-blau); font-weight: 600; text-decoration: underline; text-underline-offset: 0.15em; }
+  .services-intro-note a { color: var(--color-text-main); font-weight: 600; text-decoration: underline; text-underline-offset: 0.15em; }
 
   /* Schmalere Variante als finale Kostenuebernahme-Bestaetigung unter den
      Leistungskacheln - weniger Text, weniger Raum als der urspruengliche
@@ -993,7 +993,6 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-kohle);
-    opacity: 0.72;
   }
 
   .story-body {
@@ -1149,11 +1148,11 @@
   .contact-feedback.is-pending { background: var(--color-bg-alt); color: var(--color-text-soft); }
   .contact-feedback.is-success {
     background: color-mix(in srgb, var(--color-gruen) 18%, var(--color-surface));
-    color: color-mix(in srgb, var(--color-kohle) 82%, var(--color-gruen));
+    color: var(--color-kohle);
   }
   .contact-feedback.is-error {
     background: color-mix(in srgb, var(--color-orange) 14%, var(--color-surface));
-    color: color-mix(in srgb, var(--color-kohle) 80%, var(--color-orange));
+    color: var(--color-kohle);
   }
   .contact-feedback a { color: inherit; }
 
@@ -1508,125 +1507,6 @@
     font-size: 0.98rem;
     max-width: 68ch;
   }
-
-  .erbe-section { background: var(--color-bg-alt); }
-  .erbe-header { max-width: 64ch; }
-  .erbe-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
-  .erbe-header .erbe-sub { margin-top: 1rem; color: var(--color-text-soft); font-family: var(--font-body); font-size: 1.05rem; }
-
-  .erbe-grid {
-    margin-top: clamp(2rem, 4vw, 3rem);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  @media (max-width: 640px) { .erbe-grid { grid-template-columns: 1fr; } }
-
-  .recipe-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    background: var(--color-surface);
-    color: var(--color-kohle);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 2.5vw, 1.9rem);
-    box-shadow: var(--shadow-soft);
-  }
-  .recipe-card .recipe-icon { width: 84px; height: 84px; }
-  .recipe-card h3 { font-size: 1.2rem; }
-
-  .recipe-hero {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 1.75rem;
-    align-items: start;
-    background: var(--color-surface);
-    color: var(--color-kohle);
-    border: 2px solid var(--color-blau);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.75rem, 3vw, 2.4rem);
-    box-shadow: var(--shadow-soft);
-  }
-  @media (max-width: 640px) { .recipe-hero { grid-template-columns: 1fr; } }
-  .recipe-hero .recipe-icon-lg { width: 100%; height: auto; max-width: 150px; justify-self: center; }
-  .recipe-hero .recipe-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .recipe-hero h3 { font-size: clamp(1.15rem, 2vw, 1.4rem); margin-top: 0.65rem; }
-  .recipe-ingredients {
-    margin: 0.75rem 0 0;
-    font-size: 0.92rem;
-    color: color-mix(in srgb, var(--color-kohle) 78%, transparent);
-  }
-  .recipe-ingredients strong { color: var(--color-kohle); }
-  .recipe-card .recipe-quote,
-  .recipe-hero .recipe-quote {
-    margin: 0;
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 0.98rem;
-    color: color-mix(in srgb, var(--color-kohle) 82%, transparent);
-    border-left: 3px solid var(--color-blau);
-    padding-left: 0.85rem;
-  }
-  .recipe-hero .recipe-quote { margin-top: 0.75rem; }
-  .recipe-card .recipe-meta,
-  .recipe-hero .recipe-meta {
-    margin-top: auto;
-    padding-top: 0.3rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: color-mix(in srgb, var(--color-kohle) 75%, transparent);
-  }
-  .recipe-card .recipe-meta .sep,
-  .recipe-hero .recipe-meta .sep { opacity: 0.5; }
-  .recipe-card details.recipe-more summary,
-  .recipe-hero details.recipe-more summary {
-    cursor: pointer;
-    list-style: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    color: var(--color-sand);
-    background: var(--color-blau);
-    padding: 0.65rem 1.1rem;
-    border-radius: 999px;
-    width: fit-content;
-  }
-  .recipe-card details.recipe-more summary::-webkit-details-marker,
-  .recipe-hero details.recipe-more summary::-webkit-details-marker { display: none; }
-  .recipe-card details.recipe-more summary svg,
-  .recipe-hero details.recipe-more summary svg { width: 1em; height: 1em; flex-shrink: 0; transition: transform 0.2s ease; }
-  .recipe-card details.recipe-more[open] summary svg,
-  .recipe-hero details.recipe-more[open] summary svg { transform: translateX(3px); }
-  .recipe-card details.recipe-more .recipe-story,
-  .recipe-hero details.recipe-more .recipe-story {
-    margin-top: 0.75rem;
-    font-size: 0.95rem;
-    color: color-mix(in srgb, var(--color-kohle) 82%, transparent);
-  }
-
-  .erbe-cta {
-    margin-top: clamp(2.5rem, 5vw, 4rem);
-    background: var(--color-blau);
-    color: var(--color-sand);
-    border-radius: var(--radius-lg);
-    padding: clamp(2rem, 4vw, 3rem);
-    text-align: center;
-    max-width: 62ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .erbe-cta h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
-  .erbe-cta p { margin-top: 0.85rem; color: color-mix(in srgb, var(--color-sand) 88%, transparent); }
-  .erbe-cta .btn { margin-top: 1.6rem; background: var(--color-violett); color: var(--color-kohle); }
 
   .ratgeber-header { max-width: 62ch; }
   .ratgeber-header h2 { font-size: clamp(1.6rem, 4vw, var(--fs-heading-inner)); margin-top: 0.6rem; }
@@ -2748,7 +2628,7 @@
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.82rem;
-    color: var(--color-blau);
+    color: var(--color-text-main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     cursor: pointer;
