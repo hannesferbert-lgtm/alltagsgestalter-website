@@ -2908,3 +2908,15 @@
   @media (forced-colors: active) {
     .consent, .consent-btn { border-color: CanvasText; }
   }
+
+  /* Trailer-Video auf der Startseite */
+  .trailer-frame {
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    max-width: 64rem;
+    border: 2px solid var(--color-lavender);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+  }
+  .trailer-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  .trailer-frame a { color: #fff; }
