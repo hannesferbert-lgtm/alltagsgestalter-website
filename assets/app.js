@@ -35,6 +35,45 @@ var ALLTAGSGESTALTER_EVENTS = [
       'Freuen Sie sich an diesem Nachmittag auf einen spannenden Gastbeitrag einer zertifizierten Ernährungsfachkraft zum Thema „Gesunde & genussvolle Ernährung im Alter“. Als Heilerziehungspfleger und gelernter Koch verknüpfen wir professionelle Alltagsbegleitung mit der Freude am gemeinsamen Kochen und Genuss.',
       'Lernen Sie Hannes Ferbert & Fynn Silbermann unverbindlich kennen! Wir beantworten Ihre Fragen zur Alltagsunterstützung sowie dazu, wie die Pflegekasse diese Unterstützung finanziert (§ 45b SGB XI).'
     ]
+  },
+  {
+    id: 'genussfahrt-2026-11-29',
+    categories: ['geselligkeit', 'aktivitaet'],
+    dateISO: '2026-11-29',
+    day: '29',
+    month: 'Nov',
+    betreff: 'Genussfahrt Adventszauber Hellerau 29.11.',
+    title: 'Genussfahrt: Adventszauber Hellerau',
+    highlight: 'Mit dem Bus durch die winterliche Heide – inklusive Haustür-Service',
+    time: 'Sonntag, 29.11.2026 | 13:30 – 17:30 Uhr',
+    location: 'Start am Putbuser Weg 14 oder direkt an Ihrer Haustür im Dresdner Norden',
+    cost: 'Abrechnung über den Entlastungsbetrag',
+    summary: 'Geheizte Busfahrt durch die Dresdner Heide, Glühwein, Waffeln und ein Chor in der Waldschänke Hellerau – und abends sicher bis an die Haustür.',
+    description: [
+      '13:30 Uhr Abholung & Begrüßung am Putbuser Weg 14 oder direkt an Ihrer Haustür. Wir helfen beim sicheren Einsteigen, auch mit Rollator und Gehhilfe. 14:00 Uhr Winter-Panoramaroute: geheizte Busfahrt durch die Dresdner Heide und die Gartenstadt Hellerau, mit Geschichten zur Region.',
+      '15:15 Uhr Adventszauber in der Waldschänke Hellerau: Glühwein oder Kinderpunsch, frische Waffeln, Kuchen und Würstchen, der Wilandes-Chor (15:30 – 16:30 Uhr) und ein Rundgang an Ständen mit Kunst, Schmuck, Keramik und Seifen.',
+      '16:45 Uhr Rückfahrt mit Begleitung bis an die Haustür, Ankunft gegen 17:30 Uhr. Zum Abschied bekommt jeder Gast ein liebevoll verpacktes Tütchen, handgemacht von unseren Profi-Köchen.',
+      'Platz sichern: 0151 20147853 (Mo–Fr, 09:00 – 17:00 Uhr) oder über das Anmeldeformular.'
+    ]
+  },
+  {
+    id: 'adventssingen-2026-12-09',
+    categories: ['geselligkeit', 'aktivitaet'],
+    dateISO: '2026-12-09',
+    day: '09',
+    month: 'Dez',
+    betreff: 'Adventssingen 09.12.',
+    title: 'Gemeinsames Adventssingen zur Einstimmung auf die Weihnachtszeit',
+    highlight: 'Angeleitetes, gemeinsames Singen bekannter Weihnachtslieder',
+    time: 'Mittwoch, 09.12.2026 | 16:30 – 18:00 Uhr',
+    location: 'Gemeindehaus Alte Post, Gertrud-Caspari-Str. 10, 01109 Dresden',
+    cost: 'Kostenfrei · Inklusive Kaffee/Tee und weihnachtlichen Leckereien',
+    summary: 'Gemütliches Beisammensein in vorweihnachtlicher Stimmung: Wir singen gemeinsam bekannte Weihnachtslieder, begleitet von der Gitarre.',
+    description: [
+      'An diesem Nachmittag erwarten Sie ein gemütliches Beisammensein in vorweihnachtlicher Stimmung mit musikalischer Untermalung durch Gitarre und unseren Stimmen. Gemeinsam wollen wir uns bei Kaffee, Tee und weihnachtlichem Gebäck auf die besinnliche Zeit einstimmen und einige bekannte Weihnachtslieder zusammen singen.',
+      'Wir laden Sie herzlichst ein, sich dieser gemütlichen Zusammenkunft anzuschließen, gerne auch mit Ihren Liebsten.',
+      'Wir freuen uns darauf, diese besondere Zeit des Jahres mit Ihnen einzuläuten und hoffen, Sie am 09.12.2026 zahlreich im Gemeindehaus Alte Post begrüßen zu dürfen.'
+    ]
   }
 ];
 
