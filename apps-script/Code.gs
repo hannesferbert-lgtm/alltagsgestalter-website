@@ -27,10 +27,15 @@ var FIRST_DATA_ROW = 10;                        // erste Datenzeile
 var NOTIFY_EMAIL   = 'hannes.ferbert@alltagsgestalter.de';
 var TZ             = 'Europe/Berlin';
 
+// Spalten exakt wie die Kopfzeile (Zeile 4) im Sheet „Formular_Anmeldungen".
 var COLUMNS = [
-  'Lead-ID', 'Eingangsdatum', 'Uhrzeit', 'Anfrage-Typ', 'Anrede',
-  'Vorname', 'Nachname', 'Telefonnummer', 'E-Mail', 'Alltagsprofil/Nachricht'
+  'ID / Lead-Nr.', 'Eingangsdatum', 'Uhrzeit', 'Anfrage-Typ', 'Anrede',
+  'Vorname', 'Nachname', 'E-Mail-Adresse', 'Telefonnummer', 'PLZ / Ort',
+  'Zielperson', 'Pflegegrad', 'Event / Betreff', 'Anzahl Personen',
+  'Nachricht / Anmerkungen', 'DSGVO Einwilligung', 'Status Bearbeitung',
+  'CRM Import Status'
 ];
+var COL_EMAIL = 8, COL_TELEFON = 9, COL_PFLEGEGRAD = 12, COL_NACHRICHT = 15;   // 1-basiert
 
 function doPost(e) {
   var payload;
@@ -53,20 +58,36 @@ function doPost(e) {
   }
 
   var now = new Date();
-  var leadId = 'AG-' + Utilities.formatDate(now, TZ, 'yyyyMMdd') + '-' +
-    Utilities.getUuid().replace(/-/g, '').slice(0, 4).toUpperCase();
+  var leadId = 'LEAD-' + String(Math.floor(1000 + Math.random() * 9000));
+
+  var typ = str_(payload.anfrageTyp);
+  var msg = str_(payload.nachricht);
+  var pflegegrad = '';
+  var msgLines = msg.split('\n').filter(function (l) {
+    if (l.indexOf('Pflegegrad:') === 0) { pflegegrad = l.replace('Pflegegrad:', '').trim(); return false; }
+    return true;
+  });
+  var anrede = str_(payload.anrede) || ('Guten Tag ' + (vorname + ' ' + nachname).trim());
 
   var row = [
     leadId,
-    Utilities.formatDate(now, TZ, 'dd.MM.yyyy'),
+    Utilities.formatDate(now, TZ, 'yyyy-MM-dd'),
     Utilities.formatDate(now, TZ, 'HH:mm'),
-    str_(payload.anfrageTyp),
-    str_(payload.anrede),
+    typ,
+    anrede,
     vorname,
     nachname,
-    telefon,
     email,
-    str_(payload.nachricht)
+    telefon,
+    '',
+    '',
+    pflegegrad,
+    str_(payload.betreff) || str_(payload.eventName) || 'Allgemeine Anfrage',
+    str_(payload.personen) || '1',
+    msgLines.join('\n') || '-',
+    'JA',
+    'Neu',
+    'Offen'
   ];
 
   var sheetOk = false;
@@ -79,8 +100,9 @@ function doPost(e) {
         ss.getSheets().map(function (s) { return s.getName(); }).join(' | ');
     } else {
       var targetRow = Math.max(sheet.getLastRow() + 1, FIRST_DATA_ROW);
-      // Telefonnummer als Text speichern, sonst geht eine führende 0 verloren.
-      sheet.getRange(targetRow, 8).setNumberFormat('@');
+      // Telefonnummer als Text speichern: sonst geht eine führende 0 verloren
+      // und Nummern mit + werden als Formel gelesen (#ERROR!).
+      sheet.getRange(targetRow, COL_TELEFON).setNumberFormat('@');
       sheet.getRange(targetRow, 1, 1, row.length).setValues([row]);
       SpreadsheetApp.flush();
       sheetOk = true;
@@ -98,7 +120,7 @@ function doPost(e) {
   // Bestaetigungs-Mail an den Anmelder - nur bei Event-Anmeldung mit
   // E-Mail-Adresse. Schlaegt sie fehl, bleibt die Anmeldung trotzdem gueltig.
   var confirmOk = false;
-  if (str_(payload.anfrageTyp) === 'Event-Anmeldung' && email) {
+  if (typ === 'Event-Anmeldung' && email) {
     try {
       sendEventConfirmation_(payload, vorname, nachname, email);
       confirmOk = true;
@@ -141,11 +163,17 @@ function sendEventConfirmation_(payload, vorname, nachname, email) {
 }
 
 function sendNotification_(row, sheetOk, sheetError) {
-  var lines = COLUMNS.map(function (label, i) {
-    var val = (i === 9) ? stripHealth_(row[i]) : row[i];
-    return label + ': ' + (val || '–');
+  // Gesundheitsangaben (Pflegegrad, Einschränkungen, Unverträglichkeiten)
+  // stehen aus Datenschutzgründen nur im Sheet, nie in der Mail.
+  var msgCell = String(row[COL_NACHRICHT - 1] || '');
+  var hadHealth = !!row[COL_PFLEGEGRAD - 1] || stripHealth_(msgCell) !== msgCell;
+  var lines = [];
+  COLUMNS.forEach(function (label, i) {
+    if (i === COL_PFLEGEGRAD - 1) return;
+    var val = (i === COL_NACHRICHT - 1) ? stripHealth_(msgCell) : row[i];
+    lines.push(label + ': ' + (val || '–'));
   });
-  if (stripHealth_(row[9]) !== row[9]) {
+  if (hadHealth) {
     lines.push('', 'Hinweis: Gesundheitsangaben stehen aus Datenschutzgründen nur im Sheet, nicht in dieser Mail.');
   }
   if (!sheetOk) {
@@ -158,7 +186,7 @@ function sendNotification_(row, sheetOk, sheetError) {
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
     subject: 'Neue Website-Anfrage – ' + (row[5] ? row[5] + ' ' : '') + row[6] + ' (' + row[0] + ')',
-    replyTo: row[8] || NOTIFY_EMAIL,
+    replyTo: row[COL_EMAIL - 1] || NOTIFY_EMAIL,
     name: 'Website-Formular',
     body: lines.join('\n')
   });
@@ -183,7 +211,7 @@ function str_(v) {
 // ---------------------------------------------------------------
 // Datenschutz: Gesundheitsangaben
 // ---------------------------------------------------------------
-var HEALTH_PREFIXES = ['Pflegegrad:', 'Einschränkungen:', 'Unverträglichkeiten:'];
+var HEALTH_PREFIXES = ['Pflegegrad:', 'Einschränkungen:', 'Unverträglichkeiten:'];   // Pflegegrad steht zusätzlich in Spalte L
 var RETENTION_DAYS  = 28;   // Gesundheitsangaben: 4 Wochen nach der Fahrt
 var FALLBACK_DAYS   = 60;   // wenn kein Veranstaltungsdatum erkennbar: ab Eingang
 
@@ -211,27 +239,34 @@ function purgeHealthData() {
   var last = sheet.getLastRow();
   if (last < FIRST_DATA_ROW) return;
   var n = last - FIRST_DATA_ROW + 1;
-  var range = sheet.getRange(FIRST_DATA_ROW, 10, n, 1);   // nur Spalte J
-  var vals = range.getValues();
+  var msgRange = sheet.getRange(FIRST_DATA_ROW, COL_NACHRICHT, n, 1);
+  var pgRange  = sheet.getRange(FIRST_DATA_ROW, COL_PFLEGEGRAD, n, 1);
+  var msgs  = msgRange.getValues();
+  var pgs   = pgRange.getValues();
   var dates = sheet.getRange(FIRST_DATA_ROW, 2, n, 1).getValues();
   var now = new Date(), changed = 0;
-  for (var i = 0; i < vals.length; i++) {
-    var msg = String(vals[i][0] || '');
-    if (!HEALTH_PREFIXES.some(function (p) { return msg.indexOf('\n' + p) >= 0 || msg.indexOf(p) === 0; })) continue;
+  for (var i = 0; i < msgs.length; i++) {
+    var msg = String(msgs[i][0] || '');
+    var pg  = String(pgs[i][0] || '');
+    var hasHealthInMsg = msg !== stripHealth_(msg);
+    var hasPg = pg && pg !== '-' && pg.indexOf('gelöscht') < 0;
+    if (!hasHealthInMsg && !hasPg) continue;
     var base = eventDate_(msg), days = RETENTION_DAYS;
     if (!base) {
-      var d = dates[i][0], m = String(d).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+      var d = dates[i][0], ds = String(d);
+      var m = ds.match(/(\d{4})-(\d{2})-(\d{2})/) || ds.match(/(\d{2})\.(\d{2})\.(\d{4})/);
       if (d instanceof Date) base = d;
-      else if (m) base = new Date(+m[3], +m[2] - 1, +m[1]);
+      else if (m) base = (m[1].length === 4) ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(+m[3], +m[2] - 1, +m[1]);
       else continue;
       days = FALLBACK_DAYS;
     }
     if ((now - base) / 86400000 >= days) {
-      vals[i][0] = stripHealth_(msg) + '\nGesundheitsangaben gelöscht am ' + Utilities.formatDate(now, TZ, 'dd.MM.yyyy');
+      if (hasHealthInMsg) msgs[i][0] = stripHealth_(msg) + '\nGesundheitsangaben gelöscht am ' + Utilities.formatDate(now, TZ, 'dd.MM.yyyy');
+      if (hasPg) pgs[i][0] = 'gelöscht';
       changed++;
     }
   }
-  if (changed) range.setValues(vals);
+  if (changed) { msgRange.setValues(msgs); pgRange.setValues(pgs); }
 }
 
 /** Einmalig ausführen: richtet die tägliche Löschung ein. */
