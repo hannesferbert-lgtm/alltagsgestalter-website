@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; form-action 'self'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Anmeldung Weihnachtsliedersingen | Die Alltagsgestalter</title>
+<style>
+:root{--lila:#a687c7;--lila-hell:#e5e0f0;--mint:#d9f0e3;--gelb:#fff0c7;--rot:#8f1d2c}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Nunito',Arial,sans-serif;color:#000;background:#fbf9fd;font-size:20px;line-height:1.45}
+header{background:var(--lila-hell);padding:18px 20px}
+header .in{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header img{height:48px}
+.tag{background:var(--lila);border-radius:30px;padding:6px 18px;font-weight:800;font-size:18px}
+main{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:clamp(30px,6vw,42px);line-height:1.15;margin:0 0 14px;color:var(--rot)}
+.info{background:var(--gelb);border:3px solid #000;border-radius:18px;padding:16px 20px;margin-bottom:26px}
+.info p{margin:4px 0}
+form{display:flex;flex-direction:column;gap:22px}
+label,.lab{display:block;font-weight:800;margin-bottom:6px}
+.hint{font-weight:400;font-size:17px;color:#333;display:block}
+select,input[type=text],input[type=tel],input[type=email],input[type=number]{width:100%;font:inherit;padding:14px 16px;border:3px solid #000;border-radius:14px;background:#fff;min-height:56px}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}legend{padding:0;margin-bottom:8px}
+input[type=radio]{width:32px;height:32px;flex:none;accent-color:#5b3f80}
+input:focus,button:focus,textarea:focus{outline:4px solid var(--lila);outline-offset:2px}
+.check{display:flex;gap:14px;align-items:flex-start;font-size:18px}
+.check input[type=checkbox],.check input[type=radio]{width:32px;height:32px;flex:none;margin-top:2px;accent-color:#5b3f80}
+button{font:inherit;font-weight:800;font-size:22px;background:var(--rot);color:#fff;border:3px solid #000;border-radius:16px;padding:16px 28px;min-height:60px;cursor:pointer}
+button:hover{background:#6f1522}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.ok{background:var(--mint);border:3px solid #000;border-radius:18px;padding:20px;display:none}
+.ok.show{display:block}
+.call{margin-top:30px;background:var(--lila-hell);border-radius:18px;padding:16px 20px}
+.call a{font-weight:800;font-size:26px;color:#000}
+small.legal{font-size:16px;color:#333}
+.dsi{border:3px solid #000;border-radius:14px;padding:12px 16px;background:#fff;font-size:17px}.dsi summary{font-weight:800;cursor:pointer}.dsi p{margin:8px 0}
+.sec{font-size:16px;color:#333}
+</style></head><body>
+<header><div class="in"><img src="/assets/images/logo.svg" width="260" height="48" alt="Logo die alltagsgestalter"><span class="tag">Kennenlernfahrt</span></div></header>
+<main>
+<h1>Anmeldung: Weihnachtsliedersingen im Jägerhof</h1>
+<div class="info">
+<p><b>Samstag, 28. November 2026, 10 bis 14 Uhr</b></p>
+<p>Abholung um 10 Uhr, Singen von 11 bis 12 Uhr, danach gemeinsames Weihnachtsmenü.</p>
+<p><b>110,36 € pro Person.</b> Privat oder komplett abrechenbar über den Entlastungsbetrag.</p>
+<p><b>Anmeldung bis 20. November 2026.</b> Die Plätze sind begrenzt.</p>
+</div>
+
+<noscript><p><b>Bitte aktivieren Sie JavaScript oder rufen Sie uns an: 0151 20147853</b></p></noscript>
+<form id="f" method="post" action="/api/send-to-apps-script.php" autocomplete="off" novalidate>
+<div class="hp"><label>Bitte leer lassen <input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+<div><label for="vn">Vorname der Person, die mitfährt</label><input id="vn" name="vorname" type="text" required autocomplete="given-name"></div>
+<div><label for="nn">Nachname</label><input id="nn" name="nachname" type="text" required autocomplete="family-name"></div>
+<div><label for="tel">Telefonnummer für den Rückruf<span class="hint">Wir rufen Sie an und klären alles Weitere in Ruhe.</span></label><input id="tel" name="telefon" type="tel" required autocomplete="tel"></div>
+<div><label for="anz">Wie viele Personen melden Sie an?</label><input id="anz" name="personen" type="number" min="1" max="4" value="1" required></div>
+<div><label for="pg">Pflegegrad (freiwillig)<span class="hint">Sie müssen nichts angeben. Falls Sie über den Entlastungsbetrag abrechnen, fragen wir am Telefon nach.</span></label><select id="pg" name="pflegegrad" autocomplete="off"><option value="">Keine Angabe</option><option>Pflegegrad 1</option><option>Pflegegrad 2</option><option>Pflegegrad 3</option><option>Pflegegrad 4</option><option>Pflegegrad 5</option><option>Kein Pflegegrad</option><option>Weiß ich nicht</option></select></div>
+<fieldset><legend class="lab">Einschränkungen (freiwillig)<span class="hint">Nur wenn Sie möchten. Das hilft uns bei der Planung.</span></legend>
+<label class="check"><input type="checkbox" name="einschraenkung" value="Rollator"><span>Ich nutze einen Rollator</span></label>
+<label class="check"><input type="checkbox" name="einschraenkung" value="Rollstuhl"><span>Ich nutze einen Rollstuhl</span></label>
+<label class="check"><input type="checkbox" name="einschraenkung" value="Hilfe beim Ein- und Aussteigen"><span>Ich brauche Hilfe beim Ein- und Aussteigen</span></label>
+<label class="check"><input type="checkbox" name="einschraenkung" value="Vegetarisch"><span>Ich möchte das vegetarische Menü</span></label>
+<input type="text" name="unvertraeglich" autocomplete="off" placeholder="Das vertrage ich nicht (freiwillig)" aria-label="Das vertrage ich nicht" style="margin-top:10px"></fieldset>
+<fieldset><legend class="lab">Wie möchten Sie bezahlen?</legend>
+<label class="check"><input type="radio" name="zahlung" value="Privat" required><span>Privat</span></label>
+<label class="check"><input type="radio" name="zahlung" value="Über den Entlastungsbetrag"><span>Über den Entlastungsbetrag (wir rufen Sie dazu an)</span></label></fieldset>
+<div><label for="mail">E-Mail-Adresse (freiwillig)</label><input id="mail" name="email" type="email" autocomplete="email"></div>
+<details class="dsi"><summary>So gehen wir mit Ihren Daten um</summary>
+<p><b>Wer ist verantwortlich?</b> Die Alltagsgestalter, Hannes Ferbert, Katharinenstraße 15, 01099 Dresden, hannes.ferbert@alltagsgestalter.de.</p>
+<p><b>Wofür?</b> Nur für die Anmeldung zu dieser Fahrt, die Planung, den Rückruf und auf Wunsch die Abrechnung über den Entlastungsbetrag.</p>
+<p><b>Rechtsgrundlage:</b> Für Name, Kontakt und Anmeldung die Durchführung der Anmeldung (Art. 6 Abs. 1 lit. b DSGVO). Für freiwillige Angaben zu Pflegegrad, Einschränkungen und Unverträglichkeiten Ihre ausdrückliche Einwilligung (Art. 9 Abs. 2 lit. a DSGVO). Sie können sie jederzeit mit Wirkung für die Zukunft widerrufen, zum Beispiel per Anruf.</p>
+<p><b>Wer sieht die Daten?</b> Nur wir. Gesundheitsangaben stehen nicht in E-Mails. Die Daten werden verschlüsselt übertragen und in einer geschützten Tabelle bei Google (Workspace, mit Auftragsverarbeitungsvertrag) gespeichert.</p>
+<p><b>Wie lange?</b> Die freiwilligen Gesundheitsangaben löschen wir spätestens 4 Wochen nach der Fahrt automatisch. Name und Kontaktdaten nur, solange wir sie für die Abrechnung brauchen.</p>
+<p><b>Ihre Rechte:</b> Auskunft, Berichtigung, Löschung und Beschwerde bei der Datenschutzbehörde.</p></details>
+<label class="check"><input type="checkbox" name="consent" required><span>Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen. Die Alltagsgestalter dürfen meine Angaben (Name, Kontakt, Anmeldung) für diese Fahrt speichern und mich dazu anrufen.</span></label>
+<label class="check"><input type="checkbox" name="consent_health"><span>Nur ausfüllen, wenn Sie oben Angaben zu Pflegegrad, Einschränkungen oder Unverträglichkeiten gemacht haben: Ich willige ausdrücklich ein, dass diese Gesundheitsangaben zur Planung der Fahrt gespeichert werden. Ich kann das jederzeit widerrufen.</span></label>
+<button type="submit">Jetzt anmelden</button>
+<small class="sec">&#128274; Ihre Angaben werden verschlüsselt übertragen.</small>
+<small class="legal">Alles Weitere besprechen wir am Telefon mit Ihnen.</small>
+</form>
+
+<div class="ok" id="ok" role="status"><b>Vielen Dank!</b> Wir haben Ihre Anmeldung erhalten und rufen Sie bis spätestens 20. November an.</div>
+
+<div class="call">Lieber telefonisch anmelden?<br><a href="tel:+4915120147853">0151 20147853</a><br>Hannes Ferbert, Die Alltagsgestalter</div>
+</main>
+<script>
+(function(){
+  var f=document.getElementById('f'), btn=f.querySelector('button[type=submit]');
+  var fb=document.createElement('p'); fb.setAttribute('role','alert'); fb.style.cssText='font-weight:800;display:none;margin:0'; f.appendChild(fb);
+  function msg(t){ fb.textContent=t; fb.style.display='block'; }
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); fb.style.display='none';
+    var v=function(n){ var el=f.elements[n]; return el ? String(el.value||'').trim() : ''; };
+    if(!v('vorname')||!v('nachname')){ msg('Bitte geben Sie Vor- und Nachname an.'); return; }
+    if(!v('telefon')){ msg('Bitte geben Sie eine Telefonnummer für den Rückruf an.'); return; }
+    if(!f.querySelector('input[name=zahlung]:checked')){ msg('Bitte wählen Sie die Zahlungsart.'); return; }
+    if(!f.elements.consent.checked){ msg('Bitte stimmen Sie der Speicherung Ihrer Angaben zu.'); return; }
+    var hasHealth=!!(v('pflegegrad')||v('unvertraeglich')||f.querySelector('input[name=einschraenkung]:checked'));
+    if(hasHealth&&!f.elements.consent_health.checked){ msg('Sie haben Angaben zu Pflegegrad oder Einschränkungen gemacht. Bitte stimmen Sie zusätzlich der Speicherung dieser Angaben zu oder entfernen Sie sie.'); return; }
+    var einschr=[].map.call(f.querySelectorAll('input[name=einschraenkung]:checked'),function(x){return x.value;}).join(', ');
+    var event='Weihnachtsliedersingen im Jägerhof, Sa 28.11.2026';
+    var payload={
+      anfrageTyp:'Event-Anmeldung',
+      betreff:'Weihnachtsliedersingen 28.11.',
+      anrede:'',
+      vorname:v('vorname'), nachname:v('nachname'), telefon:v('telefon'), email:v('email'),
+      eventName:event, personen:v('personen')||'1',
+      nachricht:'Veranstaltung: '+event+
+        '\nAnzahl Personen: '+(v('personen')||'1')+
+        '\nZahlung: '+f.querySelector('input[name=zahlung]:checked').value+
+        (hasHealth?'\nPflegegrad: '+(v('pflegegrad')||'-')+'\nEinschränkungen: '+(einschr||'-')+'\nUnverträglichkeiten: '+(v('unvertraeglich')||'-'):'')+
+        '\nEinwilligung: 2026-11-v2 am '+new Date().toISOString()+(hasHealth?' (inkl. Gesundheitsangaben)':''),
+      company:v('company')
+    };
+    btn.disabled=true; msg('Anmeldung wird gesendet …');
+    var ctrl=('AbortController' in window)?new AbortController():null;
+    var timer=setTimeout(function(){ if(ctrl) ctrl.abort(); },12000);
+    fetch(f.action,{method:'POST',body:JSON.stringify(payload),credentials:'omit',referrerPolicy:'no-referrer',signal:ctrl?ctrl.signal:undefined})
+      .then(function(r){ clearTimeout(timer); return r.json().catch(function(){return {ok:r.ok};}); })
+      .then(function(d){
+        if(d&&d.ok){ f.style.display='none'; document.getElementById('ok').classList.add('show'); window.scrollTo(0,0); }
+        else throw 0;
+      })
+      .catch(function(){ btn.disabled=false; msg('Das hat leider nicht geklappt. Bitte rufen Sie uns an: 0151 20147853'); });
+  });
+})();
+</script>
+</body></html>
