@@ -55,8 +55,8 @@ small.legal{font-size:16px;color:#333}
 <div><label for="nn">Nachname</label><input id="nn" name="nachname" type="text" required autocomplete="family-name"></div>
 <div><label for="tel">Telefonnummer für den Rückruf<span class="hint">Wir rufen Sie an und klären alles Weitere in Ruhe.</span></label><input id="tel" name="telefon" type="tel" required autocomplete="tel"></div>
 <div><label for="anz">Wie viele Personen melden Sie an?</label><input id="anz" name="personen" type="number" min="1" max="4" value="1" required></div>
-<div><label for="pg">Pflegegrad</label><select id="pg" name="pflegegrad" required autocomplete="off"><option value="">Bitte auswählen</option><option>Pflegegrad 1</option><option>Pflegegrad 2</option><option>Pflegegrad 3</option><option>Pflegegrad 4</option><option>Pflegegrad 5</option><option>Kein Pflegegrad</option><option>Weiß ich nicht</option></select></div>
-<fieldset><legend class="lab">Einschränkungen<span class="hint">Wählen Sie aus, was zutrifft. Das hilft uns bei der Planung.</span></legend>
+<div><label for="pg">Pflegegrad (freiwillig)<span class="hint">Sie müssen nichts angeben. Falls Sie über den Entlastungsbetrag abrechnen, fragen wir am Telefon nach.</span></label><select id="pg" name="pflegegrad" autocomplete="off"><option value="">Keine Angabe</option><option>Pflegegrad 1</option><option>Pflegegrad 2</option><option>Pflegegrad 3</option><option>Pflegegrad 4</option><option>Pflegegrad 5</option><option>Kein Pflegegrad</option><option>Weiß ich nicht</option></select></div>
+<fieldset><legend class="lab">Einschränkungen (freiwillig)<span class="hint">Nur wenn Sie möchten. Das hilft uns bei der Planung.</span></legend>
 <label class="check"><input type="checkbox" name="einschraenkung" value="Rollator"><span>Ich nutze einen Rollator</span></label>
 <label class="check"><input type="checkbox" name="einschraenkung" value="Rollstuhl"><span>Ich nutze einen Rollstuhl</span></label>
 <label class="check"><input type="checkbox" name="einschraenkung" value="Hilfe beim Ein- und Aussteigen"><span>Ich brauche Hilfe beim Ein- und Aussteigen</span></label>
@@ -69,11 +69,12 @@ small.legal{font-size:16px;color:#333}
 <details class="dsi"><summary>So gehen wir mit Ihren Daten um</summary>
 <p><b>Wer ist verantwortlich?</b> Die Alltagsgestalter, Hannes Ferbert, Katharinenstraße 15, 01099 Dresden, hannes.ferbert@alltagsgestalter.de.</p>
 <p><b>Wofür?</b> Nur für die Anmeldung zu dieser Fahrt, die Planung, den Rückruf und auf Wunsch die Abrechnung über den Entlastungsbetrag.</p>
-<p><b>Rechtsgrundlage:</b> Ihre Einwilligung, auch für die Angaben zu Pflegegrad und Einschränkungen (Art. 6 Abs. 1 lit. a und Art. 9 Abs. 2 lit. a DSGVO). Sie können sie jederzeit mit Wirkung für die Zukunft widerrufen, zum Beispiel per Anruf.</p>
-<p><b>Wer sieht die Daten?</b> Nur wir. Die Daten werden verschlüsselt übertragen und in einer geschützten Tabelle bei Google (Workspace, mit Auftragsverarbeitungsvertrag) gespeichert.</p>
-<p><b>Wie lange?</b> Die Angaben zu Pflegegrad und Einschränkungen löschen wir spätestens 4 Wochen nach der Fahrt. Name und Kontaktdaten nur, solange wir sie für die Abrechnung brauchen.</p>
+<p><b>Rechtsgrundlage:</b> Für Name, Kontakt und Anmeldung die Durchführung der Anmeldung (Art. 6 Abs. 1 lit. b DSGVO). Für freiwillige Angaben zu Pflegegrad, Einschränkungen und Unverträglichkeiten Ihre ausdrückliche Einwilligung (Art. 9 Abs. 2 lit. a DSGVO). Sie können sie jederzeit mit Wirkung für die Zukunft widerrufen, zum Beispiel per Anruf.</p>
+<p><b>Wer sieht die Daten?</b> Nur wir. Gesundheitsangaben stehen nicht in E-Mails. Die Daten werden verschlüsselt übertragen und in einer geschützten Tabelle bei Google (Workspace, mit Auftragsverarbeitungsvertrag) gespeichert.</p>
+<p><b>Wie lange?</b> Die freiwilligen Gesundheitsangaben löschen wir spätestens 4 Wochen nach der Fahrt automatisch. Name und Kontaktdaten nur, solange wir sie für die Abrechnung brauchen.</p>
 <p><b>Ihre Rechte:</b> Auskunft, Berichtigung, Löschung und Beschwerde bei der Datenschutzbehörde.</p></details>
-<label class="check"><input type="checkbox" name="consent" required><span>Ich bin einverstanden, dass die Alltagsgestalter meine Angaben nur für die Anmeldung und den Rückruf zu dieser Fahrt speichern. Dazu gehören auch meine Angaben zu Pflegegrad und Einschränkungen. <a href="/datenschutz">Datenschutzerklärung</a></span></label>
+<label class="check"><input type="checkbox" name="consent" required><span>Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen. Die Alltagsgestalter dürfen meine Angaben (Name, Kontakt, Anmeldung) für diese Fahrt speichern und mich dazu anrufen.</span></label>
+<label class="check"><input type="checkbox" name="consent_health"><span>Nur ausfüllen, wenn Sie oben Angaben zu Pflegegrad, Einschränkungen oder Unverträglichkeiten gemacht haben: Ich willige ausdrücklich ein, dass diese Gesundheitsangaben zur Planung der Fahrt gespeichert werden. Ich kann das jederzeit widerrufen.</span></label>
 <button type="submit">Jetzt anmelden</button>
 <small class="sec">&#128274; Ihre Angaben werden verschlüsselt übertragen.</small>
 <small class="legal">Alles Weitere besprechen wir am Telefon mit Ihnen.</small>
@@ -93,9 +94,10 @@ small.legal{font-size:16px;color:#333}
     var v=function(n){ var el=f.elements[n]; return el ? String(el.value||'').trim() : ''; };
     if(!v('vorname')||!v('nachname')){ msg('Bitte geben Sie Vor- und Nachname an.'); return; }
     if(!v('telefon')){ msg('Bitte geben Sie eine Telefonnummer für den Rückruf an.'); return; }
-    if(!v('pflegegrad')){ msg('Bitte wählen Sie den Pflegegrad aus.'); return; }
     if(!f.querySelector('input[name=zahlung]:checked')){ msg('Bitte wählen Sie die Zahlungsart.'); return; }
     if(!f.elements.consent.checked){ msg('Bitte stimmen Sie der Speicherung Ihrer Angaben zu.'); return; }
+    var hasHealth=!!(v('pflegegrad')||v('unvertraeglich')||f.querySelector('input[name=einschraenkung]:checked'));
+    if(hasHealth&&!f.elements.consent_health.checked){ msg('Sie haben Angaben zu Pflegegrad oder Einschränkungen gemacht. Bitte stimmen Sie zusätzlich der Speicherung dieser Angaben zu oder entfernen Sie sie.'); return; }
     var einschr=[].map.call(f.querySelectorAll('input[name=einschraenkung]:checked'),function(x){return x.value;}).join(', ');
     var event='Weihnachtsliedersingen im Jägerhof, Sa 28.11.2026';
     var payload={
@@ -106,11 +108,9 @@ small.legal{font-size:16px;color:#333}
       eventName:event, personen:v('personen')||'1',
       nachricht:'Veranstaltung: '+event+
         '\nAnzahl Personen: '+(v('personen')||'1')+
-        '\nPflegegrad: '+v('pflegegrad')+
         '\nZahlung: '+f.querySelector('input[name=zahlung]:checked').value+
-        '\nEinschränkungen: '+(einschr||'-')+
-        '\nUnverträglichkeiten: '+(v('unvertraeglich')||'-')+
-        '\nEinwilligung: 2026-11-v1 am '+new Date().toISOString(),
+        (hasHealth?'\nPflegegrad: '+(v('pflegegrad')||'-')+'\nEinschränkungen: '+(einschr||'-')+'\nUnverträglichkeiten: '+(v('unvertraeglich')||'-'):'')+
+        '\nEinwilligung: 2026-11-v2 am '+new Date().toISOString()+(hasHealth?' (inkl. Gesundheitsangaben)':''),
       company:v('company')
     };
     btn.disabled=true; msg('Anmeldung wird gesendet …');

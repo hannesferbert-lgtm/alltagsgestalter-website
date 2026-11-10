@@ -33,3 +33,13 @@ Erwartet: `{"ok":true}`. Mit gefülltem Feld `company` muss die Anfrage abgewies
 ## 5. Danach
 - [ ] Testzeile im Sheet löschen.
 - [ ] Link auf der Veranstaltungsseite freischalten (separater Patch).
+
+## Datenschutz-Nachtrag (Version 2026-11-v2)
+
+1. Apps-Script neu einfügen (apps-script/Code.gs), speichern, **Bereitstellen → Bereitstellungen verwalten → Bearbeiten → Neue Version**.
+2. Einmalig `installTrigger` ausführen (täglich 03:00 Löschung der Gesundheitsangaben, 4 Wochen nach der Fahrt).
+3. Optional einmalig `trashOldNotificationMails` ausführen (alte Mails mit „Pflegegrad:" in den Papierkorb; braucht Gmail-Berechtigung).
+4. Test ohne Haken „Gesundheitsangaben": Zeile im Sheet enthält keine Zeilen Pflegegrad/Einschränkungen; Mail ebenfalls nicht.
+5. Test mit Gesundheitsangaben + Haken: Angaben stehen im Sheet, **nicht** in der Mail.
+6. Test mit Gesundheitsangaben ohne Haken: Formular verweigert das Absenden.
+7. Testzeile danach im Sheet löschen.

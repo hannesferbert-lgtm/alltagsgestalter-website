@@ -140,8 +140,12 @@ function sendEventConfirmation_(payload, vorname, nachname, email) {
 
 function sendNotification_(row, sheetOk, sheetError) {
   var lines = COLUMNS.map(function (label, i) {
-    return label + ': ' + (row[i] || '–');
+    var val = (i === 9) ? stripHealth_(row[i]) : row[i];
+    return label + ': ' + (val || '–');
   });
+  if (stripHealth_(row[9]) !== row[9]) {
+    lines.push('', 'Hinweis: Gesundheitsangaben stehen aus Datenschutzgründen nur im Sheet, nicht in dieser Mail.');
+  }
   if (!sheetOk) {
     lines.unshift(
       '!! Konnte NICHT ins Google Sheet geschrieben werden – bitte manuell nachtragen.',
@@ -171,4 +175,76 @@ function jsonOut_(obj) {
 
 function str_(v) {
   return (v === null || v === undefined) ? '' : String(v).trim();
+}
+
+
+// ---------------------------------------------------------------
+// Datenschutz: Gesundheitsangaben
+// ---------------------------------------------------------------
+var HEALTH_PREFIXES = ['Pflegegrad:', 'Einschränkungen:', 'Unverträglichkeiten:'];
+var RETENTION_DAYS  = 28;   // Gesundheitsangaben: 4 Wochen nach der Fahrt
+var FALLBACK_DAYS   = 60;   // wenn kein Veranstaltungsdatum erkennbar: ab Eingang
+
+/** Entfernt Zeilen mit Gesundheitsangaben aus einem Nachrichtentext. */
+function stripHealth_(text) {
+  return String(text || '').split('\n').filter(function (l) {
+    return !HEALTH_PREFIXES.some(function (p) { return l.indexOf(p) === 0; });
+  }).join('\n');
+}
+
+/** Liest das Veranstaltungsdatum (TT.MM.JJJJ) aus der Zeile „Veranstaltung: …". */
+function eventDate_(text) {
+  var m = String(text || '').match(/Veranstaltung:[^\n]*?(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null;
+}
+
+/**
+ * Löscht Gesundheitsangaben aus dem Sheet, sobald RETENTION_DAYS nach der
+ * Fahrt vergangen sind (ohne erkennbares Datum: FALLBACK_DAYS nach Eingang).
+ * Läuft täglich per Trigger (einmalig installTrigger() ausführen).
+ */
+function purgeHealthData() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  if (!sheet) return;
+  var last = sheet.getLastRow();
+  if (last < FIRST_DATA_ROW) return;
+  var n = last - FIRST_DATA_ROW + 1;
+  var range = sheet.getRange(FIRST_DATA_ROW, 10, n, 1);   // nur Spalte J
+  var vals = range.getValues();
+  var dates = sheet.getRange(FIRST_DATA_ROW, 2, n, 1).getValues();
+  var now = new Date(), changed = 0;
+  for (var i = 0; i < vals.length; i++) {
+    var msg = String(vals[i][0] || '');
+    if (!HEALTH_PREFIXES.some(function (p) { return msg.indexOf('\n' + p) >= 0 || msg.indexOf(p) === 0; })) continue;
+    var base = eventDate_(msg), days = RETENTION_DAYS;
+    if (!base) {
+      var d = dates[i][0], m = String(d).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+      if (d instanceof Date) base = d;
+      else if (m) base = new Date(+m[3], +m[2] - 1, +m[1]);
+      else continue;
+      days = FALLBACK_DAYS;
+    }
+    if ((now - base) / 86400000 >= days) {
+      vals[i][0] = stripHealth_(msg) + '\nGesundheitsangaben gelöscht am ' + Utilities.formatDate(now, TZ, 'dd.MM.yyyy');
+      changed++;
+    }
+  }
+  if (changed) range.setValues(vals);
+}
+
+/** Einmalig ausführen: richtet die tägliche Löschung ein. */
+function installTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'purgeHealthData') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('purgeHealthData').timeBased().everyDays(1).atHour(3).inTimezone(TZ).create();
+}
+
+/**
+ * Optional, einmalig: verschiebt ältere Benachrichtigungsmails ("Neue Website-Anfrage")
+ * mit Gesundheitsangaben in den Papierkorb. Braucht zusätzliche Gmail-Berechtigung.
+ */
+function trashOldNotificationMails() {
+  var threads = GmailApp.search('subject:"Neue Website-Anfrage" "Pflegegrad:"', 0, 100);
+  threads.forEach(function (t) { t.moveToTrash(); });
 }
