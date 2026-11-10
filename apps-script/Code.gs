@@ -79,6 +79,8 @@ function doPost(e) {
         ss.getSheets().map(function (s) { return s.getName(); }).join(' | ');
     } else {
       var targetRow = Math.max(sheet.getLastRow() + 1, FIRST_DATA_ROW);
+      // Telefonnummer als Text speichern, sonst geht eine führende 0 verloren.
+      sheet.getRange(targetRow, 8).setNumberFormat('@');
       sheet.getRange(targetRow, 1, 1, row.length).setValues([row]);
       SpreadsheetApp.flush();
       sheetOk = true;
