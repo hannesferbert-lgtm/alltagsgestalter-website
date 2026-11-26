@@ -7,6 +7,12 @@ RewriteRule ^meine-geschichte\.html?$ /ueber-uns [R=301,L]
 # Entfernte Seite /kulinarisches-erbe -> Startseite (dauerhaft)
 RewriteRule ^kulinarisches-erbe(\.html)?/?$ / [R=301,L]
 
+# Ratgeber-Unterseiten: /ratgeber/<thema> -> ratgeber-<thema>.html (intern)
+# Direktaufrufe der Datei (/ratgeber-<thema> oder .html) dauerhaft auf die schoene URL
+RewriteCond %{THE_REQUEST} \s/+ratgeber-([a-z0-9-]+)(\.html)?[\s?/] [NC]
+RewriteRule ^ /ratgeber/%1 [R=301,L]
+RewriteRule ^ratgeber/([a-z0-9-]+)/?$ ratgeber-$1.html [L]
+
 # Direktaufruf einer .html-Datei auf die schoene URL umleiten
 RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
