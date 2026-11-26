@@ -2951,3 +2951,7 @@
   .pr-sources a { word-break: break-word; }
   .ratgeber-card-featured { grid-column: 1 / -1; background: var(--color-accent-light); }
   .ratgeber-card-featured > p { max-width: 70ch; }
+  /* Lange Woerter (z. B. „Pflegeneuordnungsgesetz") auf schmalen Handys trennen statt ueberlaufen */
+  .ratgeber-card h2, .ratgeber-page h1, .ratgeber-page .article-body h2 { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
+  /* Startseiten-Teaser: Button so gross wie die uebrigen Buttons der Startseite */
+  #ratgeber-teaser .ratgeber-card .read-link { padding: 0.95rem 1.7rem; }
